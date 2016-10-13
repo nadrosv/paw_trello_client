@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>morello</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="js/jquery-3.1.1.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+	<div class="container">
+		<div class="top">
+			TRELLO
+		</div>
+		<div class="content">
+
+			<div id="my-test" class="board">
+				<div class="board-name" id="board-name">
+					<h3>{{board_name}}</h3>
+				</div>
+
+				<div class="list" v-for="list in lists">
+					<h3>{{list.list_name}}</h3>
+					<div class="card" v-for="card in list.cards">
+						<h3>{{card.card_name}}</h3><br>
+						<h3>{{card.desc}}</h3>
+					</div>
+				</div>
+
+
+				<div class="list">
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+	<script src="js/vue.js"></script>
+	<script src="js/app.js"></script>
+</body>
