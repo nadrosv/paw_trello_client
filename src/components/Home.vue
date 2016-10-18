@@ -1,21 +1,28 @@
 <template>
 	<!--<div class="col-md-8">-->
 	<div class="home-area">
-		<tabs>
-			<tab header="one">
-				...
-			</tab>
-			<tabs>
-				<tab header="two">
-					...
-				</tab>
-			</tabs>
-			<button class="btn btn-primary" v-on:click="addBoard()">Add board</button>
+		<div>
 
-			<!--<board v-for="(b, i) in boards" :board-data="b" v-on:del="deleteBoard(b)"></board> -->
-			<board v-for="b in comp" :board-data="b"></board>
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+
+				<li role="presentation" v-for="b in comp">
+					<a :href="b.hash" :aria-controls="b.id" role="tab" data-toggle="tab"> {{b.board_name}} </a>
+				</li>
+			</ul>
+
+			<div class="tab-content">
+				<br>
+				<button class="btn btn-primary" v-on:click="addBoard()">Add board</button>
+        <br>
+				<div role="tabpanel" v-for="b in comp" class="tab-pane fade in" :id="b.id">
+					<board :board-data="b">
+					</board>
+				</div>
+			</div>
+		</div>
+
 	</div>
-	<!--</div>-->
 </template>
 
 <script>
@@ -37,7 +44,7 @@ import auth from '../auth'
       
       addBoard() {
         let formData = {
-        "id": 7,
+        "id": 74,
         "userId": 1,
         "board_name": "board1235"
       }
@@ -68,6 +75,11 @@ import auth from '../auth'
         this.$http.get('http://localhost:3000/all').then((response) => {
         console.log(response.body)
         this.comp = response.body;
+        var i
+        for (i = 0; i < this.comp.length; i++) { 
+          this.comp[i].hash = '#' + this.comp[i].id;
+        }
+        
         console.log(this.comp[0].lists)
         }, (response) => {
          console.log(response)
