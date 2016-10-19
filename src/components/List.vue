@@ -6,7 +6,7 @@
             </span>
 			<span class="delete-list" v-on:click="del">X</span>
 			<div>
-				<card v-for="card in listData.cards" :card-data="card"></card>
+				<card v-for="card in cards" :card-data="card"></card>
 			</div>
 		</div>
 </template>

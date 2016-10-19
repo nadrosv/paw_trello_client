@@ -18,7 +18,7 @@
 			<!--<button class="btn btn-primary" v-on:click="addList">Add list</button>-->
 			<div>
 
-				<list v-for="list in boardData.lists" :list-data="list"></list>
+				<list v-for="list in lists" :list-data="list"></list>
 			</div>
 			<!--<list v-for="list in lists" :list-data="list"></list>-->
 
@@ -109,9 +109,9 @@
         "list_name": this.newListName
       }
       console.log(this.lists)
-      this.boardData.lists.push(newListData)
-      //this.lists.push(newListData)
-         this.$http.post('http://localhost:3000/boards', newListData).then((response) => {
+      // this.boardData.lists.push(newListData)
+      this.lists.push(newListData)
+         this.$http.post('http://localhost:3000/lists', newListData).then((response) => {
         console.log('dodano board')
         }, (response) => {
           console.log(response)
@@ -123,7 +123,7 @@
   //},
   mounted: function () {
   this.$nextTick(function () {
- this.getList()
+    this.getList()
    })
   },
   
