@@ -64,10 +64,6 @@ import auth from '../auth'
         newBoardName: ''
       }
     },
-    //components: {
-     // Board
-    //},
-    
     methods: {
       
       addBoard() {
@@ -105,13 +101,9 @@ import auth from '../auth'
     },
     deleteBoard(board) {
       console.log('delete board')
-      //this.$el.remove()
-      
       var index = this.comp.indexOf(board)
-      console.log(index)
       this.comp.splice(index, 1)
       
-      //this.comp.splice(1,1);
     }
   },
   // created: function () { 

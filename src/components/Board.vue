@@ -78,8 +78,12 @@
         });
     },
     del() {
+      this.$http.delete('http://localhost:3000/boards/' + this.boardData.id).then((response) => {
+        console.log(response.body)
+        }, (response) => {
+         console.log(response)
+        });
        this.$emit('del')
-        //this.$el.remove();
     },
      editBoard() {
         console.log('edit')
