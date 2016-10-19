@@ -134,7 +134,7 @@
 
 <style scoped>
 	.board-area {
-		background-color: deepskyblue;
+		background-color: rgba(0,141,196,1);
 		margin: 10px;
 		padding: 10px;
 		overflow: hidden;
