@@ -93,6 +93,11 @@
         console.log('saving')
         this.boardData.board_name = this.boardName
         this.edit = false
+        this.$http.put('http://localhost:3000/boards/' + this.boardData.id, this.boardData ).then((response) => {
+        console.log(response.body)
+        }, (response) => {
+         console.log(response)
+        });
     },
     remove() {
       this.$parent.boards.splice(this.$parent.boards.indexOf(this.boardData),1);
