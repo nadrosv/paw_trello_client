@@ -27,7 +27,7 @@
 						<div class="modal-body">
 							<p>
 								Nazwa
-								<input v-model="cardData.card_name">
+								<input v-model="card.card_name">
                 Opis
 								<input v-model="cardData.desc">
 
@@ -46,12 +46,18 @@
   export default {
     data() {
       return {
-        "editedCard": {}
+        card: this.cardData,
+        editCard: {
+          "id": this.cardData.id,
+          "listId": this.cardData.listId,
+          "card_name": this.cardData.card_name,
+          "desc": this.cardData.desc
+        }
       }
     },
     methods: {
     editCard() {
-      this.$http.put('http://localhost:3000/cards/' + this.cardData.id, this.cardData ).then((response) => {
+      this.$http.put('http://localhost:3000/cards/' + this.cardData.id, this.editCard).then((response) => {
         console.log(response.body)
         }, (response) => {
          console.log(response)
