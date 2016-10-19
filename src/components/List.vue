@@ -3,7 +3,7 @@
 		<div class="col-md-4 list-area">
 			
       <span v-if="listEditable">
-            <input v-model="listName">
+            <input v-model="listData.list_name">
             <button class="btn btn-default" v-on:click="saveList">
               <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             </button>
@@ -40,7 +40,7 @@
 						<div class="modal-body">
 							<p>
 								Nazwa
-								<input v-model="newCard.name">
+								<input v-model="newCard.card_name">
                 Opis
 								<input v-model="newCard.desc">
 
@@ -64,8 +64,8 @@
         listEditable: false,
         listName: '',
         newCard: {
-          "listId": this.listData.listid,
-          "name": '',
+          "listId": this.listData.id,
+          "card_name": '',
           "desc": ''
         },
         newCardName: ''
@@ -81,15 +81,15 @@
         });
     },
     addCard() {
-       console.log(this.cards)
+       console.log(this.newCard)
       //   let newCardData = {
       //   "listId": this.listData.listId,
       //   "card_name": this.newListName
       // }
       // this.boardData.lists.push(newListData)
-      this.cards.push(this.newCard)
-         this.$http.post('http://localhost:3000/lists', this.newCard).then((response) => {
+         this.$http.post('http://localhost:3000/cards', this.newCard).then((response) => {
         console.log('dodano karte')
+        this.cards.push(response.body)
         }, (response) => {
           console.log(response)
       });
@@ -109,7 +109,7 @@
     },
     saveList() {
         console.log('saving')
-        this.listData.list_name = this.listName
+        // this.listData.list_name = this.listName
         this.listEditable = false
         this.$http.put('http://localhost:3000/lists/' + this.listData.id, this.listData ).then((response) => {
         console.log(response.body)
