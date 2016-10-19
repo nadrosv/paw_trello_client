@@ -8,13 +8,14 @@
 </p>
     
 
-For started web-app:
-* a
-* b
+For starting web-app:
+* npm install -g webpack-dev-server (one time only)
+* npm install (one time only)
+* webpack-dev-server --inline --hot (runs application)
 
-For started json-server (only for temporary testing):
-* a 
-* b
+For starting json-server (only for temporary testing):
+* npm install -g json-server
+* json-server boards.json (runs server with boards.json as database)
 
 
 
