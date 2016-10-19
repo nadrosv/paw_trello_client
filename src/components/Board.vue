@@ -9,11 +9,11 @@
             <!--<p>Message is: {{ message }}</p>-->
         </span>
 			<span v-else>
-            Nazwa: {{boardData.board_name}}
+            
             <button class="btn btn-primary" v-on:click="editBoard">Edit</button>
         </span>
 			<!--{{newName}}-->
-			<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add list</button>
+			<button class="btn btn-primary" data-toggle="modal" data-target="#boardModal">Add list</button>
 			<button class="btn btn-primary" v-on:click="del" >Remove</button>
 			<!--<button class="btn btn-primary" v-on:click="addList">Add list</button>-->
 			<div>
@@ -23,7 +23,7 @@
 			<!--<list v-for="list in lists" :list-data="list"></list>-->
 
 			<!--Modal-->
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" id="boardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -105,14 +105,16 @@
      addList() {
        console.log(this.lists)
         let newListData = {
-        "boardId": this.boardData.bordId,
+        "boardId": this.boardData.id,
         "list_name": this.newListName
       }
       console.log(this.lists)
       // this.boardData.lists.push(newListData)
-      this.lists.push(newListData)
+      // this.lists.push(newListData)
          this.$http.post('http://localhost:3000/lists', newListData).then((response) => {
         console.log('dodano board')
+        console.log(response.body)
+        this.lists.push(response.body)
         }, (response) => {
           console.log(response)
       });
