@@ -14,7 +14,7 @@
         </span>
 			<!--{{newName}}-->
 			<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add list</button>
-			<button class="btn btn-primary" v-on:click="del">Remove</button>
+			<button class="btn btn-primary" v-on:click="del" >Remove</button>
 			<!--<button class="btn btn-primary" v-on:click="addList">Add list</button>-->
 			<div>
 
@@ -78,8 +78,8 @@
         });
     },
     del() {
-        this.$el.remove();
-       //this.$emit('del')
+       this.$emit('del')
+        //this.$el.remove();
     },
      editBoard() {
         console.log('edit')
@@ -112,11 +112,11 @@
   //created: function () {
     //  this.getList()
   //},
-  //mounted: function () {
-  //this.$nextTick(function () {
- //this.getList()
-  // })
-  //},
+  mounted: function () {
+  this.$nextTick(function () {
+ this.getList()
+   })
+  },
   
   props: ['boardData']
   }

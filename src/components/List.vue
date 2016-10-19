@@ -36,11 +36,11 @@
    //created: function () {
      //   this.getCard();
   //},
-  //mounted: function () {
-  //this.$nextTick(function () {
- //this.getCard();
-  // })
-  //},
+  mounted: function () {
+  this.$nextTick(function () {
+ this.getCard();
+   })
+  },
   props: ['listData']
   }
   </script>
