@@ -4,7 +4,7 @@
 ##Simple Trello like web app
     
 <p align="center">
-  <img alt="VS Code in action" src="https://github.com/nadrosv/paw_trello_client/raw/master/paw_trello_client_logo.PNG">
+  <img alt="paw_trello_client logo" src="https://github.com/nadrosv/paw_trello_client/raw/master/paw_trello_client_logo.PNG">
 </p>
     
 
