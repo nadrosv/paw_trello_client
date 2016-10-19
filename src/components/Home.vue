@@ -2,7 +2,9 @@
 	<!--<div class="col-md-8">-->
 	<div class="home-area">
 		<div>
-
+			<button class="btn btn-primary" data-toggle="modal" data-target="#home-modal">Dodaj tablice</button>
+      <br>
+      <br>
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs" role="tablist">
 
@@ -13,11 +15,35 @@
 
 			<div class="tab-content">
 				<br>
-				<button class="btn btn-primary" v-on:click="addBoard()">Add board</button>
-        <br>
+				<!--<button class="btn btn-primary" v-on:click="addBoard()">Add board</button>-->
+
+				<br>
 				<div role="tabpanel" v-for="b in comp" class="tab-pane fade in" :id="b.id">
-					<board :board-data="b">
+					<board v-on:del="deleteBoard(b)" :board-data="b">
 					</board>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="home-modal" tabindex="-1" role="dialog" aria-labelledby="home-modal-Label" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+						<h4 class="modal-title" id="home-modal-Label">Dodaj nowa tablice</h4>
+					</div>
+					<div class="modal-body">
+						<p>
+							Nazwa tablicy
+							<input v-model="newBoardName">
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" v-on:click="addBoard">Save changes</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -26,6 +52,7 @@
 </template>
 
 <script>
+import user from './App.vue'
 import auth from '../auth'
 
 
@@ -33,7 +60,8 @@ import auth from '../auth'
     data() {
       return {
         boards: [],
-        comp: []
+        comp: [],
+        newBoardName: ''
       }
     },
     //components: {
@@ -44,35 +72,25 @@ import auth from '../auth'
       
       addBoard() {
         let formData = {
-        "id": 74,
-        "userId": 1,
-        "board_name": "board1235"
+        "userId": auth.user.id,
+        "board_name": this.newBoardName
       }
          this.$http.post('http://localhost:3000/boards', formData).then((response) => {
         console.log('dodano board')
+        //this.boards.push(form)
         this.getComp()
         }, (response) => {
           console.log(response)
       });
 
-      //   this.boards.push({
-      //   "id": 4,
-      //   "userId": 1,
-      //   "board_name": "board123"
-      // })
       console.log(this.boards)
       
       },
-      getQuote() {
-        this.$http.get('http://localhost:3000/users/1/boards').then((response) => {
-          this.boards = response.body;
-
-        }, (response) => {
-         console.log(response)
-        });
-    },
     getComp() {
-        this.$http.get('http://localhost:3000/all').then((response) => {
+      console.log(user.data())
+      console.log('id ' + auth.user.id)
+      console.log('auth2' + auth.user.authenticated)
+        this.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
         console.log(response.body)
         this.comp = response.body;
         var i
@@ -86,9 +104,14 @@ import auth from '../auth'
         });
     },
     deleteBoard(board) {
-      this.$el.remove()
-
-      //  this.boards.splice(this.boards.indexOf(board),1);
+      console.log('delete board')
+      //this.$el.remove()
+      
+      var index = this.comp.indexOf(board)
+      console.log(index)
+      this.comp.splice(index, 1)
+      
+      //this.comp.splice(1,1);
     }
   },
   // created: function () { 
