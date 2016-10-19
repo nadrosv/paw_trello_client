@@ -3,9 +3,16 @@
 	<div class="card-area">
 		<!--ID: {{cardData.id}}-->
 		<span>
-            Desc: {{cardData.desc}}
-            </span>
-		<span class="delete-card" v-on:click="del">X</span>
+      cardData.card_name
+    </span>
+      <div class="btn-group" role="group" aria-label="listButtons">
+    <button class="btn btn-default" v-on:click="editList">
+      <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+    </button>
+    <button class="btn btn-default" v-on:click="delList">
+      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    </button>  
+        </div>   
 	</div>
 </template>
 

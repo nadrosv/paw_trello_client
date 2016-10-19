@@ -12,7 +12,7 @@
 			<span v-else>
         {{listData.list_name}} 
         <div class="btn-group" role="group" aria-label="listButtons">
-            <button class="btn btn-default" v-on:click="addCard">
+        			<button class="btn btn-default" data-toggle="modal" data-target="#listModal">
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
             <button class="btn btn-default" v-on:click="editList">
@@ -26,6 +26,33 @@
 			<div>
 				<card v-for="card in cards" :card-data="card"></card>
 			</div>
+
+      <!--Modal-->
+			<div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+							<h4 class="modal-title" id="myModalLabel">Dodaj nowa karte</h4>
+						</div>
+						<div class="modal-body">
+							<p>
+								Nazwa
+								<input v-model="newCard.name">
+                Opis
+								<input v-model="newCard.desc">
+
+							</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary" v-on:click="addCard">Save changes</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 </template>
 
@@ -35,7 +62,13 @@
       return {
         cards: [],
         listEditable: false,
-        listName: ''
+        listName: '',
+        newCard: {
+          "listId": this.listData.listid,
+          "name": '',
+          "desc": ''
+        },
+        newCardName: ''
 
       }
     },
@@ -48,7 +81,18 @@
         });
     },
     addCard() {
-      
+       console.log(this.cards)
+      //   let newCardData = {
+      //   "listId": this.listData.listId,
+      //   "card_name": this.newListName
+      // }
+      // this.boardData.lists.push(newListData)
+      this.cards.push(this.newCard)
+         this.$http.post('http://localhost:3000/lists', this.newCard).then((response) => {
+        console.log('dodano karte')
+        }, (response) => {
+          console.log(response)
+      });
     },
     delList() {
         this.$el.remove();
