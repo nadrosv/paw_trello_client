@@ -47,10 +47,12 @@
 
 <style scoped>
 	.list-area {
-		background-color: #999;
+		background-color: rgba(185, 191, 194, 1);
 		margin: 10px;
 		padding: 10px;
 		position: relative;
+    border-radius: 7px;
+    box-shadow: 0px 0px 8px #444c5c;
 	}
 	
 	.delete-list {

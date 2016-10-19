@@ -33,6 +33,8 @@
 		background-color: #fff;
 		margin: 8px;
 		padding: 5px;
+    border-radius: 2px;
+    box-shadow: 0px 4px 5px #888888;
 	}
 	
 	.delete-card {
