@@ -6,7 +6,7 @@
       {{cardData.card_name}}
     </span>
       <div class="btn-group" role="group" aria-label="listButtons">
-    <button class="btn btn-default" data-toggle="modal" data-target="#cardModal">
+    <button class="btn btn-default" data-toggle="modal" :data-target="hashModal">
       <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
     <button class="btn btn-default" v-on:click="delCard">
@@ -15,7 +15,7 @@
         </div>   
 
          <!--Modal-->
-			<div class="modal fade" id="cardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -27,7 +27,7 @@
 						<div class="modal-body">
 							<p>
 								Nazwa
-								<input v-model="card.card_name">
+								<input v-model="cardData.card_name">
                 Opis
 								<input v-model="cardData.desc">
 
@@ -46,18 +46,18 @@
   export default {
     data() {
       return {
-        card: this.cardData,
-        editCard: {
-          "id": this.cardData.id,
-          "listId": this.cardData.listId,
-          "card_name": this.cardData.card_name,
-          "desc": this.cardData.desc
-        }
+        editedCard: {},
+        hashModal: '#modal-card' + this.cardData.id,
+        modalParam: 'modal-card' + this.cardData.id
       }
     },
     methods: {
     editCard() {
-      this.$http.put('http://localhost:3000/cards/' + this.cardData.id, this.editCard).then((response) => {
+      console.log(this.cardData)
+
+      // this.cardData.card_name = this.editedCard.card_name
+      // this.cardData.desc = this.editedCard.desc
+      this.$http.put('http://localhost:3000/cards/' + this.cardData.id, this.cardData).then((response) => {
         console.log(response.body)
         }, (response) => {
          console.log(response)
