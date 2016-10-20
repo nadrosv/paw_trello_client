@@ -73,8 +73,10 @@ import auth from '../auth'
       }
          this.$http.post('http://localhost:3000/boards', formData).then((response) => {
         console.log('dodano board')
-        //this.boards.push(form)
-        this.getComp()
+        response.body.hash = '#' + response.body.id
+        // this.$set(this.comp, this.comp.length, response.body)
+        this.comp.push(response.body)
+        // this.getComp()
         }, (response) => {
           console.log(response)
       });
