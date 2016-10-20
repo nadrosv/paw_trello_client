@@ -12,7 +12,7 @@
 			<span v-else>
         {{listData.list_name}} 
         <div class="btn-group" role="group" aria-label="listButtons">
-        			<button class="btn btn-default" data-toggle="modal" data-target="#listModal">
+        			<button class="btn btn-default" data-toggle="modal" :data-target="listModal">
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
             <button class="btn btn-default" v-on:click="editList">
@@ -28,7 +28,7 @@
 			</div>
 
       <!--Modal-->
-			<div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" :id="listParam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -68,7 +68,9 @@
           "card_name": '',
           "desc": ''
         },
-        newCardName: ''
+        newCardName: '',
+        listModal: '#modal-list' + this.listData.id,
+        listParam: 'modal-list' + this.listData.id
 
       }
     },
@@ -82,14 +84,10 @@
     },
     addCard() {
        console.log(this.newCard)
-      //   let newCardData = {
-      //   "listId": this.listData.listId,
-      //   "card_name": this.newListName
-      // }
-      // this.boardData.lists.push(newListData)
          this.$http.post('http://localhost:3000/cards', this.newCard).then((response) => {
         console.log('dodano karte')
         this.cards.push(response.body)
+        console.log(response.body)
         }, (response) => {
           console.log(response)
       });
