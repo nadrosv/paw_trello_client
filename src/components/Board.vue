@@ -10,11 +10,17 @@
         </span>
 			<span v-else>
             Nazwa: {{boardData.board_name}}
-            <button class="btn btn-primary" v-on:click="editBoard">Edit</button>
+            <button class="btn btn-primary" v-on:click="editBoard">Edit name
+              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            </button>
         </span>
 			<!--{{newName}}-->
-			<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add list</button>
-			<button class="btn btn-primary" v-on:click="del" >Remove</button>
+			<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add list
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      </button>
+			<button class="btn btn-primary" v-on:click="del">Remove list
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+      </button>
 			<!--<button class="btn btn-primary" v-on:click="addList">Add list</button>-->
 			<div>
 
