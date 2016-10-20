@@ -9,7 +9,7 @@
     
 
 For starting web-app:
-* `pm install -g webpack-dev-server` (one time only)
+* `npm install -g webpack-dev-server` (one time only)
 * `npm install` (one time only)
 * `webpack-dev-server --inline --hot` (runs application)
 
