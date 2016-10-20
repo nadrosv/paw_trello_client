@@ -6,7 +6,7 @@
       <br>
       <br>
 			<!-- Nav tabs -->
-			<ul class="nav nav-tabs" role="tablist">
+			<ul class="nav nav-pills" role="tablist">
 
 				<li role="presentation" v-for="b in comp">
 					<a :href="b.hash" :aria-controls="b.id" role="tab" data-toggle="tab"> {{b.board_name}} </a>
@@ -129,3 +129,26 @@ import auth from '../auth'
   //}
   }
   </script>
+
+
+  <style scoped>
+    .nav-pills {
+      font-size: 17px;
+    }
+
+    .nav-pills>li>a {
+      background-color: rgba(217, 129, 112, 0.7);
+      color: rgba(0,0,0,0.7);
+    }
+
+    .nav-pills>li.active>a {
+      background-color: rgba(217, 129, 112, 1);
+      box-shadow: 0px 10px 20px #999999;
+      color: white;
+    }
+
+    .nav-pills>li>a:hover {
+      background-color: rgba(217, 129, 112, 0.9);
+    }
+
+  </style>
