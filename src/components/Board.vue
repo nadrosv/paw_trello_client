@@ -8,12 +8,18 @@
             <!--<p>Message is: {{ message }}</p>-->
       </span>
 			<span v-else>
-            
-            <button class="btn btn-primary" v-on:click="editBoard">Edit</button>
+          <button class="btn btn-primary" v-on:click="editBoard">Edit name
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+          </button>
       </span>
 			<!--{{newName}}-->
-			<button class="btn btn-primary" data-toggle="modal" :data-target="hashModal">Add list</button>
-			<button class="btn btn-primary" v-on:click="del" >Remove</button>
+			<button class="btn btn-primary" data-toggle="modal" :data-target="hashModal">Add list
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      </button>
+			<button class="btn btn-primary" v-on:click="del">Remove board
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+      </button>
+
 			<!--<button class="btn btn-primary" v-on:click="addList">Add list</button>-->
 			
 			<!--<list v-for="list in lists" :list-data="list"></list>-->
