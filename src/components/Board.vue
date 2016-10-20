@@ -47,7 +47,7 @@
 					</div>
 				</div>
 			</div>
-    <div>
+    <div class="list-container">
 				<list v-for="list in lists" :list-data="list" v-on:delList="del"></list>
 			</div>
   </div>
@@ -148,4 +148,10 @@
 		padding: 10px;
 		overflow: hidden;
 	}
+
+  .list-container {
+    display: flex;
+    flex: 1;
+  }
+
 </style>
