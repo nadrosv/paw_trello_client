@@ -48,7 +48,7 @@
 				</div>
 			</div>
     <div>
-				<list v-for="list in lists" :list-data="list"></list>
+				<list v-for="list in lists" :list-data="list" v-on:delList="del"></list>
 			</div>
   </div>
 
@@ -89,6 +89,8 @@
          console.log(response)
         });
        this.$emit('del')
+      this.$el.remove();
+
     },
      editBoard() {
         console.log('edit')
