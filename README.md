@@ -9,13 +9,13 @@
     
 
 For starting web-app:
-* npm install -g webpack-dev-server (one time only)
-* npm install (one time only)
-* webpack-dev-server --inline --hot (runs application)
+* `npm install -g webpack-dev-server` (one time only)
+* `npm install` (one time only)
+* `webpack-dev-server --inline --hot` (runs application)
 
 For starting json-server (only for temporary testing):
-* npm install -g json-server
-* json-server boards.json (runs server with boards.json as database)
+* `npm install -g json-server`
+* `json-server boards.json` (runs server with boards.json as database)
 
 
 
