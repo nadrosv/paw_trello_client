@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import App from './components/App.vue'
@@ -10,12 +9,12 @@ import Card from './components/Card.vue'
 import Signup from './components/Signup.vue'
 import Login from './components/Login.vue'
 import auth from './auth'
+import store from './store'
 auth.checkAuth()
 
 
 Vue.use(VueResource)
 Vue.use(VueRouter)
-Vue.use(Vuex)
 
 
 Vue.component('app1', App)
@@ -59,36 +58,36 @@ export var router = new VueRouter({
 // export const app = Vue.component('app')
 
 
-export const store = new Vuex.Store({
-  state: {
-    count: 0,
-    comp: []
-  },
-  mutations: {
-    increment (state) {
-      state.count++
-    },
-    addBoards(state, boards) {
-        var i
-        for (i = 0; i < boards.length; i++) { 
-          boards[i].hash = '#board' + boards[i].id;
-          boards[i].param = 'board' + boards[i].id;
-        }
-        state.comp = boards;
-    },
-    addBoard(state, board) {
+// export const store = new Vuex.Store({
+//   state: {
+//     count: 0,
+//     comp: []
+//   },
+//   mutations: {
+//     increment (state) {
+//       state.count++
+//     },
+//     addBoards(state, boards) {
+//         var i
+//         for (i = 0; i < boards.length; i++) { 
+//           boards[i].hash = '#board' + boards[i].id;
+//           boards[i].param = 'board' + boards[i].id;
+//         }
+//         state.comp = boards;
+//     },
+//     addBoard(state, board) {
          
-        board.hash = '#board' + board.id;
-        board.param = 'board' + board.id;
+//         board.hash = '#board' + board.id;
+//         board.param = 'board' + board.id;
         
-        state.comp.push(board);
-    }
-  }
-})
+//         state.comp.push(board);
+//     }
+//   }
+// })
 
 export const app = new Vue({
     router,
-        store
+    store
 }).$mount('#app')
 
 // Board.$watch('lists', function(newVal, oldVal))
