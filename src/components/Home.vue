@@ -8,8 +8,8 @@
 			<!-- Nav tabs -->
 			<ul class="nav nav-pills" role="tablist">
 
-				<li role="presentation" v-for="b in comp">
-					<a :href="b.hash" :aria-controls="b.id" role="tab" data-toggle="tab"> {{b.board_name}} </a>
+				<li role="presentation" v-for="b in comp" :key="b.id">
+					<a :href="b.hash" :aria-controls="b.hash" role="tab" data-toggle="tab" > {{b.board_name}} </a>
 				</li>
 			</ul>
 
@@ -18,7 +18,7 @@
 				<!--<button class="btn btn-primary" v-on:click="addBoard()">Add board</button>-->
 
 				<br>
-				<div role="tabpanel" v-for="b in comp" class="tab-pane fade in" :id="b.id">
+				<div role="tabpanel" v-for="b in comp" class="tab-pane fade in" :id="b.param" :key="b.id">
 					<board v-on:del="deleteBoard(b)" :board-data="b">
 					</board>
 				</div>
@@ -61,7 +61,8 @@ import auth from '../auth'
       return {
         boards: [],
         comp: [],
-        newBoardName: ''
+        newBoardName: '',
+        comp1: this.comp
       }
     },
     methods: {
@@ -73,7 +74,8 @@ import auth from '../auth'
       }
          this.$http.post('http://localhost:3000/boards', formData).then((response) => {
         console.log('dodano board')
-        response.body.hash = '#' + response.body.id
+        response.body.hash = '#board' + response.body.id
+        response.body.param = 'board' + response.body.id;
         // this.$set(this.comp, this.comp.length, response.body)
         this.comp.push(response.body)
         // this.getComp()
@@ -93,7 +95,8 @@ import auth from '../auth'
         this.comp = response.body;
         var i
         for (i = 0; i < this.comp.length; i++) { 
-          this.comp[i].hash = '#' + this.comp[i].id;
+          this.comp[i].hash = '#board' + this.comp[i].id;
+          this.comp[i].param = 'board' + this.comp[i].id;
         }
         
         console.log(this.comp[0].lists)
