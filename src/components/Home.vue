@@ -8,7 +8,7 @@
 			<!-- Nav tabs -->
 			<ul class="nav nav-pills" role="tablist">
 
-				<li role="presentation" v-for="b in comp" :key="b.id">
+				<li role="presentation" v-for="b in comps" :key="b.id">
 					<a :href="b.hash" :aria-controls="b.hash" role="tab" data-toggle="tab" > {{b.board_name}} </a>
 				</li>
 			</ul>
@@ -18,7 +18,7 @@
 				<!--<button class="btn btn-primary" v-on:click="addBoard()">Add board</button>-->
 
 				<br>
-				<div role="tabpanel" v-for="b in comp" class="tab-pane fade in" :id="b.param" :key="b.id">
+				<div role="tabpanel" v-for="b in comps" class="tab-pane fade in" :id="b.param" :key="b.id">
 					<board v-on:del="deleteBoard(b)" :board-data="b">
 					</board>
 				</div>
@@ -54,7 +54,7 @@
 <script>
 import user from './App.vue'
 import auth from '../auth'
-
+// import {store} from '../index.js'
 
   export default {
     data() {
@@ -63,6 +63,11 @@ import auth from '../auth'
         comp: [],
         newBoardName: '',
         comp1: this.comp
+      }
+    },
+    computed: {
+      comps () {
+        return this.$store.state.comp
       }
     },
     methods: {
@@ -74,11 +79,12 @@ import auth from '../auth'
       }
          this.$http.post('http://localhost:3000/boards', formData).then((response) => {
         console.log('dodano board')
-        response.body.hash = '#board' + response.body.id
-        response.body.param = 'board' + response.body.id;
-        // this.$set(this.comp, this.comp.length, response.body)
-        this.comp.push(response.body)
+        // response.body.hash = '#board' + response.body.id
+        // response.body.param = 'board' + response.body.id;
+        // // this.$set(this.comp, this.comp.length, response.body)
+        // this.comp.push(response.body)
         // this.getComp()
+        this.$store.commit('addBoard', response.body)
         }, (response) => {
           console.log(response)
       });
@@ -92,14 +98,16 @@ import auth from '../auth'
       console.log('auth2' + auth.user.authenticated)
         this.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
         console.log(response.body)
-        this.comp = response.body;
-        var i
-        for (i = 0; i < this.comp.length; i++) { 
-          this.comp[i].hash = '#board' + this.comp[i].id;
-          this.comp[i].param = 'board' + this.comp[i].id;
-        }
+        this.$store.commit('addBoards', response.body)
+        // store.commit('increment')
+        // this.comp = response.body;
+        // var i
+        // for (i = 0; i < this.comp.length; i++) { 
+        //   this.comp[i].hash = '#board' + this.comp[i].id;
+        //   this.comp[i].param = 'board' + this.comp[i].id;
+        // }
         
-        console.log(this.comp[0].lists)
+        // console.log(this.comp[0].lists)
         }, (response) => {
          console.log(response)
         });
