@@ -1,5 +1,7 @@
 import { app } from '../index.js'
 import auth from '../auth'
+import * as types from './mutation-types'
+
 
 export const state = {
     comp: [],
@@ -11,6 +13,8 @@ export const state = {
     activeCard: {}
 }
 
+// we can use the ES2015 computed property name feature
+// to use a constant as the function name
 export const mutations = {
     addBoards(state, boards) {
         var i
@@ -20,18 +24,16 @@ export const mutations = {
         }
 
         state.comp = boards;
-        
+
     },
-    addBoard(state, board) {
+    [types.ADD_BOARD] (state, board) {
         board.hash = '#board' + board.id
         board.param = 'board' + board.id
 
         state.comp.push(board)
         state.activeBoard = board
     },
-    deleteBoard(state, index) {
-        state.comp.splice(index, 1)
-    },
+
     getLists(state, payload) {
         // state.lists.push(payload.lists)
         let id = payload.boardId
@@ -48,10 +50,10 @@ export const mutations = {
         // state.cards = payload.cards
         // state.cards.push(payload.cards)
     },
-    editBoard(state, {boardData, boardName}) {
+    [types.EDIT_BOARD] (state, {boardData, boardName}) {
         boardData.board_name = boardName
     },
-    delBoard(state, {board}) {
+    [types.DEL_BOARD] (state, {board}) {
         state.comp.splice(state.comp.indexOf(state.activeBoard), 1)
         // state.comp.splice(state.comp.indexOf(board), 1)
     },
@@ -64,43 +66,8 @@ export const mutations = {
     setActiveCard(state, {card}) {
         state.activeCard = card
     },
-    FAV_LIST(state, {list}) {
+    [types.FAV_LIST] (state, {list}) {
         list.favourite = !list.favourite
-    }
-}
-export const actions = {
-
-    editBoard(context, {boardData, boardName}) {
-        boardData.board_name = boardName
-        app.$http.put('http://localhost:3000/boards/' + boardData.id, boardData).then((response) => {
-
-            context.commit('editBoard', { boardData, boardName })
-        }, (response) => {
-            console.log(response)
-        });
-    },
-    delBoard(context, {board}) {
-        app.$http.delete('http://localhost:3000/boards/' + state.activeBoard.id).then((response) => {
-            context.commit('delBoard', { board })
-        }, (response) => {
-            console.log(response)
-        });
-    },
-    getComponents(context) {
-        app.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
-            context.commit('addBoards', response.body, { silent: true })
-
-
-        }, (response) => {
-            console.log(response)
-        });
-    },
-    toggleFavList(context, {list}) {
-        context.commit('FAV_LIST', {list})
-        app.$http.put('http://localhost:3000/lists/' + list.id, list).then((response) => {
-        }, (response) => {
-            console.log(response)
-        });
     }
 }
 

@@ -14,7 +14,7 @@
 			<span v-else>
         <span class="list-name">{{listData.list_name}}</span>
           <span style="cursor: pointer;" aria-hidden="true" @click="toggleFavList({list: listData})" 
-            :class="[listData.favourite ? 'glyphicon glyphicon-star-empty' : 'glyphicon glyphicon-star']">
+            :class="[listData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
           </span>
               
 			<div class="btn-group" role="group" aria-label="listButtons">
