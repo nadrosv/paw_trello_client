@@ -22,13 +22,20 @@ module.exports = {
   },
 
   babel: {
-    presets: ['es2015'],
-    plugins: ['transform-runtime']
+    presets: ['es2015', 'stage-3'],
+    plugins: [
+      ['transform-runtime'],
+      ['transform-object-rest-spread'],
+      ["transform-es2015-destructuring"]
+      // ['transform-es2015-spread', {
+      //   "loose": true
+      // }]
+    ]
   },
 
   resolve: {
-  alias: {
-    'vue$': 'vue/dist/vue.js'
+    alias: {
+      'vue$': 'vue/dist/vue.js'
+    }
   }
-}
 }
