@@ -1,8 +1,10 @@
+import { app } from '../index.js'
+
 export const state = {
     comp: [],
     boards: [],
-    lists: [],
-    cards: []
+    lists: {},
+    cards: {}
 }
 
 export const mutations = {
@@ -25,9 +27,19 @@ export const mutations = {
         state.comp.splice(index, 1)
     },
     getLists(state, payload) {
-        state.lists.push({boardId: payload.boardId, data: payload.lists})
+        // state.lists.push(payload.lists)
+        let id = payload.boardId
+        app.$set(state.lists, payload.boardId, payload.lists)
+        // state.lists = { ...state.lists, id: payload.lists }
+        // state.lists = Object.assign({ x }, [payload.boardId]: payload.lists);
+
+        // state.lists[payload.boardId] = payload.lists
     },
     getCards(state, payload) {
-        state.cards.push({"listId": payload.listId, "data": payload.cards})
+        app.$set(state.cards, payload.listId, payload.cards)
+
+        // state.cards[payload.listId] = payload.cards
+        // state.cards = payload.cards
+        // state.cards.push(payload.cards)
     }
 }

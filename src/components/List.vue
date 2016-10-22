@@ -79,12 +79,15 @@
     computed: {
       cards () {
         // console.log('card ', this.$store.state.lists.indexOf(this.$store.state.cards[this.index]))
-        return this.$store.state.cards[this.index].data
+        return this.$store.state.cards[this.listData.id]
+        // return this.$store.state.lists.map(listId => this.listData.listId)
+        // return thread.messages.map(id => state.messages[id])
       }
     },
     methods: {
       getCard() {
         this.$http.get('http://localhost:3000/cards?listId='+this.listData.id).then((response) => {
+          // console.log(response)
           // this.cards = response.body;
           this.$store.commit('getCards', {listId: this.listData.id, cards: response.body}, { silent: true })
         }, (response) => {

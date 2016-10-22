@@ -73,8 +73,9 @@
       return this.boardData.board_name = this.message
     },
     lists () {
-      console.log('lists ' + this.$store.state.lists[0].data[0])
-      return this.$store.state.lists[this.index].data[this.index]
+      // console.log('lists ' + this.$store.state.lists[0].data[0])
+      // return this.$store.state.lists[this.index]
+      return this.$store.state.lists[this.boardData.id]
     }
   },
     
