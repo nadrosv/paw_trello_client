@@ -9,7 +9,7 @@
 			<ul class="nav nav-pills" role="tablist">
 
 				<li role="presentation" v-for="(b,i) in comps" :key="b.id">
-					<a :href="b.hash" :aria-controls="b.hash" role="tab" data-toggle="tab" > {{b.board_name}} </a>
+					<a :href="b.hash" :aria-controls="b.hash" role="tab" data-toggle="tab" v-on:click="setActiveBoard({board: b})"> {{b.board_name}} </a>
 				</li>
 			</ul>
 
@@ -54,6 +54,8 @@
 <script>
 import user from './App.vue'
 import auth from '../auth'
+import {store} from '../store/index.js'
+import { mapActions, mapMutations } from 'vuex'
 
   export default {
     data() {
@@ -65,9 +67,15 @@ import auth from '../auth'
     computed: {
       comps () {
         return this.$store.state.comp
+      },
+      activeBoard () {
+        return this.$store.getters.activeBoard
       }
     },
     methods: {
+       ...mapMutations([
+      'setActiveBoard'
+    ]),
       
       addBoard() {
         let formData = {
@@ -91,11 +99,11 @@ import auth from '../auth'
         }, (response) => {
          console.log(response)
         });
-    },
-    deleteBoard(index) {
-      console.log('delete board')
-      this.$store.commit('deleteBoard', index)
     }
+    // deleteBoard(index) {
+    //   console.log('delete board')
+    //   this.$store.commit('deleteBoard', index)
+    // }
   },
   mounted: function () {
   this.$nextTick(function () {

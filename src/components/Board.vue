@@ -2,13 +2,13 @@
 	<!--<div class="col-md-8">-->
 		<div class="board-area board">
 			{{$route.params.boardId}}
-			<span v-if="edit">
+			<span v-if="editing">
             <input v-model="boardName">
-            <button class="btn btn-primary" v-on:click="saveName">OK</button>
+            <button class="btn btn-primary" v-on:click="edit">OK</button>
             <!--<p>Message is: {{ message }}</p>-->
       </span>
 			<span v-else>
-          <button class="btn btn-primary" v-on:click="editBoard">Edit name
+          <button class="btn btn-primary" v-on:click="editing = true">Edit name
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
           </button>
       </span>
@@ -16,7 +16,7 @@
 			<button class="btn btn-primary" data-toggle="modal" :data-target="hashModal">Add list
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
-			<button class="btn btn-primary" v-on:click="del">Remove board
+			<button class="btn btn-primary" v-on:click="delBoard({board: boardData})">Remove board
         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
       </button>
 
@@ -48,20 +48,20 @@
 				</div>
 			</div>
     <div class="list-container">
-				<list v-for="(list,i) in lists" :list-data="list" :index="i" :key="list.id" v-on:delList="del" ></list>
+				<list v-for="(list,i) in lists" :list-data="list" :index="i" :key="list.id"></list>
 			</div>
   </div>
 
 </template>
 
 <script>
+import { mapActions, mapMutation } from 'vuex'
   export default {
     data() {
       return {
-        // lists: [],
         boardName: this.boardData.board_name,
         newListName: '',
-        edit: false,
+        editing: false,
         hashModal: '#modal' + this.boardData.id,
         modalParam: 'modal' + this.boardData.id
       }
@@ -79,7 +79,11 @@
     }
   },
     
-    methods: {
+    methods: {  
+    ...mapActions([
+      'editBoard',
+      'delBoard'
+    ]),
       getList() {
         this.$http.get('http://localhost:3000/lists?boardId='+this.boardData.id).then((response) => {
           this.$store.commit('getLists', {boardId: this.boardData.id, lists: response.body}, { silent: true })
@@ -88,33 +92,19 @@
          console.log(response)
         });
     },
-    del() {
-      this.$http.delete('http://localhost:3000/boards/' + this.boardData.id).then((response) => {
-        console.log(response.body)
-        }, (response) => {
-         console.log(response)
-        });
-       this.$emit('del')
-      this.$el.remove();
+    // del() {
+    //   let board = this.boardData
+    //   this.$store.dispatch('delBoard', {board})
+
+    // },
+    edit() {
+      this.editing = false;
+      let boardData = this.boardData
+      let boardName = this.boardName
+      this.$store.dispatch('editBoard', {boardData, boardName})
 
     },
-     editBoard() {
-        console.log('edit')
-        this.edit = true
-    },
-    saveName() {
-        console.log('saving')
-        this.boardData.board_name = this.boardName
-        this.edit = false
-        this.$http.put('http://localhost:3000/boards/' + this.boardData.id, this.boardData ).then((response) => {
-        console.log(response.body)
-        }, (response) => {
-         console.log(response)
-        });
-    },
-    remove() {
-      this.$parent.boards.splice(this.$parent.boards.indexOf(this.boardData),1);
-    },
+
      addList() {
        console.log(this.lists)
         let newListData = {
