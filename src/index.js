@@ -87,7 +87,8 @@ export var router = new VueRouter({
 
 export const app = new Vue({
     router,
-    store
+    store,
+    render: h => h(App)
 }).$mount('#app')
 
 // Board.$watch('lists', function(newVal, oldVal))

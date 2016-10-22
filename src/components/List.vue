@@ -13,6 +13,10 @@
 			</span>
 			<span v-else>
         <span class="list-name">{{listData.list_name}}</span>
+          <span style="cursor: pointer;" aria-hidden="true" @click="toggleFavList({list: listData})" 
+            :class="[listData.favourite ? 'glyphicon glyphicon-star-empty' : 'glyphicon glyphicon-star']">
+          </span>
+              
 			<div class="btn-group" role="group" aria-label="listButtons">
 				<button class="btn btn-default" data-toggle="modal" :data-target="listModal">
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -59,6 +63,8 @@
 </template>
 
 <script>
+import { mapActions, mapMutations } from 'vuex'
+
   export default {
     data() {
       return {
@@ -85,6 +91,9 @@
       }
     },
     methods: {
+      ...mapActions([
+      'toggleFavList'
+    ]),
       getCard() {
         this.$http.get('http://localhost:3000/cards?listId='+this.listData.id).then((response) => {
           // console.log(response)

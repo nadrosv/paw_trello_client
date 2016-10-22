@@ -20,12 +20,14 @@ export const mutations = {
         }
 
         state.comp = boards;
+        
     },
     addBoard(state, board) {
         board.hash = '#board' + board.id
         board.param = 'board' + board.id
 
         state.comp.push(board)
+        state.activeBoard = board
     },
     deleteBoard(state, index) {
         state.comp.splice(index, 1)
@@ -61,6 +63,9 @@ export const mutations = {
     },
     setActiveCard(state, {card}) {
         state.activeCard = card
+    },
+    FAV_LIST(state, {list}) {
+        list.favourite = !list.favourite
     }
 }
 export const actions = {
@@ -75,7 +80,7 @@ export const actions = {
         });
     },
     delBoard(context, {board}) {
-        app.$http.delete('http://localhost:3000/boards/' + board.id).then((response) => {
+        app.$http.delete('http://localhost:3000/boards/' + state.activeBoard.id).then((response) => {
             context.commit('delBoard', { board })
         }, (response) => {
             console.log(response)
@@ -83,9 +88,16 @@ export const actions = {
     },
     getComponents(context) {
         app.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
-            this.$store.commit('addBoards', response.body, { silent: true })
+            context.commit('addBoards', response.body, { silent: true })
 
 
+        }, (response) => {
+            console.log(response)
+        });
+    },
+    toggleFavList(context, {list}) {
+        context.commit('FAV_LIST', {list})
+        app.$http.put('http://localhost:3000/lists/' + list.id, list).then((response) => {
         }, (response) => {
             console.log(response)
         });

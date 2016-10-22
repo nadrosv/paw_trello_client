@@ -92,11 +92,6 @@ import { mapActions, mapMutation } from 'vuex'
          console.log(response)
         });
     },
-    // del() {
-    //   let board = this.boardData
-    //   this.$store.dispatch('delBoard', {board})
-
-    // },
     edit() {
       this.editing = false;
       let boardData = this.boardData
@@ -109,7 +104,8 @@ import { mapActions, mapMutation } from 'vuex'
        console.log(this.lists)
         let newListData = {
         "boardId": this.boardData.id,
-        "list_name": this.newListName
+        "list_name": this.newListName,
+        "favourite": false
       }
       console.log(this.lists)
       // this.boardData.lists.push(newListData)
