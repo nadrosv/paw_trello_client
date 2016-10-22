@@ -87,7 +87,7 @@ import auth from '../auth'
       console.log('auth2' + auth.user.authenticated)
 
         this.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
-        this.$store.commit('addBoards', response.body)
+        this.$store.commit('addBoards', response.body, { silent: true })
         }, (response) => {
          console.log(response)
         });

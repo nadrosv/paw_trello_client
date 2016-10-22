@@ -26,7 +26,7 @@
 			</div>
 			</span>
 			<div>
-				<card v-for="card in cards" :card-data="card"></card>
+				<card v-for="card in cards" :card-data="card" :key="card.id"></card>
 			</div>
 
 
@@ -62,7 +62,6 @@
   export default {
     data() {
       return {
-        cards: [],
         listEditable: false,
         listName: '',
         newCard: {
@@ -76,10 +75,18 @@
 
       }
     },
+
+    computed: {
+      cards () {
+        // console.log('card ', this.$store.state.lists.indexOf(this.$store.state.cards[this.index]))
+        return this.$store.state.cards[this.index].data
+      }
+    },
     methods: {
       getCard() {
         this.$http.get('http://localhost:3000/cards?listId='+this.listData.id).then((response) => {
-          this.cards = response.body;
+          // this.cards = response.body;
+          this.$store.commit('getCards', {listId: this.listData.id, cards: response.body}, { silent: true })
         }, (response) => {
          console.log(response)
         });
@@ -127,7 +134,7 @@
  this.getCard();
    })
   },
-  props: ['listData']
+  props: ['listData', 'index']
   }
   </script>
 

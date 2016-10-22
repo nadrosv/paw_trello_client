@@ -48,7 +48,7 @@
 				</div>
 			</div>
     <div class="list-container">
-				<list v-for="list in lists" :list-data="list" v-on:delList="del"></list>
+				<list v-for="(list,i) in lists" :list-data="list" :index="i" :key="list.id" v-on:delList="del" ></list>
 			</div>
   </div>
 
@@ -58,7 +58,7 @@
   export default {
     data() {
       return {
-        lists: [],
+        // lists: [],
         boardName: this.boardData.board_name,
         newListName: '',
         edit: false,
@@ -71,13 +71,18 @@
     newName: function () {
       // `this` points to the vm instance
       return this.boardData.board_name = this.message
+    },
+    lists () {
+      console.log('lists ' + this.$store.state.lists[0].data[0])
+      return this.$store.state.lists[this.index].data[this.index]
     }
   },
     
     methods: {
       getList() {
         this.$http.get('http://localhost:3000/lists?boardId='+this.boardData.id).then((response) => {
-          this.lists = response.body;
+          this.$store.commit('getLists', {boardId: this.boardData.id, lists: response.body}, { silent: true })
+          // this.lists = response.body;
         }, (response) => {
          console.log(response)
         });
@@ -136,7 +141,7 @@
    })
   },
   
-  props: ['boardData']
+  props: ['boardData', 'index']
   }
 
   </script>
