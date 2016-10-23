@@ -8,5 +8,7 @@ export const DEL_BOARD = 'DEL_BOARD'
 export const DEL_LIST = 'DEL_LIST'
 export const DEL_CARD = 'DEL_CARD'
 export const FAV_LIST = 'FAV_LIST'
+export const ARCHIVE_LIST = 'ARCHIVE_LIST'
+export const SET_LISTS = 'SET_LISTS'
 
 

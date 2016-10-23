@@ -42,7 +42,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" v-on:click="addBoard">Save changes</button>
+						<button type="button" class="btn btn-primary" v-on:click="add">Save changes</button>
 					</div>
 				</div>
 			</div>
@@ -74,32 +74,29 @@ import { mapActions, mapMutations } from 'vuex'
     },
     methods: {
        ...mapMutations([
-      'setActiveBoard'
-    ]),
+      'setActiveBoard' 
+      ]),
+      ...mapActions([
+        'addBoard'
+      ]),
       
-      addBoard() {
+      add() {
         let formData = {
         "userId": auth.user.id,
         "board_name": this.newBoardName
-      }
-         this.$http.post('http://localhost:3000/boards', formData).then((response) => {
-        console.log('dodano board')
-        this.$store.commit('addBoard', response.body)
-        }, (response) => {
-          console.log(response)
-      });
+        }
+        this.addBoard({board: formData})
       },
+      getComp() {
+        console.log('id ' + auth.user.id)
+        console.log('auth2' + auth.user.authenticated)
 
-    getComp() {
-      console.log('id ' + auth.user.id)
-      console.log('auth2' + auth.user.authenticated)
-
-        this.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
-        this.$store.commit('addBoards', response.body, { silent: true })
-        }, (response) => {
-         console.log(response)
-        });
-    }
+          this.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
+          this.$store.commit('addBoards', response.body, { silent: true })
+          }, (response) => {
+          console.log(response)
+          });
+      }
     // deleteBoard(index) {
     //   console.log('delete board')
     //   this.$store.commit('deleteBoard', index)

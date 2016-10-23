@@ -1,62 +1,69 @@
 <template>
 	<!--<div class="col-md-8">-->
-		<div class="board-area board">
-			{{$route.params.boardId}}
-			<span v-if="editing">
+	<div class="board-area board">
+	{{$route.params.boardId}}
+	<span v-if="editing">
             <input v-model="boardName">
             <button class="btn btn-primary" v-on:click="edit">OK</button>
             <!--<p>Message is: {{ message }}</p>-->
       </span>
-			<span v-else>
+	<span v-else>
           <button class="btn btn-primary" v-on:click="editing = true">Edit name
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-          </button>
-      </span>
-			<!--{{newName}}-->
-			<button class="btn btn-primary" data-toggle="modal" :data-target="hashModal">Add list
+	</button>
+	</span>
+	<!--{{newName}}-->
+	<button class="btn btn-primary" data-toggle="modal" :data-target="hashModal">Add list
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
-			<button class="btn btn-primary" v-on:click="delBoard({board: boardData})">Remove board
+	<button class="btn btn-primary" v-on:click="delBoard({board: boardData})">Remove board
         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
       </button>
 
-			<!--<button class="btn btn-primary" v-on:click="addList">Add list</button>-->
-			
-			<!--<list v-for="list in lists" :list-data="list"></list>-->
+	<!--<button class="btn btn-primary" v-on:click="addList">Add list</button>-->
 
-			<!--Modal-->
-			<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="board-modal-label" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<!--<list v-for="list in lists" :list-data="list"></list>-->
+
+	<!--Modal-->
+	<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="board-modal-label" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-							<h4 class="modal-title" id="board-modal-label">Dodaj nowa liste</h4>
-						  </div>
-						  <div class="modal-body">
-                <p>
-                  Tytul
-                  <input v-model="newListName">
-                </p>
-						  </div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary" v-on:click="addList">Save changes</button>
-						</div>
-					</div>
+					<h4 class="modal-title" id="board-modal-label">Dodaj nowa liste</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+						Tytul
+						<input v-model="newListName">
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" v-on:click="addList">Save changes</button>
 				</div>
 			</div>
-    <div class="list-container" v-sortable="{ onUpdate: onUpdate, onEnd: onEnd}">
-        <div v-for="(list,i,k) in lists">
-				<list  :list-data="list" :index="i" :key="list.id" :id="i">
-        </list>
-        <p>{{ i }}. {{ k }},, {{list.pos}} : {{ list }}</p>
-        </div>
-			</div>
+		</div>
+	</div>
+	<div class="list-container" v-sortable="{ onUpdate: onUpdate, onEnd: onEnd}">
+		<div v-for="(list,k,i) in lists">
+			<list :list-data="list" :index="i" :key="list.id" :id="i">
+			</list>
+			<p>{{ i }}. {{ k }},, {{list.pos}} : {{ list }} </p>
+		</div>
+	</div>
 
-  </div>
-
+	<div>
+		<p> ARCHIVED </p>
+		<div v-for="(lArchiv,k,i) in archived">
+			<list :list-data="lArchiv" :index="i" :key="lArchiv.id" :id="i">
+			</list>
+			<p>{{ i }}. {{ k }},, {{lArchiv.pos}} : {{ lArchiv }} </p>
+		</div>
+	</div>
+</div>
 </template>
 
 <script>
@@ -78,19 +85,28 @@ import { mapActions, mapMutation } from 'vuex'
       return this.boardData.board_name = this.message
     },
     lists () {
-      // console.log('lists ' + this.$store.state.lists[0].data[0])
-      // return this.$store.state.lists[this.index]
+
       if (this.$store.state.lists[this.boardData.id] !== undefined) {
-        this.$store.state.lists[this.boardData.id]
-       let a = this.$store.state.lists[this.boardData.id].sort(function(a, b){
+        console.log(this.$store.state.lists[this.boardData.id])
+       return this.$store.state.lists[this.boardData.id].sort(function(a, b){
         if(a.pos < b.pos) return -1;
         if(a.pos > b.pos) return 1;
         return 0;
-       })
-       return a
-        console.log('aaa')
+       }).filter(a => !a.archived)
+      //  return filtered
       } 
       // return this.$store.state.lists[this.boardData.id]
+      // let board = this.boardData
+      // this.$store.dispatch('getBoardLists', {board})
+    },
+    archived() {
+      if (this.$store.state.lists[this.boardData.id] !== undefined) {
+       return this.$store.state.lists[this.boardData.id].sort(function(a, b){
+        if(a.pos < b.pos) return -1;
+        if(a.pos > b.pos) return 1;
+        return 0;
+       }).filter(a => a.archived)
+    }
     }
   },
     
@@ -208,7 +224,7 @@ import { mapActions, mapMutation } from 'vuex'
   //},
   mounted: function () {
   this.$nextTick(function () {
-    this.getList()
+    // this.getList()
    })
   },
   

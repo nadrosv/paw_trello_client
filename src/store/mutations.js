@@ -10,7 +10,8 @@ export const state = {
     cards: {},
     activeBoard: {},
     activeList: {},
-    activeCard: {}
+    activeCard: {},
+    boardLists: []
 }
 
 // we can use the ES2015 computed property name feature
@@ -26,7 +27,7 @@ export const mutations = {
         state.comp = boards;
 
     },
-    [types.ADD_BOARD] (state, board) {
+    [types.ADD_BOARD](state, board) {
         board.hash = '#board' + board.id
         board.param = 'board' + board.id
 
@@ -50,10 +51,10 @@ export const mutations = {
         // state.cards = payload.cards
         // state.cards.push(payload.cards)
     },
-    [types.EDIT_BOARD] (state, {boardData, boardName}) {
+    [types.EDIT_BOARD](state, {boardData, boardName}) {
         boardData.board_name = boardName
     },
-    [types.DEL_BOARD] (state, {board}) {
+    [types.DEL_BOARD](state, {board}) {
         state.comp.splice(state.comp.indexOf(state.activeBoard), 1)
         // state.comp.splice(state.comp.indexOf(board), 1)
     },
@@ -66,19 +67,33 @@ export const mutations = {
     setActiveCard(state, {card}) {
         state.activeCard = card
     },
-    [types.FAV_LIST] (state, {list}) {
+    [types.FAV_LIST](state, {list}) {
         list.favourite = !list.favourite
     },
-    [types.EDIT_LIST] (state, {list}) {
+    [types.EDIT_LIST](state, {list}) {
         // app.$set(state.lists, list.boardId, list)
 
-    }
+    },
+    [types.ARCHIVE_LIST](state, {list}) {
+        list.archived = true
+    },
+    [types.SET_LISTS](state, {lists}) {
+        state.boardLists = lists
+    },
+    [types.ADD_LIST](state, {list}) {
+        app.$set(state.lists, list.boardId, list)
+
+        // state.lists.push(board)
+
+    },
+
 }
 
 export const getters = {
     activeBoard: state => state.activeBoard,
     activeList: state => state.activeList,
-    activeCard: state => state.activeCard
+    activeCard: state => state.activeCard,
+    lists: state => state.lists
 }
 
 

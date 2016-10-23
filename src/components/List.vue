@@ -3,63 +3,65 @@
 	<!--<div class="col-md-4 list-area">-->
 
 		<div class="col-fixed-size list-area">
-    <!--draggable="true" @dragstart="dragstart" @dragenter.prevent>-->
+	<!--draggable="true" @dragstart="dragstart" @dragenter.prevent>-->
 
-			<span v-if="listEditable">
+	<span v-if="listEditable">
             <input v-model="listData.list_name">
             <button class="btn btn-default" v-on:click="saveList">
               <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-			</button>
-			<!--<p>Message is: {{ message }}</p>-->
-			</span>
-			<span v-else>
+	</button>
+	<!--<p>Message is: {{ message }}</p>-->
+	</span>
+	<span v-else>
         <span class="list-name">{{listData.list_name}}</span>
-          <span style="cursor: pointer;" aria-hidden="true" @click="toggleFavList({list: listData})" 
-            :class="[listData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
+	<span style="cursor: pointer;" aria-hidden="true" @click="toggleFavList({list: listData})" :class="[listData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
           </span>
-              
-			<div class="btn-group" role="group" aria-label="listButtons">
-				<button class="btn btn-default" data-toggle="modal" :data-target="listModal">
+
+	<div class="btn-group" role="group" aria-label="listButtons">
+		<button class="btn btn-default" data-toggle="modal" :data-target="listModal">
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
-				<button class="btn btn-default" v-on:click="editList">
+		<button class="btn btn-default" v-on:click="editList">
               <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
             </button>
-				<button class="btn btn-default" v-on:click="delList">
+		<button class="btn btn-default" v-on:click="delList">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
-			</div>
-			</span>
-			<div>
-				<card v-for="card in cards" :card-data="card" :key="card.id"></card>
-			</div>
+		<button class="btn btn-default" v-on:click="archiveList({list: listData})">
+              <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
+            </button>
+	</div>
+	</span>
+	<div>
+		<card v-for="card in cards" :card-data="card" :key="card.id"></card>
+	</div>
 
 
-			<!--Modal-->
-			<div class="modal fade" :id="listParam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<!--Modal-->
+	<div class="modal fade" :id="listParam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-							<h4 class="modal-title" id="myModalLabel">Dodaj nowa karte</h4>
-						</div>
-						<div class="modal-body">
-							<p>
-								Nazwa
-								<input v-model="newCard.card_name"> Opis
-								<input v-model="newCard.desc">
-							</p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary" v-on:click="addCard">Save changes</button>
-						</div>
-					</div>
+					<h4 class="modal-title" id="myModalLabel">Dodaj nowa karte</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+						Nazwa
+						<input v-model="newCard.card_name"> Opis
+						<input v-model="newCard.desc">
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" v-on:click="addCard">Save changes</button>
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
 	
 </template>
 
@@ -97,7 +99,8 @@ import { mapActions, mapMutations } from 'vuex'
     methods: {
       ...mapActions([
       'toggleFavList',
-      'editList'
+      'editList',
+      'archiveList'
     ]),
       getCard() {
         this.$http.get('http://localhost:3000/cards?listId='+this.listData.id).then((response) => {
