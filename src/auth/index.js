@@ -32,8 +32,11 @@ export default {
     },
 
     signup(context, creds, redirect) {
-        context.$http.post(SIGNUP_URL, creds, (data) => {
-            localStorage.setItem('id_token', data.id_token)
+        if (creds.username === '' || creds.password === '') {
+            context.error = 'Podaj nazwe i haslo'
+        } else {
+        context.$http.post('http://localhost:3000/users', creds).then((response) => {
+            localStorage.setItem('id_token', response.id)
 
             this.user.authenticated = true
 
@@ -41,9 +44,10 @@ export default {
                 router.go(redirect)
             }
 
-        }).error((err) => {
-            context.error = err
+        }, (response) => {
+            console.log(response)
         })
+        }
     },
 
     logout() {
