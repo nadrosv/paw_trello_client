@@ -3,6 +3,7 @@
 	<!--<div class="col-md-4 list-area">-->
 
 		<div class="col-fixed-size list-area">
+    <!--draggable="true" @dragstart="dragstart" @dragenter.prevent>-->
 
 			<span v-if="listEditable">
             <input v-model="listData.list_name">
@@ -88,11 +89,15 @@ import { mapActions, mapMutations } from 'vuex'
         return this.$store.state.cards[this.listData.id]
         // return this.$store.state.lists.map(listId => this.listData.listId)
         // return thread.messages.map(id => state.messages[id])
+      }, 
+      lists() {
+        return this.$store.state.lists[this.listData.boardId]
       }
     },
     methods: {
       ...mapActions([
-      'toggleFavList'
+      'toggleFavList',
+      'editList'
     ]),
       getCard() {
         this.$http.get('http://localhost:3000/cards?listId='+this.listData.id).then((response) => {
@@ -130,11 +135,18 @@ import { mapActions, mapMutations } from 'vuex'
         console.log('saving')
         // this.listData.list_name = this.listName
         this.listEditable = false
-        this.$http.put('http://localhost:3000/lists/' + this.listData.id, this.listData ).then((response) => {
-        console.log(response.body)
-        }, (response) => {
-         console.log(response)
-        });
+        let name = listData.list_name
+        let pos = listData.pos
+        let list = listData
+        // editList({list, name, pos})
+        // this.$http.put('http://localhost:3000/lists/' + this.listData.id, this.listData ).then((response) => {
+        // console.log(response.body)
+        // }, (response) => {
+        //  console.log(response)
+        // });
+    }, 
+    dragstart() {
+      console.log('start')
     }
      
   },

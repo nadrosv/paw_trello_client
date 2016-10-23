@@ -47,9 +47,14 @@
 					</div>
 				</div>
 			</div>
-    <div class="list-container">
-				<list v-for="(list,i) in lists" :list-data="list" :index="i" :key="list.id"></list>
+    <div class="list-container" v-sortable="{ onUpdate: onUpdate, onEnd: onEnd}">
+        <div v-for="(list,i,k) in lists">
+				<list  :list-data="list" :index="i" :key="list.id" :id="i">
+        </list>
+        <p>{{ i }}. {{ k }},, {{list.pos}} : {{ list }}</p>
+        </div>
 			</div>
+
   </div>
 
 </template>
@@ -75,14 +80,25 @@ import { mapActions, mapMutation } from 'vuex'
     lists () {
       // console.log('lists ' + this.$store.state.lists[0].data[0])
       // return this.$store.state.lists[this.index]
-      return this.$store.state.lists[this.boardData.id]
+      if (this.$store.state.lists[this.boardData.id] !== undefined) {
+        this.$store.state.lists[this.boardData.id]
+       let a = this.$store.state.lists[this.boardData.id].sort(function(a, b){
+        if(a.pos < b.pos) return -1;
+        if(a.pos > b.pos) return 1;
+        return 0;
+       })
+       return a
+        console.log('aaa')
+      } 
+      // return this.$store.state.lists[this.boardData.id]
     }
   },
     
     methods: {  
     ...mapActions([
       'editBoard',
-      'delBoard'
+      'delBoard',
+      'editList'
     ]),
       getList() {
         this.$http.get('http://localhost:3000/lists?boardId='+this.boardData.id).then((response) => {
@@ -105,7 +121,8 @@ import { mapActions, mapMutation } from 'vuex'
         let newListData = {
         "boardId": this.boardData.id,
         "list_name": this.newListName,
-        "favourite": false
+        "favourite": false,
+        "pos": this.lists.length
       }
       console.log(this.lists)
       // this.boardData.lists.push(newListData)
@@ -117,7 +134,74 @@ import { mapActions, mapMutation } from 'vuex'
         }, (response) => {
           console.log(response)
       });
-     }
+     },
+     dragstart() {
+       console.log('start')
+     },
+     dragend() {
+       console.log('end')
+
+     },
+     dragover() {
+       console.log('over')
+
+     },
+     dragenter() {
+       console.log('enter')
+
+     },
+     drop() {
+       console.log()
+       console.log('drop')
+
+     },
+     onUpdate: function (event) {
+      //  console.log('old ' + event.oldIndex)
+      //  console.log('new ' + event.newIndex)
+       console.log('old ' + event.oldIndex)
+       console.log('new ' + event.newIndex)
+      // let list = this.lists[event.oldIndex]
+      //  console.log('list pos: ' + list.pos)
+      // let name = list.list_name
+      // // let pos = list.pos
+      // let pos = event.newIndex
+
+      
+      // let list1 = this.lists[event.newIndex]
+      // let name1 = list1.list_name
+      // let pos1 = event.oldIndex
+
+      // this.editList({list, name, pos})
+      // this.editList({list: list1, name: name1, pos: pos1})
+
+      // this.lists.splice(event.newIndex, 0, this.lists.splice(event.oldIndex, 1)[0])
+      let old = this.lists[event.oldIndex]
+      let new1 = this.lists[event.newIndex]
+      // new1.pos = event.oldIndex
+      // old.pos = event.newIndex
+      console.log(old)
+      console.log(new1)
+
+      // let p1 = old.pos
+      // old.pos = new1.pos
+      // new1.pos = p1
+      // this.$set(this.$store.state.lists[this.boardData.id], event.newIndex, old)
+      // this.$set(this.$store.state.lists[this.boardData.id], event.oldIndex, new1)
+      // this.$set(new1, pos, event.oldIndex)
+      this.$set(this.lists, event.oldIndex, new1)
+      this.$set(this.lists, event.newIndex, old)
+
+      // old.pos = event.newIndex
+      // this.lists[event.newIndex].pos2 = 'aaa'
+      // this.lists.splice(event.newIndex, 0, this.lists.splice(event.oldIndex, 1)[0])
+    },
+     onEnd: function (event) {
+        console.log('old end ' + event.oldIndex)
+       console.log('new end' + event.newIndex)
+             this.lists[event.oldIndex].pos = event.newIndex
+      this.lists[event.newIndex].pos = event.oldIndex
+
+    }
   }, 
   //created: function () {
     //  this.getList()
@@ -145,5 +229,21 @@ import { mapActions, mapMutation } from 'vuex'
     display: flex;
     flex: 1;
   }
+
+  .q div {
+  width: 200px;
+  height: 50px;
+  border: solid 1px #ccc;
+  box-shadow: 0 1px 2px 0px #888;
+  background-color: #f8f8f8;
+  margin: 5px;
+  display: inline-block;
+  position: absolute;
+  transition: top 400ms;
+}
+.q div#placeholder {
+  opacity: 0.2;
+}
+
 
 </style>

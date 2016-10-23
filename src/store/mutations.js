@@ -68,6 +68,10 @@ export const mutations = {
     },
     [types.FAV_LIST] (state, {list}) {
         list.favourite = !list.favourite
+    },
+    [types.EDIT_LIST] (state, {list}) {
+        // app.$set(state.lists, list.boardId, list)
+
     }
 }
 

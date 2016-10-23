@@ -10,9 +10,11 @@ import Signup from './components/Signup.vue'
 import Login from './components/Login.vue'
 import auth from './auth'
 import store from './store'
+import Sortable from '../vue-sortable-master/vue-sortable.js'
 auth.checkAuth()
 
 
+Vue.use(Sortable)
 Vue.use(VueResource)
 Vue.use(VueRouter)
 

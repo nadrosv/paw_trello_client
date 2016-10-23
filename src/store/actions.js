@@ -35,5 +35,17 @@ export const toggleFavList = (context, {list}) => {
     }, (response) => {
         console.log(response)
     });
-
+}
+export const editList = (context, {list, name, pos}) => {
+    list.list_name = name
+    list.pos = pos
+    
+    context.commit(types.EDIT_LIST, {list})
+    console.log(list + ', ' + pos)
+    app.$http.put('http://localhost:3000/lists/' + list.id, list).then((response) => {
+        console.log(response.body)
+        // context.commit(types.EDIT_LIST, { list })
+    }, (response) => {
+        console.log(response)
+    });
 }
