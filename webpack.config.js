@@ -26,7 +26,7 @@ module.exports = {
     plugins: [
       ['transform-runtime'],
       ['transform-object-rest-spread'],
-      ["transform-es2015-destructuring"]
+      ['transform-es2015-destructuring']
       // ['transform-es2015-spread', {
       //   "loose": true
       // }]

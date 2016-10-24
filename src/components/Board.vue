@@ -48,7 +48,7 @@
 		</div>
 	</div>
 	<div class="list-container" v-sortable="{ onUpdate: onUpdate, onEnd: onEnd}">
-		<div v-for="(list,k,i) in lists">
+		<div v-for="(list,k,i) in notArchived">
 			<list :list-data="list" :index="i" :key="list.id" :id="i">
 			</list>
 			<p>{{ i }}. {{ k }},, {{list.pos}} : {{ list }} </p>
@@ -71,6 +71,8 @@ import { mapActions, mapMutation } from 'vuex'
   export default {
     data() {
       return {
+        archived: [],
+        notArchived: [],
         boardName: this.boardData.board_name,
         newListName: '',
         editing: false,
@@ -88,7 +90,7 @@ import { mapActions, mapMutation } from 'vuex'
 
       if (this.$store.state.lists[this.boardData.id] !== undefined) {
         console.log(this.$store.state.lists[this.boardData.id])
-       return this.$store.state.lists[this.boardData.id].sort(function(a, b){
+       this.notArchived = this.$store.state.lists[this.boardData.id].sort(function(a, b){
         if(a.pos < b.pos) return -1;
         if(a.pos > b.pos) return 1;
         return 0;
@@ -101,7 +103,7 @@ import { mapActions, mapMutation } from 'vuex'
     },
     archived() {
       if (this.$store.state.lists[this.boardData.id] !== undefined) {
-       return this.$store.state.lists[this.boardData.id].sort(function(a, b){
+       this.archived = this.$store.state.lists[this.boardData.id].sort(function(a, b){
         if(a.pos < b.pos) return -1;
         if(a.pos > b.pos) return 1;
         return 0;
@@ -138,7 +140,8 @@ import { mapActions, mapMutation } from 'vuex'
         "boardId": this.boardData.id,
         "list_name": this.newListName,
         "favourite": false,
-        "pos": this.lists.length
+        "pos": this.lists.length,
+        "archived": false
       }
       console.log(this.lists)
       // this.boardData.lists.push(newListData)
