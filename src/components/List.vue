@@ -23,6 +23,9 @@
 				<button class="btn btn-default" v-on:click="delList">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
+				<button class="btn btn-default" v-on:click="archiveList">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
 			</div>
 			</span>
 			<div>
@@ -116,6 +119,15 @@
         }, (response) => {
          console.log(response)
         });
+    },
+    archiveList() {
+      this.listData.archived = !this.listData.archived
+        this.$http.put('http://localhost:3000/lists/' + this.listData.id, this.listData ).then((response) => {
+        console.log(response.body)
+        }, (response) => {
+         console.log(response)
+        });
+      
     }
      
   },

@@ -48,7 +48,11 @@
 				</div>
 			</div>
     <div class="list-container">
-				<list v-for="list in lists" :list-data="list" v-on:delList="del"></list>
+				<list v-for="list in listsArchivedNot" :list-data="list" v-on:delList="del"></list>
+			</div>
+
+      <div class="list-container">
+				<list v-for="list in listsArchived" :list-data="list" v-on:delList="del"></list>
 			</div>
   </div>
 
@@ -59,6 +63,8 @@
     data() {
       return {
         lists: [],
+        listsArchived: [],
+        listsArchivedNot: [],
         boardName: this.boardData.board_name,
         newListName: '',
         edit: false,
@@ -71,10 +77,26 @@
     newName: function () {
       // `this` points to the vm instance
       return this.boardData.board_name = this.message
+    },
+    listsArchivedNot() {
+      return this.lists.filter(l => {
+        return l.archived === false
+     }) 
+    },
+    listsArchived() {
+      return this.lists.filter(l => {
+        return l.archived === true
+      })
     }
   },
     
     methods: {
+      filterArchiv() {
+        return this.lists.filter(l => {
+        return l.archived === false
+     }) 
+      },
+
       getList() {
         this.$http.get('http://localhost:3000/lists?boardId='+this.boardData.id).then((response) => {
           this.lists = response.body;
@@ -113,7 +135,8 @@
        console.log(this.lists)
         let newListData = {
         "boardId": this.boardData.id,
-        "list_name": this.newListName
+        "list_name": this.newListName,
+        "archived": false
       }
       console.log(this.lists)
       // this.boardData.lists.push(newListData)
