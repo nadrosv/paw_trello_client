@@ -12,7 +12,11 @@
 			<!--<p>Message is: {{ message }}</p>-->
 			</span>
 			<span v-else>
-        <span class="list-name">{{listData.list_name}}</span>
+        <span class="list-name">{{listData.list_name}}
+        <span style="cursor: pointer;" aria-hidden="true" 
+          @click="favList({list: listData})" 
+          :class="[listData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
+        </span>
 			<div class="btn-group" role="group" aria-label="listButtons">
 				<button class="btn btn-default" data-toggle="modal" :data-target="listModal">
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -127,7 +131,14 @@
         }, (response) => {
          console.log(response)
         });
-      
+    },
+    favList() {
+      this.listData.favourite = !this.listData.favourite
+        this.$http.put('http://localhost:3000/lists/' + this.listData.id, this.listData ).then((response) => {
+        console.log(response.body)
+        }, (response) => {
+         console.log(response)
+        });
     }
      
   },
