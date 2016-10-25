@@ -9,8 +9,10 @@ import Login from './components/Login.vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import auth from './auth'
+import Sortable from '../vue-sortable-master/vue-sortable.js'
 auth.checkAuth()
 
+Vue.use(Sortable)
 
 Vue.use(VueResource)
 Vue.use(VueRouter)

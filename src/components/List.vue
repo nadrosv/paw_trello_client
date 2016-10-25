@@ -28,7 +28,7 @@
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
 				<button class="btn btn-default" v-on:click="archiveList">
-              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
             </button>
 			</div>
 			</span>
