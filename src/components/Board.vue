@@ -52,6 +52,14 @@
 			v-if="!list.archived">
 		</list>
     </div>
+	<div class="list-container" v-sortable="{ onUpdate: onUpdate, onStart: onStart, onEnd: onEnd}">
+		<list v-for="(list,k,i) in lists" 
+			:list-data="list"
+			v-on:delList="del" 
+			:key="list.id" 
+			v-if="list.archived">
+		</list>
+    </div>
 </div>		
 
 </template>
