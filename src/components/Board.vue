@@ -47,22 +47,22 @@
 			</div>
 		</div>
 	</div>
-	<div class="list-container" v-sortable="{ onUpdate: onUpdate, onEnd: onEnd}">
-		<div v-for="(list,k,i) in notArchived">
-			<list :list-data="list" :index="i" :key="list.id" :id="i">
-			</list>
-			<p>{{ i }}. {{ k }},, {{list.pos}} : {{ list }} </p>
-		</div>
-	</div>
-
-	<div>
-		<p> ARCHIVED </p>
-		<div v-for="(lArchiv,k,i) in archived">
-			<list :list-data="lArchiv" :index="i" :key="lArchiv.id" :id="i">
-			</list>
-			<p>{{ i }}. {{ k }},, {{lArchiv.pos}} : {{ lArchiv }} </p>
-		</div>
-	</div>
+	<div class="list-container" v-sortable="{ onUpdate: onUpdate, onStart: onStart, onEnd: onEnd}">
+		<list v-for="(list,k,i) in lists" 
+			:list-data="list"
+			v-on:delList="del" 
+			:key="list.id" 
+			v-if="!list.archived">
+		</list>
+    </div>
+	<div class="list-container" v-sortable="{ onUpdate: onUpdate, onStart: onStart, onEnd: onEnd}">
+		<list v-for="(list,k,i) in lists" 
+			:list-data="list"
+			v-on:delList="del" 
+			:key="list.id" 
+			v-if="list.archived">
+		</list>
+    </div>
 </div>
 </template>
 
@@ -71,6 +71,7 @@ import { mapActions, mapMutation } from 'vuex'
   export default {
     data() {
       return {
+		lists: [],
         archived: [],
         notArchived: [],
         boardName: this.boardData.board_name,
@@ -87,29 +88,16 @@ import { mapActions, mapMutation } from 'vuex'
       return this.boardData.board_name = this.message
     },
     lists () {
-
       if (this.$store.state.lists[this.boardData.id] !== undefined) {
         console.log(this.$store.state.lists[this.boardData.id])
-       this.notArchived = this.$store.state.lists[this.boardData.id].sort(function(a, b){
+       this.lists = this.$store.state.lists[this.boardData.id].sort(function(a, b){
         if(a.pos < b.pos) return -1;
         if(a.pos > b.pos) return 1;
         return 0;
-       }).filter(a => !a.archived)
-      //  return filtered
+       })
+	   return this.lists
       } 
-      // return this.$store.state.lists[this.boardData.id]
-      // let board = this.boardData
-      // this.$store.dispatch('getBoardLists', {board})
-    },
-    archived() {
-      if (this.$store.state.lists[this.boardData.id] !== undefined) {
-       this.archived = this.$store.state.lists[this.boardData.id].sort(function(a, b){
-        if(a.pos < b.pos) return -1;
-        if(a.pos > b.pos) return 1;
-        return 0;
-       }).filter(a => a.archived)
-    }
-    }
+ }
   },
     
     methods: {  
@@ -118,10 +106,31 @@ import { mapActions, mapMutation } from 'vuex'
       'delBoard',
       'editList'
     ]),
-      getList() {
+	onUpdate: function (event) {
+      this.lists.splice(event.newIndex, 0, this.lists.splice(event.oldIndex, 1)[0])
+      for (let i=0; i < this.lists.length; i++) {
+        this.lists[i].pos = i
+      }
+    //   this.$http.put('http://localhost:3000/lists/' + this.lists[event.oldIndex].id, this.lists[event.oldIndex] ).then((response) => {
+    //     console.log(response.body)
+    //     }, (response) => {
+    //      console.log(response)
+    //     })
+    //     this.$http.put('http://localhost:3000/lists/' + this.lists[event.newIndex].id, this.lists[event.newIndex] ).then((response) => {
+    //     console.log(response.body)
+    //     }, (response) => {
+    //      console.log(response)
+    //     })
+    },
+	onStart: function(event) {
+      console.log(this.listsArchivedNot)
+    },
+     onEnd: function (event) {
+    },
+      getList() {	
         this.$http.get('http://localhost:3000/lists?boardId='+this.boardData.id).then((response) => {
           this.$store.commit('getLists', {boardId: this.boardData.id, lists: response.body}, { silent: true })
-          // this.lists = response.body;
+        //   this.lists = response.body;
         }, (response) => {
          console.log(response)
         });
@@ -227,7 +236,7 @@ import { mapActions, mapMutation } from 'vuex'
   //},
   mounted: function () {
   this.$nextTick(function () {
-    // this.getList()
+    this.getList()
    })
   },
   
