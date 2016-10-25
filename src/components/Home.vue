@@ -1,14 +1,16 @@
 <template>
 	<!--<div class="col-md-8">-->
 	<div class="home-area">
+
 		<div>
+    <input v-model="searchPhrase"></input>
 			<button class="btn btn-primary" data-toggle="modal" data-target="#home-modal">Dodaj tablice</button>
       <br>
       <br>
 			<!-- Nav tabs -->
 			<ul class="nav nav-pills" role="tablist">
 
-				<li role="presentation" v-for="b in comp" :key="b.id">
+				<li role="presentation" v-for="b in comp.filter(customFilter)" :key="b.id" >
 					<a :href="b.hash" :aria-controls="b.hash" role="tab" data-toggle="tab" > {{b.board_name}} </a>
 				</li>
 			</ul>
@@ -18,7 +20,7 @@
 				<!--<button class="btn btn-primary" v-on:click="addBoard()">Add board</button>-->
 
 				<br>
-				<div role="tabpanel" v-for="b in comp" class="tab-pane fade in" :id="b.param" :key="b.id">
+				<div role="tabpanel" v-for="b in comp.filter(customFilter)" class="tab-pane fade in" :id="b.param" :key="b.id">
 					<board v-on:del="deleteBoard(b)" :board-data="b">
 					</board>
 				</div>
@@ -59,6 +61,7 @@ import auth from '../auth'
   export default {
     data() {
       return {
+        searchPhrase: '',
         boards: [],
         comp: [],
         newBoardName: '',
@@ -66,7 +69,9 @@ import auth from '../auth'
       }
     },
     methods: {
-      
+      customFilter: function(board) {
+          return board.board_name.indexOf(this.searchPhrase) != -1
+      },
       addBoard() {
         let formData = {
         "userId": auth.user.id,
