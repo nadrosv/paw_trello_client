@@ -192,11 +192,11 @@
     flex: 1;
     overflow: auto;   
     
-    position: absolute;
-    top: 280px;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    /* position: absolute; */
+    /* top: 280px; */
+    /* right: 0; */
+    /* bottom: 0; */
+    /* left: 0; */
     
     white-space: nowrap;
     overflow-x: auto;
