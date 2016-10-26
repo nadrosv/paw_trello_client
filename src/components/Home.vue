@@ -3,13 +3,12 @@
 	<div class="home-area">
 
 		<div>
-    <input v-model="searchPhrase"></input>
-			<button class="btn btn-primary" data-toggle="modal" data-target="#home-modal">Dodaj tablice</button>
-      <br>
-      <br>
+      <div class="search-container">
+        <input class="input-search" v-model="searchPhrase" placeholder="Search"></input>	
+      </div>	
+      <button class="btn btn-primary btn-search" data-toggle="modal" data-target="#home-modal">Dodaj tablice</button>
 			<!-- Nav tabs -->
 			<ul class="nav nav-pills" role="tablist">
-
 				<li role="presentation" v-for="b in comp.filter(customFilter)" :key="b.id" >
 					<a :href="b.hash" :aria-controls="b.hash" role="tab" data-toggle="tab" > {{b.board_name}} </a>
 				</li>
@@ -18,9 +17,8 @@
 			<div class="tab-content">
 				<br>
 				<!--<button class="btn btn-primary" v-on:click="addBoard()">Add board</button>-->
-
-				<br>
-				<div role="tabpanel" v-for="b in comp.filter(customFilter)" class="tab-pane fade in" :id="b.param" :key="b.id">
+				
+        <div role="tabpanel" v-for="b in comp.filter(customFilter)" class="tab-pane fade in" :id="b.param" :key="b.id">
 					<board v-on:del="deleteBoard(b)" :board-data="b">
 					</board>
 				</div>
@@ -159,6 +157,15 @@ import auth from '../auth'
 
     .nav-pills>li>a:hover {
       background-color: rgba(217, 129, 112, 0.9);
+    }
+
+    .btn-search {
+      margin: 7px 0px 7px 0px;
+    }
+
+    .search-container {
+      width: 100%;
+      text-align: center;
     }
 
   </style>
