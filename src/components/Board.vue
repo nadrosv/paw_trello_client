@@ -52,14 +52,6 @@
 			v-if="!list.archived">
 		</list>
     </div>
-	<div class="list-container" v-sortable="{ onUpdate: onUpdate, onStart: onStart, onEnd: onEnd}">
-		<list v-for="(list,k,i) in lists" 
-			:list-data="list"
-			v-on:delList="del" 
-			:key="list.id" 
-			v-if="list.archived">
-		</list>
-    </div>
 </div>		
 
 </template>
@@ -192,11 +184,11 @@
     flex: 1;
     overflow: auto;   
     
-    /* position: absolute; */
-    /* top: 280px; */
-    /* right: 0; */
-    /* bottom: 0; */
-    /* left: 0; */
+    position: absolute; 
+    top: 280px; 
+    right: 0; 
+    bottom: 0;
+    left: 0; 
     
     white-space: nowrap;
     overflow-x: auto;
