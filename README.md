@@ -17,5 +17,8 @@ For starting json-server (only for temporary testing):
 * `npm install -g json-server`
 * `json-server boards.json` (runs server with boards.json as database)
 
+<br>
 
+App is available locally on:
+`http://localhost:8080`
 
