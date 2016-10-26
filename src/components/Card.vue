@@ -87,7 +87,6 @@
     box-shadow: 0px 4px 5px #888888;
     
     white-space: normal;
-    word-break: break-all;
     overflow-wrap: break-word;
     word-wrap: break-word;
 	}
