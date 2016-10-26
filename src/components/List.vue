@@ -1,6 +1,7 @@
 <template>
 	<!--<div class="col-md-8">-->
 	<!--<div class="col-md-4 list-area">-->
+    <div class="column-wrapper">
 
 		<div class="col-fixed-size list-area">
 
@@ -62,7 +63,7 @@
 				</div>
 			</div>
 		</div>
-	
+	</div>
 </template>
 
 <script>
@@ -156,6 +157,15 @@
 
 
 <style scoped>
+
+    .column-wrapper {
+        margin: 0;
+        box-sizing: border-box;
+        display: inline-block;
+        vertical-align: top;
+        white-space: nowrap;
+    }
+  
 	.list-area {
 		background-color: rgba(185, 191, 194, 1);
 		margin: 10px;
