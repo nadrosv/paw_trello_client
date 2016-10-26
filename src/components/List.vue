@@ -192,7 +192,7 @@
 	}
 	
 	.col-fixed-size {
-		width: 360px;
+		width: 340px;
 	}
 
 </style>
