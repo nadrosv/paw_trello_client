@@ -19,7 +19,7 @@ export default {
                 console.log(response.body[0].id)
                 this.user.id = response.body[0].id
                 localStorage.setItem('id_token', response.body[0].id)
-                
+                router.push('/dashboard')
                 // if (redirect) {
                     // router.go(redirect)
                 // }
@@ -32,23 +32,24 @@ export default {
     },
 
     signup(context, creds, redirect) {
-        context.$http.post(SIGNUP_URL, creds, (data) => {
-            localStorage.setItem('id_token', data.id_token)
+        context.$http.post(SIGNUP_URL, creds).then((response) => {
+            localStorage.setItem('id_token', response.id_token)
 
-            this.user.authenticated = true
+            // this.user.authenticated = true
 
             if (redirect) {
-                router.go(redirect)
+                router.push(redirect)
             }
 
-        }).error((err) => {
-            context.error = err
+        }, (response) => {
+            console.log(response)
         })
     },
 
     logout() {
         localStorage.removeItem('id_token')
         this.user.authenticated = false
+        router.push('/login')
     },
 
     checkAuth() {
