@@ -108,7 +108,7 @@
         }, (response) => {
          console.log(response)
         });
-        this.$emit('delList')
+        // this.$emit('delList')
         this.$el.remove();
     },
     editList() {

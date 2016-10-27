@@ -1,62 +1,56 @@
 <template>
 
 <div class="board-area board">
-    {{$route.params.boardId}}
-    <span v-if="edit">
+	{{$route.params.boardId}}
+	<span v-if="edit">
 		<input v-model="boardName">
 		<button class="btn btn-primary" v-on:click="saveName">OK</button>
     </span>
-    <span v-else>
-
+	<span v-else>
 		<button class="btn btn-primary" v-on:click="editBoard">Edit name
 			<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-    	</button>
-    </span>
-    <button class="btn btn-primary" 
-			data-toggle="modal" 
-			:data-target="hashModal">Add list
+		</button>
+	</span>
+
+	<button class="btn btn-primary" data-toggle="modal" :data-target="hashModal">Add list
 		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 	</button>
-    <button class="btn btn-primary" v-on:click="del">Remove board
+	<button class="btn btn-primary" v-on:click="del">Remove board
 		<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 	</button>
-  <button class="btn btn-primary" v-on:click="favBoard">Star board
-   <span style="cursor: pointer;" aria-hidden="true" 
-          :class="[boardData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
-  </span>
-  </button>
-    <!--Modal-->
-    <div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="board-modal-label" aria-hidden="true">
+	<button class="btn btn-primary" v-on:click="favBoard">Star board
+		<span style="cursor: pointer;" aria-hidden="true" 
+			:class="[boardData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
+		</span>
+  	</button>
+	<!--Modal-->
+	<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="board-modal-label" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-            		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   		<span aria-hidden="true">&times;</span>
                 	</button>
-            		<h4 class="modal-title" id="board-modal-label">Dodaj nowa liste</h4>
-          		</div>
-          		<div class="modal-body">
-            		<p>
+					<h4 class="modal-title" id="board-modal-label">Dodaj nowa liste</h4>
+				</div>
+				<div class="modal-body">
+					<p>
 						Tytul
 						<input v-model="newListName">
-            		</p>
-          		</div>
-          		<div class="modal-footer">
+					</p>
+				</div>
+				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary" v-on:click="addList">Save changes</button>
 				</div>
 			</div>
 		</div>
 	</div>
-    <div class="list-container" v-sortable="{ onUpdate: onUpdate, onStart: onStart, onEnd: onEnd}">
-		<list v-for="(list,k,i) in lists" 
-			:list-data="list"
-			v-on:delList="del" 
-			:key="list.id" 
-			v-show="!list.archived">
+	<div class="list-container" v-sortable="{ onUpdate: onUpdate, onStart: onStart, onEnd: onEnd}">
+		<list v-for="(list,k,i) in lists" :list-data="list" v-on:delList="del" :key="list.id" v-show="!list.archived">
 		</list>
-    </div>
-</div>		
+	</div>
+</div>
 
 </template>
 
