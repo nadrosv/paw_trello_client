@@ -7,11 +7,11 @@
 		<button class="btn btn-primary" v-on:click="saveName">OK</button>
     </span>
     <span v-else>
+
 		<button class="btn btn-primary" v-on:click="editBoard">Edit name
 			<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     	</button>
     </span>
-
     <button class="btn btn-primary" 
 			data-toggle="modal" 
 			:data-target="hashModal">Add list
@@ -20,7 +20,11 @@
     <button class="btn btn-primary" v-on:click="del">Remove board
 		<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 	</button>
-
+  <button class="btn btn-primary" v-on:click="favBoard">Star board
+   <span style="cursor: pointer;" aria-hidden="true" 
+          :class="[boardData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
+  </span>
+  </button>
     <!--Modal-->
     <div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="board-modal-label" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -136,6 +140,14 @@
           console.log(response)
       });
      },
+     favBoard() {
+       this.boardData.favourite = !this.boardData.favourite
+        this.$http.put('http://localhost:3000/boards/' + this.boardData.id, this.boardData ).then((response) => {
+        console.log(response.body)
+        }, (response) => {
+         console.log(response)
+        });
+      },
      onUpdate: function (event) {
       this.lists.splice(event.newIndex, 0, this.lists.splice(event.oldIndex, 1)[0])
       for (let i=0; i < this.lists.length; i++) {
