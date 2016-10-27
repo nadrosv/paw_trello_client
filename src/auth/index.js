@@ -32,6 +32,9 @@ export default {
     },
 
     signup(context, creds, redirect) {
+        if (creds.username === '' || creds.password === '') {
+            context.error = 'Podaj nazwę użytkoniwa i haslo'
+        } else {
         context.$http.post(SIGNUP_URL, creds).then((response) => {
             localStorage.setItem('id_token', response.id_token)
 
@@ -42,8 +45,10 @@ export default {
             }
 
         }, (response) => {
+            context.error = response
             console.log(response)
         })
+        }
     },
 
     logout() {
