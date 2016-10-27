@@ -49,7 +49,7 @@
 			:list-data="list"
 			v-on:delList="del" 
 			:key="list.id" 
-			v-if="!list.archived">
+			v-show="!list.archived">
 		</list>
     </div>
 </div>		
