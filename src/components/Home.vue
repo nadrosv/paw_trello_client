@@ -19,7 +19,7 @@
 
 				<br>
 				<div role="tabpanel" v-for="(b,i) in comps" class="tab-pane fade in" :id="b.param" :key="b.id">
-					<board v-on:del="deleteBoard(i)" :board-data="b" :index="i">
+					<board :board-data="b" :index="i">
 					</board>
 				</div>
 			</div>
@@ -77,7 +77,8 @@ import { mapActions, mapMutations } from 'vuex'
       'setActiveBoard' 
       ]),
       ...mapActions([
-        'addBoard'
+        'addBoard',
+        'getBoards'
       ]),
       
       add() {
@@ -88,14 +89,16 @@ import { mapActions, mapMutations } from 'vuex'
         this.addBoard({board: formData})
       },
       getComp() {
-        console.log('id ' + auth.user.id)
-        console.log('auth2' + auth.user.authenticated)
+        this.getBoards()
 
-          this.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
-          this.$store.commit('addBoards', response.body, { silent: true })
-          }, (response) => {
-          console.log(response)
-          });
+        // console.log('id ' + auth.user.id)
+        // console.log('auth2' + auth.user.authenticated)
+
+        //   this.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
+        //   this.$store.commit('addBoards', response.body, { silent: true })
+        //   }, (response) => {
+        //   console.log(response)
+        //   });
       }
     // deleteBoard(index) {
     //   console.log('delete board')
@@ -117,24 +120,27 @@ import { mapActions, mapMutations } from 'vuex'
   </script>
 
 
-  <style scoped>
+<style scoped>
     .nav-pills {
       font-size: 17px;
     }
-
     .nav-pills>li>a {
       background-color: rgba(217, 129, 112, 0.7);
       color: rgba(0,0,0,0.7);
     }
-
     .nav-pills>li.active>a {
       background-color: rgba(217, 129, 112, 1);
       box-shadow: 0px 10px 20px #999999;
       color: white;
     }
-
     .nav-pills>li>a:hover {
       background-color: rgba(217, 129, 112, 0.9);
     }
-
+    .btn-search {
+      margin: 7px 0px 7px 0px;
+    }
+    .search-container {
+      width: 100%;
+      text-align: center;
+    }
   </style>

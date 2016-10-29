@@ -18,6 +18,8 @@ export const getBoardLists = (context, {board}) => {
     }
 
 }
+
+//BOARDS
 export const addBoard = (context, {board}) => {
     app.$http.post('http://localhost:3000/boards', board).then((response) => {
         console.log('dodano board')
@@ -38,21 +40,31 @@ export const editBoard = (context, {boardData, boardName}) => {
 }
 
 export const delBoard = (context, {board}) => {
-    app.$http.delete('http://localhost:3000/boards/' + state.activeBoard.id).then((response) => {
+    app.$http.delete('http://localhost:3000/boards/' + context.state.activeBoard.id).then((response) => {
         context.commit(types.DEL_BOARD, { board })
     }, (response) => {
         console.log(response)
     });
 }
 
-export const getComponents = (context) => {
+export const getBoards = (context) => {
     app.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
-        context.commit(types.ADD_BOARD, response.body, { silent: true })
+        context.commit(types.GET_BOARDS, response.body, { silent: true })
 
     }, (response) => {
         console.log(response)
     });
 }
+
+export const getLists = (context, {boardId}) => {
+    app.$http.get('http://localhost:3000/lists?boardId=' + boardId).then((response) => {
+        context.commit(types.GET_LISTS, { boardId, lists: response.body }, { silent: true })
+        //   this.lists = response.body;
+    }, (response) => {
+        console.log(response)
+    });
+}
+
 export const toggleFavList = (context, {list}) => {
     context.commit(types.FAV_LIST, { list })
     app.$http.put('http://localhost:3000/lists/' + list.id, list).then((response) => {
@@ -89,8 +101,8 @@ export const addList = (context, {list}) => {
     app.$http.post('http://localhost:3000/lists', list).then((response) => {
         console.log('dodano liste')
         console.log(response.body)
-        context.commit(types.ADD_LIST, response.body)
-        this.lists.push(response.body)
+        context.commit(types.ADD_LIST, { list: response.body })
+        // this.lists.push(response.body)
     }, (response) => {
         console.log(response)
     });
