@@ -47,6 +47,23 @@ export const delBoard = (context, {board}) => {
     });
 }
 
+export const delList = (context, {list}) => {
+    app.$http.delete('http://localhost:3000/lists/' + list.id).then((response) => {
+        context.commit(types.DEL_LIST, { list })
+    }, (response) => {
+        console.log(response)
+    });
+}
+
+export const delCard = (context, {card}) => {
+    app.$http.delete('http://localhost:3000/cards/' + card.id).then((response) => {
+        context.commit(types.DEL_CARD, { card })
+    }, (response) => {
+        console.log(response)
+    });
+}
+
+
 export const getBoards = (context) => {
     app.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
         context.commit(types.GET_BOARDS, response.body, { silent: true })
@@ -65,6 +82,15 @@ export const getLists = (context, {boardId}) => {
     });
 }
 
+export const getCards = (context, {listId}) => {
+    app.$http.get('http://localhost:3000/cards?listId=' + listId).then((response) => {
+        context.commit(types.GET_CARDS, { listId, cards: response.body }, { silent: true })
+        //   this.lists = response.body;
+    }, (response) => {
+        console.log(response)
+    });
+}
+
 export const toggleFavList = (context, {list}) => {
     context.commit(types.FAV_LIST, { list })
     app.$http.put('http://localhost:3000/lists/' + list.id, list).then((response) => {
@@ -73,14 +99,21 @@ export const toggleFavList = (context, {list}) => {
     });
 }
 export const editList = (context, {list, name, pos}) => {
-    list.list_name = name
-    list.pos = pos
+    // let newList = {...list, list_name: name, pos: pos}
 
-    context.commit(types.EDIT_LIST, { list })
-    console.log(list + ', ' + pos)
-    app.$http.put('http://localhost:3000/lists/' + list.id, list).then((response) => {
+    app.$http.put('http://localhost:3000/lists/' + list.id, {boardId: list.boardId, list_name: name, pos: pos}).then((response) => {
+    context.commit(types.EDIT_LIST, { list, name, pos })
         console.log(response.body)
-        // context.commit(types.EDIT_LIST, { list })
+    }, (response) => {
+        console.log(response)
+    });
+}
+
+export const editCard = (context, {card, name, desc}) => {
+    // console.log(editedCard)
+    app.$http.put('http://localhost:3000/cards/' + card.id, {listId: card.listId, card_name: name, desc: desc}).then((response) => {
+        // console.log(response.body)
+        context.commit(types.EDIT_CARD, {card, name, desc})
     }, (response) => {
         console.log(response)
     });
@@ -102,8 +135,28 @@ export const addList = (context, {list}) => {
         console.log('dodano liste')
         console.log(response.body)
         context.commit(types.ADD_LIST, { list: response.body })
-        // this.lists.push(response.body)
     }, (response) => {
         console.log(response)
     });
 }
+
+export const addCard = (context, {card}) => {
+    app.$http.post('http://localhost:3000/cards', card).then((response) => {
+        console.log('dodano karte')
+        console.log(response.body)
+        context.commit(types.ADD_CARD, { card: response.body })
+    }, (response) => {
+        console.log(response)
+    });
+}
+
+export const favBoard = (context, {board}) => {
+    context.commit(types.FAV_BOARD, { board })
+
+    app.$http.put('http://localhost:3000/boards/' + board.id, board).then((response) => {
+        console.log(response.body)
+    }, (response) => {
+        console.log(response)
+    });
+}
+

@@ -1,68 +1,66 @@
 <template>
-	<!--<div class="col-md-8">-->
-	<!--<div class="col-md-4 list-area">-->
-    <div class="column-wrapper">
+	
+<div class="column-wrapper">
 
-      <div class="col-fixed-size list-area">
-    <!--draggable="true" @dragstart="dragstart" @dragenter.prevent>-->
+	<div class="col-fixed-size list-area">
 
-    <span v-if="listEditable">
+		<span v-if="listEditable">
               <input v-model="listData.list_name">
               <button class="btn btn-default" v-on:click="saveList">
                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-    </button>
-    <!--<p>Message is: {{ message }}</p>-->
-    </span>
-    <span v-else>
+		</button>
+		<!--<p>Message is: {{ message }}</p>-->
+		</span>
+		<span v-else>
           <span class="list-name">{{listData.list_name}}</span>
-    <span style="cursor: pointer;" aria-hidden="true" @click="toggleFavList({list: listData})" :class="[listData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
+		<span style="cursor: pointer;" aria-hidden="true" @click="toggleFavList({list: listData})" :class="[listData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
             </span>
 
-    <div class="btn-group" role="group" aria-label="listButtons">
-      <button class="btn btn-default" data-toggle="modal" :data-target="listModal">
+		<div class="btn-group" role="group" aria-label="listButtons">
+			<button class="btn btn-default" data-toggle="modal" :data-target="listModal">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
               </button>
-      <button class="btn btn-default" v-on:click="editList">
+			<button class="btn btn-default" v-on:click="listEditable = true">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
               </button>
-      <button class="btn btn-default" v-on:click="delList">
+			<button class="btn btn-default" v-on:click="delList({list: listData})">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
               </button>
-      <button class="btn btn-default" v-on:click="archiveList({list: listData})">
+			<button class="btn btn-default" v-on:click="archiveList({list: listData})">
                 <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
               </button>
-    </div>
-    </span>
-    <div>
-      <card v-for="card in cards" :card-data="card" :key="card.id"></card>
-    </div>
+		</div>
+		</span>
+		<div>
+			<card v-for="card in cards" :card-data="card" :key="card.id"></card>
+		</div>
 
 
-    <!--Modal-->
-    <div class="modal fade" :id="listParam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<!--Modal-->
+		<div class="modal fade" :id="listParam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-            <h4 class="modal-title" id="myModalLabel">Dodaj nowa karte</h4>
-          </div>
-          <div class="modal-body">
-            <p>
-              Nazwa
-              <input v-model="newCard.card_name"> Opis
-              <input v-model="newCard.desc">
-            </p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" v-on:click="addCard">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+						<h4 class="modal-title" id="myModalLabel">Dodaj nowa karte</h4>
+					</div>
+					<div class="modal-body">
+						<p>
+							Nazwa
+							<input v-model="newCard.card_name"> Opis
+							<input v-model="newCard.desc">
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" v-on:click="save">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 	
@@ -81,7 +79,6 @@ import { mapActions, mapMutations } from 'vuex'
           "card_name": '',
           "desc": ''
         },
-        newCardName: '',
         listModal: '#modal-list' + this.listData.id,
         listParam: 'modal-list' + this.listData.id
 
@@ -90,77 +87,30 @@ import { mapActions, mapMutations } from 'vuex'
 
     computed: {
       cards () {
-        // console.log('card ', this.$store.state.lists.indexOf(this.$store.state.cards[this.index]))
         return this.$store.state.cards[this.listData.id]
-        // return this.$store.state.lists.map(listId => this.listData.listId)
-        // return thread.messages.map(id => state.messages[id])
-      }, 
-      lists() {
-        return this.$store.state.lists[this.listData.boardId]
       }
     },
     methods: {
       ...mapActions([
-      'toggleFavList',
+	  'getCards',
       'editList',
-      'archiveList'
+      'toggleFavList',
+      'archiveList',
+	  'addCard',
+	  'delList'
     ]),
-      getCard() {
-        this.$http.get('http://localhost:3000/cards?listId='+this.listData.id).then((response) => {
-          // console.log(response)
-          // this.cards = response.body;
-          this.$store.commit('getCards', {listId: this.listData.id, cards: response.body}, { silent: true })
-        }, (response) => {
-         console.log(response)
-        });
-    },
-    addCard() {
-       console.log(this.newCard)
-         this.$http.post('http://localhost:3000/cards', this.newCard).then((response) => {
-        console.log('dodano karte')
-        this.cards.push(response.body)
-        console.log(response.body)
-        }, (response) => {
-          console.log(response)
-      });
-    },
-    delList() {
-        this.$http.delete('http://localhost:3000/lists/' + this.listData.id).then((response) => {
-        console.log(response.body)
-        }, (response) => {
-         console.log(response)
-        });
-        this.$el.remove();
-    },
-    editList() {
-        console.log('edit')
-        this.listEditable = true
+
+    save() {
+		this.addCard({card: this.newCard})
     },
     saveList() {
-        console.log('saving')
-        // this.listData.list_name = this.listName
         this.listEditable = false
-        let name = listData.list_name
-        let pos = listData.pos
-        let list = listData
-        // editList({list, name, pos})
-        // this.$http.put('http://localhost:3000/lists/' + this.listData.id, this.listData ).then((response) => {
-        // console.log(response.body)
-        // }, (response) => {
-        //  console.log(response)
-        // });
-    }, 
-    dragstart() {
-      console.log('start')
+        this.editList({list: this.listData, name: this.listData.list_name, pos: this.listData.pos})
     }
-     
   },
-   //created: function () {
-     //   this.getCard();
-  //},
   mounted: function () {
   this.$nextTick(function () {
- this.getCard();
+	  this.getCards({listId: this.listData.id})
    })
   },
   props: ['listData', 'index']

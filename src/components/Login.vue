@@ -48,6 +48,5 @@
         auth.login(this, credentials, '/home')
       }
     }
-
   }
   </script>

@@ -6,23 +6,28 @@
             <input v-model="boardName">
             <button class="btn btn-primary" v-on:click="edit">OK</button>
             <!--<p>Message is: {{ message }}</p>-->
-      </span>
+    </span>
 	<span v-else>
           <button class="btn btn-primary" v-on:click="editing = true">Edit name
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 	</button>
 	</span>
 	<!--{{newName}}-->
-	<button class="btn btn-primary" data-toggle="modal" :data-target="boardData.hash">Add list
+	<button class="btn btn-primary" data-toggle="modal" :data-target="hashModal">Add list
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
 	<button class="btn btn-primary" v-on:click="delBoard({board: boardData})">Remove board
         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
       </button>
+	<button class="btn btn-primary" v-on:click="favBoard({board: boardData})">Star board
+		<span style="cursor: pointer;" aria-hidden="true" 
+			:class="[boardData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
+		</span>
+  	</button>
 
 
 	<!--Modal-->
-	<div class="modal fade" :id="boardData.param" tabindex="-1" role="dialog" aria-labelledby="board-modal-label" aria-hidden="true">
+	<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="board-modal-label" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -64,6 +69,8 @@ export default {
 		boardName: this.boardData.board_name,
 		newListName: '',
 		editing: false,
+		hashModal: '#modal' + this.boardData.id,
+        modalParam: 'modal' + this.boardData.id
 		}
 	},
 	computed: {
@@ -81,12 +88,13 @@ export default {
 			'addList',
 			'editList',
 			'editBoard',
-			'delBoard'
+			'delBoard',
+			'favBoard'
 		]),
 
 		edit() {
 			this.editing = false;
-			this.editBoard({ boardData: this.boardData, boardName })
+			this.editBoard({ boardData: this.boardData, boardName: this.boardName })
 		},
 
 		saveList() {

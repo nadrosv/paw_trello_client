@@ -19,7 +19,7 @@ export default {
                 console.log(response.body[0].id)
                 this.user.id = response.body[0].id
                 localStorage.setItem('id_token', response.body[0].id)
-                
+                router.push('/dashboard')
                 // if (redirect) {
                     // router.go(redirect)
                 // }
@@ -32,19 +32,20 @@ export default {
     },
 
     signup(context, creds, redirect) {
-        if (creds.username === '' || creds.password === '') {
-            context.error = 'Podaj nazwe i haslo'
+        if (creds.userName === '' || creds.password === '') {
+            context.error = 'Podaj nazwę użytkoniwa i haslo'
         } else {
-        context.$http.post('http://localhost:3000/users', creds).then((response) => {
-            localStorage.setItem('id_token', response.id)
+        context.$http.post(SIGNUP_URL, creds).then((response) => {
+            localStorage.setItem('id_token', response.id_token)
 
-            this.user.authenticated = true
+            // this.user.authenticated = true
 
             if (redirect) {
-                router.go(redirect)
+                router.push(redirect)
             }
 
         }, (response) => {
+            context.error = response
             console.log(response)
         })
         }
@@ -53,6 +54,7 @@ export default {
     logout() {
         localStorage.removeItem('id_token')
         this.user.authenticated = false
+        router.push('/login')
     },
 
     checkAuth() {

@@ -25,16 +25,9 @@ export const mutations = {
         }
 
         state.comp = boards;
+        state.activeBoard = state.comp[0]
 
     },
-    [types.ADD_BOARD](state, board) {
-        board.hash = '#board' + board.id
-        board.param = 'board' + board.id
-
-        state.comp.push(board)
-        state.activeBoard = board
-    },
-
     [types.GET_LISTS](state, payload) {
         let id = payload.boardId
         payload.lists.sort(function (a, b) {
@@ -45,10 +38,18 @@ export const mutations = {
         app.$set(state.lists, payload.boardId, payload.lists)
 
     },
-    getCards(state, payload) {
+    [types.GET_CARDS](state, payload) {
         app.$set(state.cards, payload.listId, payload.cards)
-
     },
+
+    [types.ADD_BOARD](state, board) {
+        board.hash = '#board' + board.id
+        board.param = 'board' + board.id
+
+        state.comp.push(board)
+        state.activeBoard = board
+    },
+
     [types.EDIT_BOARD](state, {boardData, boardName}) {
         boardData.board_name = boardName
     },
@@ -67,8 +68,13 @@ export const mutations = {
     [types.FAV_LIST](state, {list}) {
         list.favourite = !list.favourite
     },
-    [types.EDIT_LIST](state, {list}) {
-
+    [types.EDIT_LIST](state, {list, name, pos}) {
+       list.list_name = name
+       list.pos = pos
+    },
+    [types.EDIT_CARD](state, {card, name, desc}) {
+        card.card_name = name
+        card.desc = desc
     },
     [types.ARCHIVE_LIST](state, {list}) {
         list.archived = true
@@ -78,9 +84,19 @@ export const mutations = {
     },
     [types.ADD_LIST](state, {list}) {
         state.lists[list.boardId].push(list)
-
     },
-
+    [types.ADD_CARD](state, {card}) {
+        state.cards[card.listId].push(card)
+    },
+    [types.FAV_BOARD](state, {board}) {
+        board.favourite = !board.favourite
+    },
+    [types.DEL_LIST](state, {list}) {
+        state.lists[list.boardId].splice(state.lists[list.boardId].indexOf(list), 1)
+    },
+    [types.DEL_CARD](state, {card}) {
+        state.cards[card.listId].splice(state.cards[card.listId].indexOf(card), 1)
+    }
 }
 
 export const getters = {

@@ -2,14 +2,18 @@
 	<!--<div class="col-md-8">-->
 	<div class="home-area">
 		<div>
+      <div class="search-container">
+        <input class="input-search" v-model="searchPhrase" placeholder="Search"></input>	
+      </div>	
 			<button class="btn btn-primary" data-toggle="modal" data-target="#home-modal">Dodaj tablice</button>
       <br>
       <br>
 			<!-- Nav tabs -->
 			<ul class="nav nav-pills" role="tablist">
 
-				<li role="presentation" v-for="(b,i) in comps" :key="b.id">
-					<a :href="b.hash" :aria-controls="b.hash" role="tab" data-toggle="tab" v-on:click="setActiveBoard({board: b})"> {{b.board_name}} </a>
+				<li role="presentation" v-for="(b,i) in boards.filter(customFilter)" :key="b.id">
+					<a :href="b.hash" :aria-controls="b.hash" role="tab" data-toggle="tab" 
+              v-on:click="setActiveBoard({board: b}, {silent: true})"> {{b.board_name}} </a>
 				</li>
 			</ul>
 
@@ -18,7 +22,7 @@
 				<!--<button class="btn btn-primary" v-on:click="addBoard()">Add board</button>-->
 
 				<br>
-				<div role="tabpanel" v-for="(b,i) in comps" class="tab-pane fade in" :id="b.param" :key="b.id">
+				<div role="tabpanel" v-for="(b,i) in boards.filter(customFilter)" class="tab-pane fade in" :id="b.param" :key="b.id">
 					<board :board-data="b" :index="i">
 					</board>
 				</div>
@@ -60,12 +64,13 @@ import { mapActions, mapMutations } from 'vuex'
   export default {
     data() {
       return {
+        searchPhrase: '',
         newBoardName: '',
         comp1: this.comp
       }
     },
     computed: {
-      comps () {
+      boards () {
         return this.$store.state.comp
       },
       activeBoard () {
@@ -80,6 +85,10 @@ import { mapActions, mapMutations } from 'vuex'
         'addBoard',
         'getBoards'
       ]),
+
+      customFilter: function(board) {
+          return board.board_name.indexOf(this.searchPhrase) != -1
+      },
       
       add() {
         let formData = {
@@ -87,27 +96,11 @@ import { mapActions, mapMutations } from 'vuex'
         "board_name": this.newBoardName
         }
         this.addBoard({board: formData})
-      },
-      getComp() {
-        this.getBoards()
-
-        // console.log('id ' + auth.user.id)
-        // console.log('auth2' + auth.user.authenticated)
-
-        //   this.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
-        //   this.$store.commit('addBoards', response.body, { silent: true })
-        //   }, (response) => {
-        //   console.log(response)
-        //   });
       }
-    // deleteBoard(index) {
-    //   console.log('delete board')
-    //   this.$store.commit('deleteBoard', index)
-    // }
   },
   mounted: function () {
   this.$nextTick(function () {
-    this.getComp()
+    this.getBoards()
   })
   },
   route: {

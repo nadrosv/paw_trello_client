@@ -9,7 +9,7 @@
     <button class="btn btn-default" data-toggle="modal" :data-target="hashModal">
       <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
-    <button class="btn btn-default" v-on:click="delCard">
+    <button class="btn btn-default" v-on:click="delCard({ card: cardData })">
       <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
     </button>  
         </div>   
@@ -22,20 +22,20 @@
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-							<h4 class="modal-title" id="myModalLabel">Dodaj nowa karte</h4>
+							<h4 class="modal-title" id="myModalLabel">Edytuj karte</h4>
 						</div>
 						<div class="modal-body">
 							<p>
 								Nazwa
-								<input v-model="cardData.card_name">
+								<input v-model="newName">
                 Opis
-								<input v-model="cardData.desc">
+								<input v-model="newDesc">
 
 							</p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary" v-on:click="editCard">Save changes</button>
+							<button type="button" class="btn btn-primary" v-on:click="save">Save changes</button>
 						</div>
 					</div>
 				</div>
@@ -43,35 +43,28 @@
 </template>
 
 <script>
+import { mapActions, mapMutations } from 'vuex'
+
   export default {
     data() {
       return {
-        editedCard: {},
+        // editedCard: {Object.assign({},this.cardData),
+        // editedCard: {...this.cardData},
+        newName: this.cardData.card_name,
+        newDesc: this.cardData.desc,
         hashModal: '#modal-card' + this.cardData.id,
         modalParam: 'modal-card' + this.cardData.id
       }
     },
     methods: {
-    editCard() {
-      console.log(this.cardData)
-
-      // this.cardData.card_name = this.editedCard.card_name
-      // this.cardData.desc = this.editedCard.desc
-      this.$http.put('http://localhost:3000/cards/' + this.cardData.id, this.cardData).then((response) => {
-        console.log(response.body)
-        }, (response) => {
-         console.log(response)
-        });
-    },
-    delCard() {
-      this.$el.remove();
-      this.$http.delete('http://localhost:3000/cards/' + this.cardData.id).then((response) => {
-        console.log(response.body)
-        }, (response) => {
-         console.log(response)
-        });
+      ...mapActions([
+	      'editCard',
+        'delCard'
+    ]),
+    save() {
+      this.editCard({card: this.cardData, name: this.newName, desc: this.newDesc})
+      // this.editCard({card: this.cardData, editedCard: this.editedCard })
     }
-     
   },
   props: ['cardData']
   }
@@ -85,6 +78,10 @@
 		padding: 5px;
     border-radius: 2px;
     box-shadow: 0px 4px 5px #888888;
+    
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 	}
 	
 	.delete-card {

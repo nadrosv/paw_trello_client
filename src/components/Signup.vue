@@ -10,7 +10,7 @@
           type="text"
           class="form-control"
           placeholder="Enter your username"
-          v-model="credentials.username"
+          v-model="credentials.userName"
         >
       </div>
       <div class="form-group">
@@ -31,7 +31,7 @@
     data() {
       return {
         credentials: {
-          username: '',
+          userName: '',
           password: ''
         },
         error: ''
@@ -40,15 +40,13 @@
     methods: {
       submit() {
         var credentials = {
-          username: this.credentials.username,
+          userName: this.credentials.userName,
           password: this.credentials.password
         }
         // We need to pass the component's this context
         // to properly make use of http in the auth service
-
         auth.signup(this, credentials, '/home')
       }
     }
-
   }
   </script>
