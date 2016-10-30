@@ -24,7 +24,19 @@
 			:class="[boardData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
 		</span>
   	</button>
-
+	  <!-- Archived button -->
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Archived <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+			<li>
+				<router-link v-for="(list,k,i) in lists" v-show="list.archived"
+ 				:to="{ name: 'List', params: {boardId: boardData.id, listId: list.id }}">{{list.list_name}}</router-link>
+			</li>
+		</ul>
+	</div>
+	<router-view list-data:></router-view>
 
 	<!--Modal-->
 	<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="board-modal-label" aria-hidden="true">
@@ -70,7 +82,8 @@ export default {
 		newListName: '',
 		editing: false,
 		hashModal: '#modal' + this.boardData.id,
-        modalParam: 'modal' + this.boardData.id
+        modalParam: 'modal' + this.boardData.id,
+		selectedList: {}
 		}
 	},
 	computed: {
@@ -138,11 +151,24 @@ export default {
 
 	mounted: function () {
 		this.$nextTick(function () {
-			this.getLists({boardId: this.boardData.id})
+			// this.getLists({boardId: this.boardData.id})
 		})
 	},
 
-	props: ['boardData', 'index']
+	props: ['boardData', 'index'],
+	// props:{
+	// 	// boardData: {
+	// 	// 	// type: Object,
+	// 	// 	// required: true
+	// 	// }, 
+	// 	index: Number
+	// },
+ watch: {
+    '$route' (to, from) {
+
+    //   console.log(to)
+    }
+  }
 }
 
   </script>
@@ -160,7 +186,7 @@ export default {
     flex: 1;
     overflow: auto;   
     
-    position: absolute; 
+    /*position: absolute;*/ 
     top: 280px; 
     right: 0; 
     bottom: 0;

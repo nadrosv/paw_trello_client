@@ -11,6 +11,8 @@ import Login from './components/Login.vue'
 import auth from './auth'
 import store from './store'
 import Sortable from '../vue-sortable-master/vue-sortable.js'
+import { sync } from 'vuex-router-sync'
+
 auth.checkAuth()
 
 
@@ -33,7 +35,30 @@ Vue.component('card', Card)
 
 
 const routes = [
-    { path: '/dashboard', component: Home, name: 'App' },
+    {
+        path: '/dashboard', component: Home, name: 'App',
+        children: [
+            {
+                // UserProfile will be rendered inside User's <router-view>
+                // when /user/:id/profile is matched
+                path: 'board/:boardId',
+                component: Board,
+                name: 'Board',
+                children: [
+                    {
+                        path: 'list/:listId',
+                        component: List,
+                        name: 'List',
+                    },
+                    {
+                        path: 'lists',
+                        component: List,
+                        name: 'Lists',
+                    }
+                ]
+            }
+        ]
+    },
     {
         path: '/home', component: Home, name: 'Home',
         beforeEnter: (to, from, next) => {
@@ -44,18 +69,19 @@ const routes = [
             } else {
                 next('/dashboard')
             }
-
         }
     },
     // { path: '/home/:boardId', component: Board},
     { path: '/login', component: Login, name: 'Login' },
     { path: '/signup', component: Signup, name: 'Singup' },
+    // { path: 'dashboard/list/:id', component: List, name: 'List' },
     { path: '*', redirect: '/home' }
 ]
 
 export var router = new VueRouter({
     routes
 })
+// sync(store, router)
 
 // export const app = Vue.component('app')
 
@@ -78,10 +104,10 @@ export var router = new VueRouter({
 //         state.comp = boards;
 //     },
 //     addBoard(state, board) {
-         
+
 //         board.hash = '#board' + board.id;
 //         board.param = 'board' + board.id;
-        
+
 //         state.comp.push(board);
 //     }
 //   }

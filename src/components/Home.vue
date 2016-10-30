@@ -11,21 +11,26 @@
 			<!-- Nav tabs -->
 			<ul class="nav nav-pills" role="tablist">
 
-				<li role="presentation" v-for="(b,i) in boards.filter(customFilter)" :key="b.id">
-					<a :href="b.hash" :aria-controls="b.hash" role="tab" data-toggle="tab" 
-              v-on:click="setActiveBoard({board: b}, {silent: true})"> {{b.board_name}} </a>
+				<li role="presentation" v-for="(b,i) in boards.filter(customFilter)">
+        <router-link  :key="b.id"
+ 				:to="{ name: 'Board', params: { boardId: i }}"
+         >{{b.board_name}}</router-link>
+					<!--<a :href="b.hash" :aria-controls="b.hash" role="tab" data-toggle="tab" 
+              v-on:click="setActiveBoard({board: b}, {silent: true})"> {{b.board_name}} </a>-->
 				</li>
 			</ul>
+      <router-view :board-data="activeBoard"></router-view>
 
 			<div class="tab-content">
 				<br>
 				<!--<button class="btn btn-primary" v-on:click="addBoard()">Add board</button>-->
 
 				<br>
-				<div role="tabpanel" v-for="(b,i) in boards.filter(customFilter)" class="tab-pane fade in" :id="b.param" :key="b.id">
+				<!--<div role="tabpanel" v-for="(b,i) in boards.filter(customFilter)" class="tab-pane fade in" :id="b.param" :key="b.id">
 					<board :board-data="b" :index="i">
 					</board>
 				</div>
+        -->
 			</div>
 		</div>
 
@@ -83,10 +88,12 @@ import { mapActions, mapMutations } from 'vuex'
       ]),
       ...mapActions([
         'addBoard',
-        'getBoards'
+        'getBoards',
+        'getComps'
       ]),
 
       customFilter: function(board) {
+        if (board.board_name !== undefined)
           return board.board_name.indexOf(this.searchPhrase) != -1
       },
       
@@ -100,13 +107,20 @@ import { mapActions, mapMutations } from 'vuex'
   },
   mounted: function () {
   this.$nextTick(function () {
-    this.getBoards()
+    // this.getBoards()
+    this.getComps()
   })
   },
   route: {
     canActivate() {
       console.log('can activate')
       return auth.user.authenticated
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      // console.log(to)
+    this.setActiveBoard({board: this.$store.state.comp[to.params.boardId]})
     }
   }
   }

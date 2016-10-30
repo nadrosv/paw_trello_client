@@ -23,7 +23,7 @@
 			<button class="btn btn-default" v-on:click="listEditable = true">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
               </button>
-			<button class="btn btn-default" v-on:click="delList({list: listData})">
+			<button class="btn btn-default" v-on:click="delList({list: listData})" v-show="listData.archived">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
               </button>
 			<button class="btn btn-default" v-on:click="archiveList({list: listData})">
@@ -75,12 +75,12 @@ import { mapActions, mapMutations } from 'vuex'
         listEditable: false,
         listName: '',
         newCard: {
-          "listId": this.listData.id,
+          "listId": 'this.listData.id',
           "card_name": '',
           "desc": ''
         },
-        listModal: '#modal-list' + this.listData.id,
-        listParam: 'modal-list' + this.listData.id
+        listModal: '#modal-list',
+        listParam: 'modal-list'
 
       }
     },
@@ -89,6 +89,14 @@ import { mapActions, mapMutations } from 'vuex'
       cards () {
         return this.$store.state.cards[this.listData.id]
       }
+	//   ,
+	//   listData() {
+	// 	//   if (this.$store.state.route.params.boardId === this.$store.state.activeBoard.id) {
+	// 	//   console.log('listparam ' + this.$store.state.activeBoard.id)
+	// 		// console.log(this.$store.state.lists[this.$route.params.listId])
+	// 		return this.$store.state.lists[this.$store.state.route.params.boardId]
+	// 	// }
+	//   }
     },
     methods: {
       ...mapActions([
@@ -110,10 +118,18 @@ import { mapActions, mapMutations } from 'vuex'
   },
   mounted: function () {
   this.$nextTick(function () {
-	  this.getCards({listId: this.listData.id})
+	 // this.getCards({listId: this.listData.id})
    })
   },
   props: ['listData', 'index']
+//   props:{
+//   listData: {
+//       type: Object,
+//       required: true
+// 	}, 
+// 	index: Number
+// 	}
+//   }
   }
   </script>
 
