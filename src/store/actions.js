@@ -65,30 +65,58 @@ export const delCard = (context, {card}) => {
 
 
 export const getBoards = (context) => {
-    app.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
-        context.commit(types.GET_BOARDS, response.body, { silent: true })
+    return new Promise((resolve, reject) => {
 
-    }, (response) => {
-        console.log(response)
-    });
+        app.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
+            context.commit(types.GET_BOARDS, response.body, { silent: true })
+            resolve()
+        }, (response) => {
+            console.log(response)
+        });
+    })
 }
 
 export const getLists = (context, {boardId}) => {
-    app.$http.get('http://localhost:3000/lists?boardId=' + boardId).then((response) => {
-        context.commit(types.GET_LISTS, { boardId, lists: response.body }, { silent: true })
-        //   this.lists = response.body;
-    }, (response) => {
-        console.log(response)
-    });
+    return new Promise((resolve, reject) => {
+
+        app.$http.get('http://localhost:3000/lists?boardId=' + boardId).then((response) => {
+            context.commit(types.GET_LISTS, { boardId, lists: response.body }, { silent: true })
+            //   this.lists = response.body;
+            resolve()
+
+        }, (response) => {
+            console.log(response)
+        });
+    })
+
 }
 
 export const getCards = (context, {listId}) => {
-    app.$http.get('http://localhost:3000/cards?listId=' + listId).then((response) => {
-        context.commit(types.GET_CARDS, { listId, cards: response.body }, { silent: true })
-        //   this.lists = response.body;
-    }, (response) => {
-        console.log(response)
-    });
+    return new Promise((resolve, reject) => {
+
+        app.$http.get('http://localhost:3000/cards?listId=' + listId).then((response) => {
+            context.commit(types.GET_CARDS, { listId, cards: response.body }, { silent: true })
+            //   this.lists = response.body;
+            resolve()
+
+        }, (response) => {
+            console.log(response)
+        });
+    })
+
+}
+
+export const getComps = (context) => {
+    app.$store.dispatch('getBoards').then(() => {
+        for (let i = 0; i < app.$store.state.comp.length; i++) {
+            app.$store.dispatch('getLists', { boardId: app.$store.state.comp[i].id }).then(() => {
+                for (let j = 0; j < app.$store.state.lists[app.$store.state.comp[i].id].length; j++) {
+                    // console.log((app.$store.state.lists[app.$store.state.comp[i].id])[j].id)
+                    app.$store.dispatch('getCards', { listId: (app.$store.state.lists[app.$store.state.comp[i].id])[j].id })
+                }
+            })
+        }
+    })
 }
 
 export const toggleFavList = (context, {list}) => {
@@ -101,8 +129,8 @@ export const toggleFavList = (context, {list}) => {
 export const editList = (context, {list, name, pos}) => {
     // let newList = {...list, list_name: name, pos: pos}
 
-    app.$http.put('http://localhost:3000/lists/' + list.id, {boardId: list.boardId, list_name: name, pos: pos}).then((response) => {
-    context.commit(types.EDIT_LIST, { list, name, pos })
+    app.$http.put('http://localhost:3000/lists/' + list.id, { boardId: list.boardId, list_name: name, pos: pos }).then((response) => {
+        context.commit(types.EDIT_LIST, { list, name, pos })
         console.log(response.body)
     }, (response) => {
         console.log(response)
@@ -111,9 +139,9 @@ export const editList = (context, {list, name, pos}) => {
 
 export const editCard = (context, {card, name, desc}) => {
     // console.log(editedCard)
-    app.$http.put('http://localhost:3000/cards/' + card.id, {listId: card.listId, card_name: name, desc: desc}).then((response) => {
+    app.$http.put('http://localhost:3000/cards/' + card.id, { listId: card.listId, card_name: name, desc: desc }).then((response) => {
         // console.log(response.body)
-        context.commit(types.EDIT_CARD, {card, name, desc})
+        context.commit(types.EDIT_CARD, { card, name, desc })
     }, (response) => {
         console.log(response)
     });
