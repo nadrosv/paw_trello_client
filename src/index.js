@@ -11,7 +11,7 @@ import Login from './components/Login.vue'
 import auth from './auth'
 import store from './store'
 import Sortable from '../vue-sortable-master/vue-sortable.js'
-import { sync } from 'vuex-router-sync'
+// import { sync } from 'vuex-router-sync'
 
 auth.checkAuth()
 
