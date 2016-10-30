@@ -31,12 +31,12 @@
 		</button>
 		<ul class="dropdown-menu">
 			<li>
-				<router-link v-for="(list,k,i) in lists" v-show="list.archived"
- 				:to="{ name: 'List', params: {boardId: boardData.id, listId: list.id }}">{{list.list_name}}</router-link>
+				<router-link v-for="(list,i) in lists" v-show="list.archived"
+ 				:to="{ name: 'List', params: {boardId: $route.params.boardId, listId: i }}">{{list.list_name}}</router-link>
 			</li>
 		</ul>
 	</div>
-	<router-view list-data:></router-view>
+	<router-view :list-data="selectedList"></router-view>
 
 	<!--Modal-->
 	<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="board-modal-label" aria-hidden="true">
@@ -61,7 +61,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="list-container" v-sortable="{onStart: onStart, onEnd: onEnd, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost'}">
+
+	<div v-show="selectedList === undefined" class="list-container" v-sortable="{onStart: onStart, onEnd: onEnd, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost'}">
 		<list v-for="(list,k,i) in lists" 
 			    v-show="!list.archived"
 			    :list-data="list"
@@ -165,7 +166,12 @@ export default {
 	// },
  watch: {
     '$route' (to, from) {
-
+	console.log(to.params.listId)
+	console.log((this.$store.state.lists[this.$store.state.activeBoard.id])[to.params.listId])
+	console.log(from.params.boardId)
+	console.log((this.$store.state.lists[this.boardData.id])[to.params.listId])
+	// console.log((this.$store.state.lists[to.params.boardId])[to.params.listId])
+			this.selectedList = (this.$store.state.lists[this.$store.state.activeBoard.id])[to.params.listId]
     //   console.log(to)
     }
   }
