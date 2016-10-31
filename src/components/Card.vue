@@ -70,6 +70,7 @@
         }, (response) => {
          console.log(response)
         });
+        this.$parent.$emit('activity', 'deleted card',this.cardData.card_name, this.$parent.listData.list_name);
     }
      
   },

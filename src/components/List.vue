@@ -101,6 +101,7 @@
         }, (response) => {
           console.log(response)
       });
+      this.$emit('activity', 'added card to', this.listData.list_name);
     },
     delList() {
         this.$http.delete('http://localhost:3000/lists/' + this.listData.id).then((response) => {
@@ -110,6 +111,7 @@
         });
         // this.$emit('delList')
         this.$el.remove();
+        this.$emit('activity', 'deleted', this.listData.list_name);
     },
     editList() {
         console.log('edit')
@@ -132,6 +134,7 @@
         }, (response) => {
          console.log(response)
         });
+        this.$emit('activity', 'archived', this.listData.list_name);
     },
     favList() {
       this.listData.favourite = !this.listData.favourite
@@ -140,6 +143,7 @@
         }, (response) => {
          console.log(response)
         });
+        this.$emit('activity', 'added to fav', this.listData.list_name);
     }
      
   },

@@ -26,9 +26,10 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "sortablejs": "^1.4.2",
+    "vue": "^2.0.3",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.0.1",
-    "vue-strap": "^1.1.29",
-    "vue": "^2.0.3"
+    "vue-strap": "^1.1.29"
   }
 }

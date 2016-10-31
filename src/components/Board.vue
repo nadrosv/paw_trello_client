@@ -47,8 +47,14 @@
 		</div>
 	</div>
 	<div class="list-container" v-sortable="{ onUpdate: onUpdate, onStart: onStart, onEnd: onEnd}">
-		<list v-for="(list,k,i) in lists" :list-data="list" v-on:delList="del" :key="list.id" v-show="!list.archived">
+    <div class="fancy-sliding-side-something">
+      <h3>Activity log</h3>
+      <activity v-for="activity in activities" :activity-data="activity" :key="activity.id"></activity>
+    </div>
+
+		<list v-for="(list,k,i) in lists" :list-data="list" v-on:activity="addActivity" v-on:delList="del" :key="list.id" v-show="!list.archived">
 		</list>
+    
 	</div>
 </div>
 
@@ -59,6 +65,7 @@
     data() {
       return {
         lists: [],
+        activities: [],
         listsArchived: [],
         listsArchivedNot: [],
         boardName: this.boardData.board_name,
@@ -78,16 +85,45 @@
     
     methods: {
 
-      getList() {
-        this.$http.get('http://localhost:3000/lists?boardId='+this.boardData.id).then((response) => {
-          this.lists = response.body.sort(function(a, b){
-            if(a.pos < b.pos) return -1;
-            if(a.pos > b.pos) return 1;
-            return 0;
-          })
+    getList() {
+      this.$http.get('http://localhost:3000/lists?boardId='+this.boardData.id).then((response) => {
+        this.lists = response.body.sort(function(a, b){
+          if(a.pos < b.pos) return -1;
+          if(a.pos > b.pos) return 1;
+          return 0;
+        })
+      }, (response) => {
+        console.log(response)
+      });
+    },
+    getActivity(){
+      this.$http.get('http://localhost:3000/activities?boardId='+this.boardData.id).then((response) => {
+          this.activities = response.body;
         }, (response) => {
          console.log(response)
         });
+    },
+    addActivity(action, what, where){
+      console.log(this.activities)
+      var newLog;
+      if(where == null){
+        newLog = " " + action + " \"" + what + "\"";
+      }else{
+        newLog = " " + action + " \"" + what + "\" from \"" + where + "\"";
+      }
+      let newActivityData = {
+        "boardId": this.boardData.id,
+        "date": new Date(),
+        "log": newLog
+      }
+     
+      this.$http.post('http://localhost:3000/activities', newActivityData).then((response) => {
+        console.log('new activity logged')
+        console.log(response.body)
+        this.activities.push(response.body)
+        }, (response) => {
+          console.log(response)
+      });
     },
     del() {
       this.$http.delete('http://localhost:3000/boards/' + this.boardData.id).then((response) => {
@@ -133,6 +169,7 @@
         }, (response) => {
           console.log(response)
       });
+      addActivity();
      },
      favBoard() {
        this.boardData.favourite = !this.boardData.favourite
@@ -169,6 +206,7 @@
   mounted: function () {
   this.$nextTick(function () {
     this.getList()
+    this.getActivity()
    })
   },
   
@@ -198,6 +236,10 @@
     
     white-space: nowrap;
     overflow-x: auto;
+  }
+  .fancy-sliding-side-something{
+    min-width: 300px;
+    padding: 15px;
   }
 
 </style>
