@@ -46,7 +46,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="list-container" v-sortable="{ onUpdate: onUpdate, onStart: onStart, onEnd: onEnd}">
+	<div class="list-container" v-sortable="{ onStart: onStart, onEnd: onEnd, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost'}">
     <div class="fancy-sliding-side-something">
       <h3>Activity log</h3>
       <activity v-for="activity in activities" :activity-data="activity" :key="activity.id"></activity>
@@ -197,10 +197,17 @@
        
     },
     onStart: function(event) {
-      console.log(this.listsArchivedNot)
+       console.log(this.listsArchivedNot)      
+    // $(event.item).css({"background-color":"rgba(100,141,196,1)", "transform":"rotate(1deg)"});
+    $(event.item.firstChild).css({"background-color":"rgba(100,141,196,1)", 
+	"transform":"rotate(360deg)", 
+	"transition-duration":"0.3s"});
     },
      onEnd: function (event) {
-    }
+		//   $(event.item).css({"background-color":"rgba(0,141,196,1)", "transform":"rotate(0deg)"});
+    $(event.item.firstChild).css({"background-color":"rgba(185, 191, 194, 1)", 
+	"transform":"rotate(0deg)"});
+    },
   }, 
 
   mounted: function () {
@@ -241,5 +248,8 @@
     min-width: 300px;
     padding: 15px;
   }
+  .ghost {
+	 opacity: 0;
+	}
 
 </style>
