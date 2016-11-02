@@ -109,6 +109,7 @@ export const getCards = (context, {listId}) => {
 export const getComps = (context) => {
     app.$store.dispatch('getBoards').then(() => {
         for (let i = 0; i < app.$store.state.comp.length; i++) {
+            app.$store.dispatch('getActivity', { boardId: app.$store.state.comp[i].id })
             app.$store.dispatch('getLists', { boardId: app.$store.state.comp[i].id }).then(() => {
                 for (let j = 0; j < app.$store.state.lists[app.$store.state.comp[i].id].length; j++) {
                     // console.log((app.$store.state.lists[app.$store.state.comp[i].id])[j].id)
@@ -180,11 +181,46 @@ export const addCard = (context, {card}) => {
 
 export const favBoard = (context, {board}) => {
     context.commit(types.FAV_BOARD, { board })
+    app.$store.dispatch('addActivity', { boardId: board.id, action: 'favourited', element: board.board_name })
 
     app.$http.put('http://localhost:3000/boards/' + board.id, board).then((response) => {
         console.log(response.body)
     }, (response) => {
         console.log(response)
     });
+}
+
+export const addActivity = (context, {boardId, action, element}) => {
+    let newLog;
+    // if (where == null) {
+        newLog = " " + action + " \"" + element + "\"";
+    // } else {
+        // newLog = " " + action + " \"" + element + "\" from \"" + where + "\"";
+    // }
+    let newActivity = {
+        "boardId": boardId,
+        "date": new Date(),
+        "log": newLog
+    }
+
+    app.$http.post('http://localhost:3000/activities', newActivity).then((response) => {
+        context.commit(types.ADD_ACTIVITY, { boardId, newActivity })
+    }, (response) => {
+        console.log(response)
+    });
+
+}
+
+export const getActivity = (context, {boardId}) => {
+    return new Promise((resolve, reject) => {
+        app.$http.get('http://localhost:3000/activities?boardId=' + boardId).then((response) => {
+            // this.activities = response.body;
+            context.commit(types.GET_ACTIVITY, { boardId, activities: response.body })
+            resolve()
+
+        }, (response) => {
+            console.log(response)
+        })
+    })
 }
 

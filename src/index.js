@@ -8,6 +8,7 @@ import List from './components/List.vue'
 import Card from './components/Card.vue'
 import Signup from './components/Signup.vue'
 import Login from './components/Login.vue'
+import Activity from './components/Activity.vue'
 import auth from './auth'
 import store from './store'
 import Sortable from '../vue-sortable-master/vue-sortable.js'
@@ -25,6 +26,7 @@ Vue.component('app1', App)
 Vue.component('board', Board)
 Vue.component('list', List)
 Vue.component('card', Card)
+Vue.component('activity', Activity)
 // Vue.component('home', Home)
 // Vue.component('login', Login)
 // var Board = Vue.extend({

@@ -19,4 +19,7 @@ export const ARCHIVE_LIST = 'ARCHIVE_LIST'
 export const SET_LISTS = 'SET_LISTS'
 export const FAV_BOARD = 'FAV_BOARD'
 
+export const GET_ACTIVITY = 'GET_ACTIVITY'
+export const ADD_ACTIVITY = 'ADD_ACTIVITY'
+
 

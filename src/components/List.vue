@@ -75,7 +75,7 @@ import { mapActions, mapMutations } from 'vuex'
         listEditable: false,
         listName: '',
         newCard: {
-          "listId": 'this.listData.id',
+          "listId": this.listData.id,
           "card_name": '',
           "desc": ''
         },

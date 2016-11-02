@@ -69,6 +69,8 @@
 			    :key="list.id">
 		</list>
     </div>
+	<activity v-for="activity in activities" :activity-data="activity" :key="activity.id"></activity>
+
 
 </div>
 </template>
@@ -93,6 +95,9 @@ export default {
 		},
 		lists() {
 			return this.$store.state.lists[this.boardData.id]
+		},
+		activities() {
+			return this.$store.state.activities[this.boardData.id]
 		}
 	},
 

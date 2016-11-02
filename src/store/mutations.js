@@ -11,6 +11,7 @@ export const state = {
     activeBoard: {},
     activeList: {},
     activeCard: {},
+    activities: {},
     boardLists: []
 }
 
@@ -42,6 +43,9 @@ export const mutations = {
         app.$set(state.cards, payload.listId, payload.cards)
     },
 
+    [types.GET_ACTIVITY](state, payload) {
+        app.$set(state.activities, payload.boardId, payload.activities)
+    },
     [types.ADD_BOARD](state, board) {
         board.hash = '#board' + board.id
         board.param = 'board' + board.id
@@ -77,7 +81,7 @@ export const mutations = {
         card.desc = desc
     },
     [types.ARCHIVE_LIST](state, {list}) {
-        list.archived = true
+        list.archived = !list.archived
     },
     [types.SET_LISTS](state, {lists}) {
         state.boardLists = lists
@@ -87,6 +91,9 @@ export const mutations = {
     },
     [types.ADD_CARD](state, {card}) {
         state.cards[card.listId].push(card)
+    },
+    [types.ADD_ACTIVITY](state, payload) {
+        state.activities[payload.boardId].push(payload.newActivity)
     },
     [types.FAV_BOARD](state, {board}) {
         board.favourite = !board.favourite
