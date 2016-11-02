@@ -32,7 +32,8 @@
 		</div>
 		</span>
 		<div>
-			<card v-for="card in cards" :card-data="card" :key="card.id"></card>
+			<card v-for="card in cards" :card-data="card" :key="card.id"
+			></card>
 		</div>
 
 

@@ -97,6 +97,11 @@ export const getCards = (context, {listId}) => {
         app.$http.get('http://localhost:3000/cards?listId=' + listId).then((response) => {
             context.commit(types.GET_CARDS, { listId, cards: response.body }, { silent: true })
             //   this.lists = response.body;
+            
+            for (let i = 0; i < response.body.length; i++) {
+                app.$store.dispatch('getComments', { cardId: response.body[i].id })
+
+            }
             resolve()
 
         }, (response) => {
@@ -193,9 +198,9 @@ export const favBoard = (context, {board}) => {
 export const addActivity = (context, {boardId, action, element}) => {
     let newLog;
     // if (where == null) {
-        newLog = " " + action + " \"" + element + "\"";
+    newLog = " " + action + " \"" + element + "\"";
     // } else {
-        // newLog = " " + action + " \"" + element + "\" from \"" + where + "\"";
+    // newLog = " " + action + " \"" + element + "\" from \"" + where + "\"";
     // }
     let newActivity = {
         "boardId": boardId,
@@ -208,7 +213,6 @@ export const addActivity = (context, {boardId, action, element}) => {
     }, (response) => {
         console.log(response)
     });
-
 }
 
 export const getActivity = (context, {boardId}) => {
@@ -222,5 +226,28 @@ export const getActivity = (context, {boardId}) => {
             console.log(response)
         })
     })
+}
+
+export const getComments = (context, {cardId}) => {
+    return new Promise((resolve, reject) => {
+        app.$http.get('http://localhost:3000/comments?cardId=' + cardId).then((response) => {
+            // this.activities = response.body;
+            context.commit(types.GET_COMMENTS, { cardId, comments: response.body })
+            resolve()
+
+        }, (response) => {
+            console.log(response)
+        })
+    })
+}
+
+export const addComment = (context, {comment}) => {
+    app.$http.post('http://localhost:3000/comments', comment).then((response) => {
+        console.log('dodano karte')
+        console.log(response.body)
+        context.commit(types.ADD_CARD, { card: response.body })
+    }, (response) => {
+        console.log(response)
+    });
 }
 

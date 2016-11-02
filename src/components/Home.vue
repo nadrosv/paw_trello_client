@@ -2,7 +2,9 @@
 	<!--<div class="col-md-8">-->
 	<div class="home-area">
 		<div>
+
       <div class="search-container">
+
         <input class="input-search" v-model="searchPhrase" placeholder="Search"></input>	
       </div>	
 			<button class="btn btn-primary" data-toggle="modal" data-target="#home-modal">Dodaj tablice</button>

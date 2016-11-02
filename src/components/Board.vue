@@ -1,6 +1,7 @@
 <template>
 	<!--<div class="col-md-8">-->
 	<div class="board-area board">
+	
 	{{$route.params.boardId}}
 	<span v-if="editing">
             <input v-model="boardName">
@@ -24,6 +25,7 @@
 			:class="[boardData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
 		</span>
   	</button>
+
 	  <!-- Archived button -->
 	<div class="btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -37,7 +39,7 @@
 		</ul>
 	</div>
 	<router-view :list-data="selectedList"></router-view>
-
+	
 	<!--Modal-->
 	<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="board-modal-label" aria-hidden="true">
 		<div class="modal-dialog" role="document">

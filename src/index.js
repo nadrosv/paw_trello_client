@@ -9,6 +9,7 @@ import Card from './components/Card.vue'
 import Signup from './components/Signup.vue'
 import Login from './components/Login.vue'
 import Activity from './components/Activity.vue'
+import CardView from './components/CardView.vue'
 import auth from './auth'
 import store from './store'
 import Sortable from '../vue-sortable-master/vue-sortable.js'
@@ -27,6 +28,7 @@ Vue.component('board', Board)
 Vue.component('list', List)
 Vue.component('card', Card)
 Vue.component('activity', Activity)
+Vue.component('cardview', CardView)
 // Vue.component('home', Home)
 // Vue.component('login', Login)
 // var Board = Vue.extend({
@@ -58,6 +60,13 @@ const routes = [
                         name: 'Lists',
                     }
                 ]
+            },
+            {
+                path: 'board/:boardId/list/:listId/card/:cardId',
+                components: {
+                    a: CardView
+                },
+                name: 'CardView',
             }
         ]
     },

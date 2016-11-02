@@ -12,6 +12,7 @@ export const state = {
     activeList: {},
     activeCard: {},
     activities: {},
+    comments: {},
     boardLists: []
 }
 
@@ -73,8 +74,8 @@ export const mutations = {
         list.favourite = !list.favourite
     },
     [types.EDIT_LIST](state, {list, name, pos}) {
-       list.list_name = name
-       list.pos = pos
+        list.list_name = name
+        list.pos = pos
     },
     [types.EDIT_CARD](state, {card, name, desc}) {
         card.card_name = name
@@ -103,6 +104,10 @@ export const mutations = {
     },
     [types.DEL_CARD](state, {card}) {
         state.cards[card.listId].splice(state.cards[card.listId].indexOf(card), 1)
+    },
+    [types.GET_COMMENTS](state, payload) {
+        app.$set(state.comments, payload.cardId, payload.comments)
+
     }
 }
 
