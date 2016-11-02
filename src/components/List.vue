@@ -50,8 +50,8 @@
 					<div class="modal-body">
 						<p>
 							Nazwa
-							<input v-model="newCard.card_name"> Opis
-							<input v-model="newCard.desc">
+							<input v-model="newName"> Opis
+							<input v-model="newDesc">
 						</p>
 					</div>
 					<div class="modal-footer">
@@ -75,13 +75,12 @@ import { mapActions, mapMutations } from 'vuex'
       return {
         listEditable: false,
         listName: '',
-        newCard: {
-          "listId": this.listData.id,
-          "card_name": '',
-          "desc": ''
-        },
-        listModal: '#modal-list',
-        listParam: 'modal-list'
+				newName: '',
+				newDesc: '',
+
+        listModal: '#modal-list' + this.listData.id,
+        listParam: 'modal-list' + this.listData.id,
+				cards: {}
 
       }
     },
@@ -101,16 +100,21 @@ import { mapActions, mapMutations } from 'vuex'
     },
     methods: {
       ...mapActions([
-	  'getCards',
+	  	'getCards',
       'editList',
       'toggleFavList',
       'archiveList',
-	  'addCard',
-	  'delList'
+	  	'addCard',
+	  	'delList'
     ]),
 
     save() {
-		this.addCard({card: this.newCard})
+			let newCard = {
+				listId: this.listData.id,
+				card_name: this.newName,
+				desc: this.newDesc
+			}
+		this.addCard({card: newCard})
     },
     saveList() {
         this.listEditable = false

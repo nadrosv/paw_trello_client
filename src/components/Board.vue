@@ -2,7 +2,6 @@
 	<!--<div class="col-md-8">-->
 	<div class="board-area board">
 	
-	{{$route.params.boardId}}
 	<span v-if="editing">
             <input v-model="boardName">
             <button class="btn btn-primary" v-on:click="edit">OK</button>
@@ -64,7 +63,7 @@
 		</div>
 	</div>
 
-	<div v-show="selectedList === undefined" class="list-container" v-sortable="{onStart: onStart, onEnd: onEnd, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost'}">
+	<div v-show="this.$route.params.listId === undefined" class="list-container" v-sortable="{onStart: onStart, onEnd: onEnd, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost'}">
 		<list v-for="(list,k,i) in lists" 
 			    v-show="!list.archived"
 			    :list-data="list"
@@ -173,7 +172,11 @@ export default {
 	// },
  watch: {
     '$route' (to, from) {
+
+			if(to.params.listId !== undefined) {
 			this.selectedList = (this.$store.state.lists[this.$store.state.activeBoard.id])[to.params.listId]
+			}
+ 				
     //   console.log(to)
     }
   }
