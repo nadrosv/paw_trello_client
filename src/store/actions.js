@@ -22,8 +22,8 @@ export const getBoardLists = (context, {board}) => {
 //BOARDS
 export const addBoard = (context, {board}) => {
     app.$http.post('http://localhost:3000/boards', board).then((response) => {
-        console.log('dodano board')
         context.commit(types.ADD_BOARD, response.body)
+        app.$store.dispatch('addActivity', { action: 'added board', element: board_boardname })
     }, (response) => {
         console.log(response)
     });
@@ -32,8 +32,9 @@ export const addBoard = (context, {board}) => {
 export const editBoard = (context, {boardData, boardName}) => {
     boardData.board_name = boardName
     app.$http.put('http://localhost:3000/boards/' + boardData.id, boardData).then((response) => {
-
         context.commit(types.EDIT_BOARD, { boardData, boardName })
+        app.$store.dispatch('addActivity', { action: 'edited list', element: boardName })
+
     }, (response) => {
         console.log(response)
     });
@@ -42,6 +43,8 @@ export const editBoard = (context, {boardData, boardName}) => {
 export const delBoard = (context, {board}) => {
     app.$http.delete('http://localhost:3000/boards/' + context.state.activeBoard.id).then((response) => {
         context.commit(types.DEL_BOARD, { board })
+        app.$store.dispatch('addActivity', { action: 'deleted board', element: board.board_name })
+
     }, (response) => {
         console.log(response)
     });
@@ -50,6 +53,8 @@ export const delBoard = (context, {board}) => {
 export const delList = (context, {list}) => {
     app.$http.delete('http://localhost:3000/lists/' + list.id).then((response) => {
         context.commit(types.DEL_LIST, { list })
+        app.$store.dispatch('addActivity', { action: 'deleted list', element: list.list_name })
+
     }, (response) => {
         console.log(response)
     });
@@ -58,6 +63,8 @@ export const delList = (context, {list}) => {
 export const delCard = (context, {card}) => {
     app.$http.delete('http://localhost:3000/cards/' + card.id).then((response) => {
         context.commit(types.DEL_CARD, { card })
+        app.$store.dispatch('addActivity', { action: 'deleted card', element: card.card_name })
+
     }, (response) => {
         console.log(response)
     });
@@ -97,7 +104,7 @@ export const getCards = (context, {listId}) => {
         app.$http.get('http://localhost:3000/cards?listId=' + listId).then((response) => {
             context.commit(types.GET_CARDS, { listId, cards: response.body }, { silent: true })
             //   this.lists = response.body;
-            
+
             for (let i = 0; i < response.body.length; i++) {
                 app.$store.dispatch('getComments', { cardId: response.body[i].id })
 
@@ -117,7 +124,6 @@ export const getComps = (context) => {
             app.$store.dispatch('getActivity', { boardId: app.$store.state.comp[i].id })
             app.$store.dispatch('getLists', { boardId: app.$store.state.comp[i].id }).then(() => {
                 for (let j = 0; j < app.$store.state.lists[app.$store.state.comp[i].id].length; j++) {
-                    // console.log((app.$store.state.lists[app.$store.state.comp[i].id])[j].id)
                     app.$store.dispatch('getCards', { listId: (app.$store.state.lists[app.$store.state.comp[i].id])[j].id })
                 }
             })
@@ -126,28 +132,28 @@ export const getComps = (context) => {
 }
 
 export const toggleFavList = (context, {list}) => {
-    context.commit(types.FAV_LIST, { list })
     app.$http.put('http://localhost:3000/lists/' + list.id, list).then((response) => {
+        context.commit(types.FAV_LIST, { list })
+        app.$store.dispatch('addActivity', { action: 'favourited card', element: list.list_name })
+
     }, (response) => {
         console.log(response)
     });
 }
 export const editList = (context, {list, name, pos}) => {
-    // let newList = {...list, list_name: name, pos: pos}
-
     app.$http.put('http://localhost:3000/lists/' + list.id, { boardId: list.boardId, list_name: name, pos: pos }).then((response) => {
         context.commit(types.EDIT_LIST, { list, name, pos })
-        console.log(response.body)
+        app.$store.dispatch('addActivity', { action: 'edited list', element: list.list_name })
     }, (response) => {
         console.log(response)
     });
 }
 
 export const editCard = (context, {card, name, desc}) => {
-    // console.log(editedCard)
     app.$http.put('http://localhost:3000/cards/' + card.id, { listId: card.listId, card_name: name, desc: desc }).then((response) => {
-        // console.log(response.body)
         context.commit(types.EDIT_CARD, { card, name, desc })
+        app.$store.dispatch('addActivity', { action: 'edited card', element: card.card_name })
+
     }, (response) => {
         console.log(response)
     });
@@ -155,10 +161,9 @@ export const editCard = (context, {card, name, desc}) => {
 
 export const archiveList = (context, {list}) => {
     context.commit(types.ARCHIVE_LIST, { list })
-
     app.$http.put('http://localhost:3000/lists/' + list.id, list).then((response) => {
-        console.log(response.body)
-        // context.commit(types.EDIT_LIST, { list })
+        app.$store.dispatch('addActivity', { action: 'archived list', element: list.list_name })
+
     }, (response) => {
         console.log(response)
     });
@@ -166,8 +171,8 @@ export const archiveList = (context, {list}) => {
 
 export const addList = (context, {list}) => {
     app.$http.post('http://localhost:3000/lists', list).then((response) => {
-        console.log('dodano liste')
-        console.log(response.body)
+        app.$store.dispatch('addActivity', { action: 'added list', element: list.list_name })
+
         context.commit(types.ADD_LIST, { list: response.body })
     }, (response) => {
         console.log(response)
@@ -176,8 +181,7 @@ export const addList = (context, {list}) => {
 
 export const addCard = (context, {card}) => {
     app.$http.post('http://localhost:3000/cards', card).then((response) => {
-        console.log('dodano karte')
-        console.log(response.body)
+        app.$store.dispatch('addActivity', { action: 'added card', element: card.card_name })
         context.commit(types.ADD_CARD, { card: response.body })
     }, (response) => {
         console.log(response)
@@ -186,7 +190,7 @@ export const addCard = (context, {card}) => {
 
 export const favBoard = (context, {board}) => {
     context.commit(types.FAV_BOARD, { board })
-    app.$store.dispatch('addActivity', { boardId: board.id, action: 'favourited', element: board.board_name })
+    app.$store.dispatch('addActivity', { action: 'favourited', element: board.board_name })
 
     app.$http.put('http://localhost:3000/boards/' + board.id, board).then((response) => {
         console.log(response.body)
@@ -195,21 +199,17 @@ export const favBoard = (context, {board}) => {
     });
 }
 
-export const addActivity = (context, {boardId, action, element}) => {
-    let newLog;
-    // if (where == null) {
-    newLog = " " + action + " \"" + element + "\"";
-    // } else {
-    // newLog = " " + action + " \"" + element + "\" from \"" + where + "\"";
-    // }
+export const addActivity = (context, {action, element}) => {
+    let newLog = auth.user.username + " " + action + " \"" + element + "\"";
+
     let newActivity = {
-        "boardId": boardId,
+        "boardId": app.$store.state.activeBoard.id,
         "date": new Date(),
         "log": newLog
     }
 
     app.$http.post('http://localhost:3000/activities', newActivity).then((response) => {
-        context.commit(types.ADD_ACTIVITY, { boardId, newActivity })
+        context.commit(types.ADD_ACTIVITY, { newActivity })
     }, (response) => {
         console.log(response)
     });
@@ -218,7 +218,6 @@ export const addActivity = (context, {boardId, action, element}) => {
 export const getActivity = (context, {boardId}) => {
     return new Promise((resolve, reject) => {
         app.$http.get('http://localhost:3000/activities?boardId=' + boardId).then((response) => {
-            // this.activities = response.body;
             context.commit(types.GET_ACTIVITY, { boardId, activities: response.body })
             resolve()
 
@@ -231,7 +230,6 @@ export const getActivity = (context, {boardId}) => {
 export const getComments = (context, {cardId}) => {
     return new Promise((resolve, reject) => {
         app.$http.get('http://localhost:3000/comments?cardId=' + cardId).then((response) => {
-            // this.activities = response.body;
             context.commit(types.GET_COMMENTS, { cardId, comments: response.body })
             resolve()
 
@@ -243,9 +241,9 @@ export const getComments = (context, {cardId}) => {
 
 export const addComment = (context, {comment}) => {
     app.$http.post('http://localhost:3000/comments', comment).then((response) => {
-        console.log('dodano kom')
-        console.log(response.body)
         context.commit(types.ADD_COMMENT, { comment: response.body })
+        app.$store.dispatch('addActivity', { action: 'added comment', element: comment.text })
+
     }, (response) => {
         console.log(response)
     });

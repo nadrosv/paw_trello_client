@@ -8,7 +8,8 @@ export default {
 
     user: {
         authenticated: false,
-        id: 0
+        id: 0,
+        username: localStorage.getItem('username')
     },
 
     login(context, creds, redirect) {
@@ -18,10 +19,13 @@ export default {
                 this.user.authenticated = true
                 console.log(response.body[0].id)
                 this.user.id = response.body[0].id
+                this.user.username = response.body[0].userName
                 localStorage.setItem('id_token', response.body[0].id)
+                localStorage.setItem('username', response.body[0].userName)
+
                 router.push('/dashboard')
                 // if (redirect) {
-                    // router.go(redirect)
+                // router.go(redirect)
                 // }
             } else {
                 context.error = 'Brak takiego uzytkownika'
@@ -35,19 +39,19 @@ export default {
         if (creds.userName === '' || creds.password === '') {
             context.error = 'Podaj nazwę użytkoniwa i haslo'
         } else {
-        context.$http.post(SIGNUP_URL, creds).then((response) => {
-            localStorage.setItem('id_token', response.id_token)
+            context.$http.post(SIGNUP_URL, creds).then((response) => {
+                localStorage.setItem('id_token', response.id_token)
 
-            // this.user.authenticated = true
+                // this.user.authenticated = true
 
-            if (redirect) {
-                router.push(redirect)
-            }
+                if (redirect) {
+                    router.push(redirect)
+                }
 
-        }, (response) => {
-            context.error = response
-            console.log(response)
-        })
+            }, (response) => {
+                context.error = response
+                console.log(response)
+            })
         }
     },
 

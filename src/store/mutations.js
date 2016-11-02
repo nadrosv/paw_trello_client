@@ -97,7 +97,7 @@ export const mutations = {
         state.comments[comment.cardId].push(comment)
     },
     [types.ADD_ACTIVITY](state, payload) {
-        state.activities[payload.boardId].push(payload.newActivity)
+        state.activities[state.activeBoard.id].push(payload.newActivity)
     },
     [types.FAV_BOARD](state, {board}) {
         board.favourite = !board.favourite
