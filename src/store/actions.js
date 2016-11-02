@@ -169,6 +169,16 @@ export const archiveList = (context, {list}) => {
     });
 }
 
+export const archiveCard = (context, {card}) => {
+    context.commit(types.ARCHIVE_CARD, { card })
+    app.$http.put('http://localhost:3000/cards/' + card.id, card).then((response) => {
+        app.$store.dispatch('addActivity', { action: 'archived card', element: card.card_name })
+
+    }, (response) => {
+        console.log(response)
+    });
+}
+
 export const addList = (context, {list}) => {
     app.$http.post('http://localhost:3000/lists', list).then((response) => {
         app.$store.dispatch('addActivity', { action: 'added list', element: list.list_name })

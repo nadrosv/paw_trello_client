@@ -84,6 +84,9 @@ export const mutations = {
     [types.ARCHIVE_LIST](state, {list}) {
         list.archived = !list.archived
     },
+    [types.ARCHIVE_CARD](state, {card}) {
+        card.archived = !card.archived
+    },
     [types.SET_LISTS](state, {lists}) {
         state.boardLists = lists
     },

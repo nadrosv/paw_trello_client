@@ -9,9 +9,13 @@
 		<button class="btn btn-default" data-toggle="modal" :data-target="hashModal">
       <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
-		<button class="btn btn-default" v-on:click="delCard({ card: cardData })">
+		<button class="btn btn-default" v-on:click="delCard({ card: cardData })" v-show="cardData.archived">
       <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
     </button>
+			<button class="btn btn-default" v-on:click="archiveCard({card: cardData})">
+          <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
+      </button>
+
 		<button class="btn btn-default" data-toggle="modal" :data-target="hashModal1">
       <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
     </button>
@@ -76,7 +80,8 @@ import { mapActions, mapMutations } from 'vuex'
     methods: {
       ...mapActions([
 	      'editCard',
-        'delCard'
+        'delCard',
+        'archiveCard'
     ]),
     save() {
       this.editCard({card: this.cardData, name: this.newName, desc: this.newDesc})

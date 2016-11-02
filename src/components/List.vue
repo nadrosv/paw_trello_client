@@ -112,7 +112,8 @@ import { mapActions, mapMutations } from 'vuex'
 			let newCard = {
 				listId: this.listData.id,
 				card_name: this.newName,
-				desc: this.newDesc
+				desc: this.newDesc,
+				archived: false
 			}
 		this.addCard({card: newCard})
     },
