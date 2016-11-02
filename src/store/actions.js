@@ -243,9 +243,9 @@ export const getComments = (context, {cardId}) => {
 
 export const addComment = (context, {comment}) => {
     app.$http.post('http://localhost:3000/comments', comment).then((response) => {
-        console.log('dodano karte')
+        console.log('dodano kom')
         console.log(response.body)
-        context.commit(types.ADD_CARD, { card: response.body })
+        context.commit(types.ADD_COMMENT, { comment: response.body })
     }, (response) => {
         console.log(response)
     });

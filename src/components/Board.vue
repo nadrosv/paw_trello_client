@@ -173,11 +173,6 @@ export default {
 	// },
  watch: {
     '$route' (to, from) {
-	console.log(to.params.listId)
-	console.log((this.$store.state.lists[this.$store.state.activeBoard.id])[to.params.listId])
-	console.log(from.params.boardId)
-	console.log((this.$store.state.lists[this.boardData.id])[to.params.listId])
-	// console.log((this.$store.state.lists[to.params.boardId])[to.params.listId])
 			this.selectedList = (this.$store.state.lists[this.$store.state.activeBoard.id])[to.params.listId]
     //   console.log(to)
     }

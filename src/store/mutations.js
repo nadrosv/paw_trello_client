@@ -93,6 +93,9 @@ export const mutations = {
     [types.ADD_CARD](state, {card}) {
         state.cards[card.listId].push(card)
     },
+    [types.ADD_COMMENT](state, {comment}) {
+        state.comments[comment.cardId].push(comment)
+    },
     [types.ADD_ACTIVITY](state, payload) {
         state.activities[payload.boardId].push(payload.newActivity)
     },

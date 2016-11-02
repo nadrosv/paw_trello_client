@@ -4,6 +4,11 @@
             {{cardviewData.desc}}
             Komentarze
             <p v-for="comm in comments" :key="comm.id">{{comm.text}}</p>
+            Dodaj Komentarz
+            <input v-model="commText">
+            <button class="btn btn-default" v-on:click="saveComment()">Zapisz</button>
+
+
 
     </div>   
 </template>
@@ -14,6 +19,7 @@ import { mapActions, mapMutations } from 'vuex'
   export default {
     data() {
       return {
+          commText: ''
 
         // newName: this.cardviewData.card_name,
         // newDesc: this.cardviewData.desc,
@@ -29,10 +35,17 @@ import { mapActions, mapMutations } from 'vuex'
     },
     methods: {
       ...mapActions([
-
+          'addComment'
     ]),
     back() {
         this.$router.go(-1)
+    },
+    saveComment() {
+        let comm = {
+            cardId: this.cardviewData.id,
+            text: this.commText
+        }
+        this.addComment({comment: comm})
     }
   },
   props: ['cardviewData']
