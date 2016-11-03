@@ -108,6 +108,10 @@ import { mapActions, mapMutations } from 'vuex'
     overflow-wrap: break-word;
     word-wrap: break-word;
 	}
+
+	.card-area:hover {
+    background-color: #ddd;
+  }
 	
 	.delete-card {
 		margin-right: 10em;

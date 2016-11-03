@@ -130,26 +130,31 @@ import { mapActions, mapMutations } from 'vuex'
 
 
 <style scoped>
-    .nav-pills {
-      font-size: 17px;
-    }
-    .nav-pills>li>a {
-      background-color: rgba(217, 129, 112, 0.7);
-      color: rgba(0,0,0,0.7);
-    }
-    .nav-pills>li.active>a {
-      background-color: rgba(217, 129, 112, 1);
-      box-shadow: 0px 10px 20px #999999;
-      color: white;
-    }
-    .nav-pills>li>a:hover {
-      background-color: rgba(217, 129, 112, 0.9);
-    }
-    .btn-search {
-      margin: 7px 0px 7px 0px;
-    }
-    .search-container {
-      width: 100%;
-      text-align: center;
-    }
-  </style>
+  .nav-pills {
+    font-size: 17px;
+  }
+
+  .nav-pills>li>a {
+    background-color: rgba(212, 111, 92, 0.8);
+    color: rgba(0,0,0,0.7);
+  }
+  
+  li>a.router-link-active {
+    background-color: rgba(194, 95, 95, 1);
+    box-shadow: 0px 11px 20px #999999;
+    color: white;
+  }
+
+  .nav-pills>li>a:hover {
+    background-color: rgba(217, 129, 112, 0.9);
+  }
+
+  .btn-search {
+    margin: 7px 0px 7px 0px;
+  }
+
+  .search-container {
+    width: 100%;
+    text-align: center;
+  }
+</style>

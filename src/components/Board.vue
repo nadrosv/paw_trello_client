@@ -70,7 +70,12 @@
 			    :key="list.id">
 		</list>
     </div>
-	<activity v-for="activity in activities" :activity-data="activity" :key="activity.id"></activity>
+
+	<button type="button" class="btn btn-info btn-logs" @click="logsVisible=!logsVisible">show logs</button>
+	<div class="super-activity-container" v-show="logsVisible">
+		<p>LOGS:</p>	
+		<activity v-for="activity in activities" :activity-data="activity" :key="activity.id"></activity>
+	</div>
 
 
 </div>
@@ -87,7 +92,8 @@ export default {
 		editing: false,
 		hashModal: '#modal' + this.boardData.id,
         modalParam: 'modal' + this.boardData.id,
-		selectedList: {}
+		selectedList: {},
+		logsVisible: false
 		}
 	},
 	computed: {
@@ -153,7 +159,10 @@ export default {
 				"background-color": "rgba(185, 191, 194, 1)",
 				"transform": "rotate(0deg)"
 			});
-		}
+		},
+
+		
+
 	},
 
 	mounted: function () {
@@ -192,22 +201,31 @@ export default {
 		overflow: hidden;
 	}
 
-  .list-container {
-    display: flex;
-    flex: 1;
-    overflow: auto;   
-    
-    /*position: absolute;*/ 
-    top: 280px; 
-    right: 0; 
-    bottom: 0;
-    left: 0; 
-    
-    white-space: nowrap;
-    overflow-x: auto;
+	.list-container {
+		display: flex;
+		flex: 1;
+		overflow: auto;   
+		
+		/*position: absolute;*/ 
+		top: 280px; 
+		right: 0; 
+		bottom: 0;
+		left: 0; 
+		
+		white-space: nowrap;
+		overflow-x: auto;
   	}
+
 	.ghost {
-	 opacity: 0;
+		opacity: 0;
 	}
+
+	.super-activity-container {
+		background-color: rgba(0,121,186,0.9);
+		padding: 5px;
+		border-radius: 5px;
+		color: rgba(245, 235, 238, 0.9);
+	}
+	
 
 </style>

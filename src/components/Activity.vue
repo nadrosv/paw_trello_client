@@ -22,11 +22,13 @@
 </script>
 
 <style scoped>
-	.activity-container{
-		background: #fff;
+	.activity-container {
+		
 	}
-	.activity-container p{
+	.activity-container p {
 		white-space: normal;
     	overflow-wrap: break-word;
+		margin: 1px;
+
 	}
 </style>
