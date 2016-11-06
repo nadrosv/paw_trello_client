@@ -1,0 +1,9 @@
+{
+  "/api/": "/",
+  "/blog/:resource/:id/show": "/:resource/:id",
+  "/api/list/:id/cards": "/lists/:id?_embed=cards",
+  "/users/:userId/lists": "/users/:userId/boards?_embed=lists",
+  "/boards/:boardId/cards": "/boards/:boardId/lists?_embed=cards",
+  "/api/lists": "/boards?_embed=lists",
+  "lists1": "/lists?_embed=cards"
+}

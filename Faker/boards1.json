@@ -1,0 +1,402 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "userName": "kornel",
+      "password": "secret1"
+    },
+    {
+      "id": 2,
+      "userName": "adam",
+      "password": "secret1"
+    },
+    {
+      "userName": "aaa",
+      "password": "secret",
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "userName": "kornel3",
+      "password": "secret1",
+      "id": 6
+    },
+    {
+      "username": "",
+      "password": "",
+      "id": 7
+    },
+    {
+      "username": "",
+      "password": "",
+      "id": 8
+    },
+    {
+      "username": "k",
+      "password": 1,
+      "id": 9
+    },
+    {
+      "userName": "kornel3",
+      "password": "secret1",
+      "id": 10
+    },
+    {
+      "userName": "adam",
+      "password": "secret1",
+      "id": 11
+    },
+    {
+      "username": "a",
+      "password": "a",
+      "id": 12
+    },
+    {
+      "username": "d",
+      "password": "d",
+      "id": 13
+    },
+    {
+      "username": "kornel43",
+      "password": "ddsd",
+      "id": 14
+    },
+    {
+      "username": "ads",
+      "password": "asd",
+      "id": 15
+    },
+    {
+      "username": "a",
+      "password": "",
+      "id": 16
+    },
+    {
+      "username": "ko",
+      "password": "s",
+      "id": 17
+    },
+    {
+      "username": "asdasdas",
+      "password": 123,
+      "id": 18
+    },
+    {
+      "username": 123,
+      "password": 123,
+      "id": 19
+    },
+    {
+      "username": "asd",
+      "password": "asd",
+      "id": 20
+    },
+    {
+      "userName": "aq",
+      "password": "aq",
+      "id": 21
+    }
+  ],
+  "boards": [
+    {
+      "id": 1,
+      "board_name": "d",
+      "userId": 1,
+      "hash": "#board1",
+      "param": "board1",
+      "favourite": false
+    },
+    {
+      "userId": 1,
+      "board_name": "www",
+      "id": 2,
+      "favourite": false,
+      "hash": "#board2",
+      "param": "board2"
+    },
+    {
+      "userId": 1,
+      "board_name": "x",
+      "id": 3,
+      "favourite": false
+    },
+    {
+      "userId": 21,
+      "board_name": "s",
+      "id": 6
+    },
+    {
+      "userId": 21,
+      "board_name": "ss",
+      "id": 7
+    },
+    {
+      "userId": 1,
+      "board_name": "g",
+      "id": 10,
+      "hash": "#board10",
+      "param": "board10",
+      "favourite": false
+    }
+  ],
+  "lists": [
+    {
+      "boardId": 1,
+      "list_name": "w trakcie2!d",
+      "id": 20,
+      "favourite": false,
+      "pos": 0,
+      "archived": true
+    },
+    {
+      "boardId": 2,
+      "list_name": "ss",
+      "favourite": false,
+      "pos": 1,
+      "id": 25,
+      "archived": true
+    },
+    {
+      "boardId": 2,
+      "list_name": "ff",
+      "favourite": false,
+      "pos": 3,
+      "id": 26,
+      "archived": true
+    },
+    {
+      "boardId": 3,
+      "list_name": "as",
+      "favourite": false,
+      "pos": 1,
+      "id": 30,
+      "archived": true
+    },
+    {
+      "boardId": 1,
+      "list_name": "d",
+      "pos": 3,
+      "id": 58,
+      "archived": true
+    },
+    {
+      "boardId": 2,
+      "list_name": "list 1",
+      "archived": true,
+      "pos": 4,
+      "id": 60
+    },
+    {
+      "boardId": 2,
+      "list_name": "list 5",
+      "archived": false,
+      "pos": 7,
+      "id": 64
+    },
+    {
+      "boardId": 1,
+      "list_name": "ed",
+      "pos": 1,
+      "id": 71,
+      "archived": false
+    },
+    {
+      "boardId": 2,
+      "list_name": "s",
+      "favourite": false,
+      "pos": 4,
+      "archived": false,
+      "id": 73
+    },
+    {
+      "boardId": 1,
+      "list_name": "d",
+      "pos": 2,
+      "id": 74,
+      "archived": true
+    },
+    {
+      "boardId": 1,
+      "list_name": "c",
+      "favourite": false,
+      "pos": 4,
+      "archived": false,
+      "id": 75
+    },
+    {
+      "boardId": 1,
+      "list_name": "t",
+      "favourite": false,
+      "pos": 5,
+      "archived": false,
+      "id": 76
+    },
+    {
+      "boardId": 1,
+      "list_name": "asd",
+      "favourite": false,
+      "pos": 6,
+      "archived": false,
+      "id": 77
+    },
+    {
+      "boardId": 10,
+      "list_name": "asds",
+      "favourite": false,
+      "pos": 0,
+      "archived": true,
+      "id": 78
+    },
+    {
+      "boardId": 10,
+      "list_name": "asdd",
+      "favourite": false,
+      "pos": 1,
+      "archived": false,
+      "id": 79
+    },
+    {
+      "boardId": 10,
+      "list_name": "s",
+      "favourite": false,
+      "pos": 2,
+      "archived": false,
+      "id": 80
+    },
+    {
+      "boardId": 1,
+      "list_name": "f",
+      "favourite": false,
+      "pos": 7,
+      "archived": false,
+      "id": 81
+    }
+  ],
+  "cards": [
+    {
+      "name": "Trello",
+      "desc": "Opis",
+      "id": 3,
+      "archived": false
+    },
+    {
+      "name": "Trello",
+      "desc": "Opis",
+      "id": 4,
+      "archived": false
+    },
+    {
+      "id": 5,
+      "archived": false
+    },
+    {
+      "listId": 20,
+      "card_name": "Obiad",
+      "desc": "",
+      "id": 7,
+      "archived": true
+    },
+    {
+      "listId": 20,
+      "id": 8,
+      "card_name": "Zakupy",
+      "archived": true
+    },
+    {
+      "listId": 20,
+      "card_name": "Kolacja",
+      "desc": "Opis",
+      "id": 9,
+      "archived": true
+    },
+    {
+      "card_name": "Logowanie13dgrfe",
+      "desc": "d",
+      "id": 10,
+      "archived": true
+    },
+    {
+      "card_name": "Rejestracja3",
+      "desc": "",
+      "id": 11,
+      "archived": true
+    },
+    {
+      "card_name": "Usuwaniedd",
+      "desc": "",
+      "id": 12,
+      "archived": true
+    },
+    {
+      "card_name": "ddd",
+      "desc": "",
+      "id": 13,
+      "archived": true
+    },
+    {
+      "card_name": "aaaa",
+      "desc": "",
+      "id": 14,
+      "archived": false
+    },
+    {
+      "card_name": "dd",
+      "desc": "",
+      "id": 15,
+      "archived": false
+    },
+    {
+      "card_name": "ss",
+      "desc": "",
+      "id": 16,
+      "archived": false
+    },
+    {
+      "listId": 71,
+      "card_name": "bdd",
+      "desc": "",
+      "id": 24
+    },
+    {
+      "listId": "this.listData.id",
+      "card_name": "d",
+      "desc": "",
+      "id": 25
+    },
+    {
+      "listId": "this.listData.id",
+      "card_name": "d",
+      "desc": "",
+      "id": 26
+    },
+    {
+      "listId": 78,
+      "card_name": "rff",
+      "desc": "",
+      "id": 27
+    },
+    {
+      "listId": "this.listData.id",
+      "card_name": "d",
+      "desc": "",
+      "id": 28
+    },
+    {
+      "listId": "this.listData.id",
+      "card_name": "f",
+      "desc": "",
+      "id": 29
+    },
+    {
+      "listId": 78,
+      "card_name": "f",
+      "desc": "",
+      "id": 30
+    }
+  ]
+}
