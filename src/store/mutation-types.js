@@ -3,6 +3,7 @@ export const GET_LISTS = 'GET_LISTS'
 export const GET_CARDS = 'GET_CARDS'
 export const GET_ACTIVITY = 'GET_ACTIVITY'
 export const GET_COMMENTS = 'GET_COMMENTS'
+export const GET_LABELS = 'GET_LABELS'
 
 export const ADD_BOARD = 'ADD_BOARD'
 export const ADD_LIST = 'ADD_LIST'

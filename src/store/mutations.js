@@ -13,7 +13,8 @@ export const state = {
     activeCard: {},
     activities: {},
     comments: {},
-    boardLists: []
+    boardLists: [],
+    globalLabels: []
 }
 
 // we can use the ES2015 computed property name feature
@@ -52,6 +53,10 @@ export const mutations = {
     [types.GET_ACTIVITY](state, payload) {
         app.$set(state.activities, payload.boardId, payload.activities)
     },
+    [types.GET_LABELS](state, payload) {
+        state.globalLabels = payload.labels
+    },
+
     [types.ADD_BOARD](state, board) {
         board.hash = '#board' + board.id
         board.param = 'board' + board.id

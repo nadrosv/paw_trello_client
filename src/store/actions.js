@@ -128,6 +128,8 @@ export const getComps = (context) => {
                 }
             })
         }
+    }).then(() => {
+        app.$store.dispatch('getLabels')
     })
 }
 
@@ -241,6 +243,18 @@ export const getComments = (context, {cardId}) => {
     return new Promise((resolve, reject) => {
         app.$http.get('http://localhost:3000/comments?cardId=' + cardId).then((response) => {
             context.commit(types.GET_COMMENTS, { cardId, comments: response.body })
+            resolve()
+
+        }, (response) => {
+            console.log(response)
+        })
+    })
+}
+
+export const getLabels = (context) => {
+    return new Promise((resolve, reject) => {
+        app.$http.get('http://localhost:3000/labels').then((response) => {
+            context.commit(types.GET_LABELS, { labels: response.body })
             resolve()
 
         }, (response) => {

@@ -20,6 +20,8 @@
       <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
     </button>
 	</div>
+	<div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }"/>
+	
 
 	<!--Modal-->
 	<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -77,6 +79,17 @@ import { mapActions, mapMutations } from 'vuex'
         modalParam1: 'modal-card-1' + this.cardData.id
       }
     },
+		computed: {
+			labels() {
+				let cardLabelsText = this.cardData.labels; //"12"
+				let cardLabels = []
+				for (let i = 0; i < cardLabelsText.length; i++) {
+					let n = cardLabelsText.charAt(i)
+					cardLabels.push(this.$store.state.globalLabels[n])
+				}
+				return cardLabels
+			}
+		},
     methods: {
       ...mapActions([
 	      'editCard',
@@ -117,5 +130,11 @@ import { mapActions, mapMutations } from 'vuex'
 		margin-right: 10em;
 		position: absolute;
 		cursor: pointer;
+	}
+
+	.card-label {
+		width: 50px;
+		height: 10px;
+		margin: 5px;
 	}
 </style>
