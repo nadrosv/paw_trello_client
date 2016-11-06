@@ -20,6 +20,7 @@
     "babel-preset-stage-3": "^6.17.0",
     "babel-runtime": "^5.8.0",
     "css-loader": "^0.21.0",
+    "mocha-loader": "^1.0.0",
     "style-loader": "^0.13.0",
     "vue-hot-reload-api": "^1.2.1",
     "vue-html-loader": "^1.0.0",
@@ -29,10 +30,11 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "mocha": "^3.1.2",
+    "vue": "^2.0.3",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.0.1",
     "vue-strap": "^1.1.29",
-    "vue": "^2.0.3",
     "vuex": "^2.0.0"
   }
 }

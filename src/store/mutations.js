@@ -41,6 +41,11 @@ export const mutations = {
 
     },
     [types.GET_CARDS](state, payload) {
+        payload.cards.sort(function (a, b) {
+            if (a.pos < b.pos) return -1;
+            if (a.pos > b.pos) return 1;
+            return 0;
+        })
         app.$set(state.cards, payload.listId, payload.cards)
     },
 
@@ -77,9 +82,10 @@ export const mutations = {
         list.list_name = name
         list.pos = pos
     },
-    [types.EDIT_CARD](state, {card, name, desc}) {
+    [types.EDIT_CARD](state, {card, name, pos, desc}) {
         card.card_name = name
         card.desc = desc
+        card.pos = pos
     },
     [types.ARCHIVE_LIST](state, {list}) {
         list.archived = !list.archived

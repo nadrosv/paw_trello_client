@@ -13,7 +13,7 @@
 	</button>
 	</span>
 	<!--{{newName}}-->
-	<button class="btn btn-primary" data-toggle="modal" :data-target="hashModal">Add list
+	<button class="btn btn-primary" data-toggle="modal" :data-target="boardData.hash">Add list
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
 	<button class="btn btn-primary" v-on:click="delBoard({board: boardData})">Remove board
@@ -40,7 +40,7 @@
 	<router-view :list-data="selectedList"></router-view>
 	
 	<!--Modal-->
-	<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="board-modal-label" aria-hidden="true">
+	<div class="modal fade" :id="boardData.param" tabindex="-1" role="dialog" aria-labelledby="board-modal-label" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -63,7 +63,7 @@
 		</div>
 	</div>
 
-	<div v-show="this.$route.params.listId === undefined" class="list-container" v-sortable="{delay: 200,onStart: onStart, onEnd: onEnd, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost'}">
+	<div v-show="this.$route.params.listId === undefined" class="list-container" v-sortable="{delay: 20, onStart: onStart, onEnd: onEnd, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost'}">
 		<list v-for="(list,k,i) in lists" 
 			    v-show="!list.archived"
 			    :list-data="list"
@@ -148,17 +148,17 @@ export default {
 		},
 
     	onStart: function(event) {
-			$(event.item.firstChild).css({
-				"background-color": "rgba(100,141,196,1)",
-				"transform": "rotate(360deg)",
-				"transition-duration": "0.3s"
-			});
+			// $(event.item.firstChild).css({
+			// 	"background-color": "rgba(100,141,196,1)",
+			// 	"transform": "rotate(360deg)",
+			// 	"transition-duration": "0.3s"
+			// });
 		},
      	onEnd: function (event) {
-			$(event.item.firstChild).css({
-				"background-color": "rgba(185, 191, 194, 1)",
-				"transform": "rotate(0deg)"
-			});
+			// $(event.item.firstChild).css({
+			// 	"background-color": "rgba(185, 191, 194, 1)",
+			// 	"transform": "rotate(0deg)"
+			// });
 		},
 
 		

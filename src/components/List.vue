@@ -31,9 +31,8 @@
               </button>
 		</div>
 		</span>
-		<div>
-			<card v-for="card in cards" :card-data="card" :key="card.id"
-			></card>
+		<div v-sortable="{delay: 20, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost'}">
+			<card v-for="card in cards" :card-data="card" :key="card.id"/>
 		</div>
 
 
@@ -105,22 +104,39 @@ import { mapActions, mapMutations } from 'vuex'
       'toggleFavList',
       'archiveList',
 	  	'addCard',
-	  	'delList'
+	  	'delList',
+			'editCard'
     ]),
 
     save() {
+			console.log(this.cards.length)
+			let len = this.cards === undefined ? 0 : this.cards.length
 			let newCard = {
 				listId: this.listData.id,
 				card_name: this.newName,
 				desc: this.newDesc,
-				archived: false
+				archived: false,
+				pos: len
 			}
 		this.addCard({card: newCard})
     },
     saveList() {
         this.listEditable = false
         this.editList({list: this.listData, name: this.listData.list_name, pos: this.listData.pos})
-    }
+    },
+
+		onUpdate: function (event) {
+			this.cards.splice(event.newIndex, 0, this.cards.splice(event.oldIndex, 1)[0])
+			for (let i = 0; i < this.cards.length; i++) {
+				this.cards[i].pos = i
+			}
+			let oldCard = this.cards[event.oldIndex]
+			let newCard = this.cards[event.newIndex]
+
+			this.editCard({ card: oldCard, name: oldCard.card_name, pos: oldCard.pos, desc: oldCard.newDesc })
+			this.editCard({ card: newCard, name: newCard.card_name, pos: newCard.pos, desc: newCard.newDesc })
+
+		}
   },
   mounted: function () {
   this.$nextTick(function () {
@@ -176,5 +192,8 @@ import { mapActions, mapMutations } from 'vuex'
 	
 	.col-fixed-size {
 		width: 340px;
+	}
+		.ghost {
+		opacity: 0;
 	}
 </style>
