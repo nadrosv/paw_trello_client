@@ -31,7 +31,7 @@
               </button>
 		</div>
 		</span>
-		<div v-sortable="{delay: 20, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost'}">
+		<div v-sortable="{delay: 200, onUpdate: onUpdate, forceFallback: true, filter:'.modal-open', ghostClass: 'ghost', handle:'.card-area'}">
 			<card v-for="card in cards" :card-data="card" :key="card.id"/>
 		</div>
 
@@ -109,7 +109,7 @@ import { mapActions, mapMutations } from 'vuex'
     ]),
 
     save() {
-			console.log(this.cards.length)
+			// console.log(this.cards.length)
 			let len = this.cards === undefined ? 0 : this.cards.length
 			let newCard = {
 				listId: this.listData.id,
@@ -126,6 +126,7 @@ import { mapActions, mapMutations } from 'vuex'
     },
 
 		onUpdate: function (event) {
+
 			this.cards.splice(event.newIndex, 0, this.cards.splice(event.oldIndex, 1)[0])
 			for (let i = 0; i < this.cards.length; i++) {
 				this.cards[i].pos = i

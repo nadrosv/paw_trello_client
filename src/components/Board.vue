@@ -63,7 +63,8 @@
 		</div>
 	</div>
 
-	<div v-show="this.$route.params.listId === undefined" class="list-container" v-sortable="{delay: 20, onStart: onStart, onEnd: onEnd, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost'}">
+	<div v-show="this.$route.params.listId === undefined" class="list-container" 
+		 v-sortable="{delay: 20, onStart: onStart, onEnd: onEnd, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost', handle: '.list-name'}">
 		<list v-for="(list,k,i) in lists" 
 			    v-show="!list.archived"
 			    :list-data="list"
