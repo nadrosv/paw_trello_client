@@ -151,9 +151,16 @@ export const editList = (context, {list, name, pos}) => {
     });
 }
 
-export const editCard = (context, {card, name, pos, desc}) => {
-    app.$http.put('http://localhost:3000/cards/' + card.id, { listId: card.listId, card_name: name, pos: pos, desc: desc }).then((response) => {
-        context.commit(types.EDIT_CARD, { card, name, pos, desc })
+export const editCard = (context, {card, name, pos, desc, label}) => {
+    let newLabel
+    if (card.labels !== undefined) {
+        newLabel = card.labels.toString().concat(label)
+    } else {
+        newLabel = label.toString()
+    }
+
+    app.$http.put('http://localhost:3000/cards/' + card.id, { listId: card.listId, card_name: name, pos: pos, desc: desc, labels: newLabel }).then((response) => {
+        context.commit(types.EDIT_CARD, { card, name, pos, desc, newLabel })
         app.$store.dispatch('addActivity', { action: 'edited card', element: card.card_name })
 
     }, (response) => {

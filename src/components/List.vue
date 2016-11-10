@@ -116,7 +116,8 @@ import { mapActions, mapMutations } from 'vuex'
 				card_name: this.newName,
 				desc: this.newDesc,
 				archived: false,
-				pos: len
+				pos: len,
+				labels: ""
 			}
 		this.addCard({card: newCard})
     },

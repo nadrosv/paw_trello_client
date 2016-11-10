@@ -20,7 +20,7 @@
       <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
     </button>
 	</div>
-	<div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }"/>
+	<div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }"></div>
 	
 
 	<!--Modal-->
@@ -81,14 +81,14 @@ import { mapActions, mapMutations } from 'vuex'
     },
 		computed: {
 			labels() {
-				let cardLabelsText = this.cardData.labels; //"12"
-				let cardLabels = []
-				for (let i = 0; i < cardLabelsText.length; i++) {
-					let n = cardLabelsText.charAt(i)
-					cardLabels.push(this.$store.state.globalLabels[n])
+					let cardLabelsText = this.cardData.labels.toString(); //"12"
+					let cardLabels = []
+					for (let i = 0; i < cardLabelsText.length; i++) {
+						let n = cardLabelsText.charAt(i)
+						cardLabels.push(this.$store.state.globalLabels[n])
+					}
+					return cardLabels
 				}
-				return cardLabels
-			}
 		},
     methods: {
       ...mapActions([

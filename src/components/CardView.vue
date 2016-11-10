@@ -1,15 +1,22 @@
 <template>
 	<div class="card-view-area">
-            {{cardviewData.card_name}}
-            {{cardviewData.desc}}
-            Komentarze
-            <p v-for="comm in comments" :key="comm.id">{{comm.text}}</p>
-            Dodaj Komentarz
-            <input v-model="commText">
-            <button class="btn btn-default" v-on:click="saveComment()">Zapisz</button>
-
-
-
+        {{cardviewData.card_name}}
+        {{cardviewData.desc}}
+        Komentarze
+        <p v-for="comm in comments" :key="comm.id">{{comm.text}}</p>
+        Dodaj Komentarz
+        <input v-model="commText">
+        <button class="btn btn-default" v-on:click="saveComment()">Zapisz</button>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="hashModal" aria-expanded="false">
+            Add labels
+        </button>
+        <div class="collapse" :id="modalParam">
+            <div class="well">
+                <button v-for="label in globalLabels" class="card-global-label" 
+                        v-on:click="addLabel(label)" :style="{ 'background-color': label.color }">
+                </button>
+            </div>
+        </div>
     </div>   
 </template>
 
@@ -19,7 +26,9 @@ import { mapActions, mapMutations } from 'vuex'
   export default {
     data() {
       return {
-          commText: ''
+          commText: '',
+          hashModal: '#modal-cardview' + this.cardviewData.id,
+          modalParam: 'modal-cardview' + this.cardviewData.id,
 
         // newName: this.cardviewData.card_name,
         // newDesc: this.cardviewData.desc,
@@ -31,11 +40,16 @@ import { mapActions, mapMutations } from 'vuex'
         // }
             comments() {
                 return this.$store.state.comments[this.cardviewData.id]
+            },
+            globalLabels() {
+                return this.$store.state.globalLabels
+
             }
     },
     methods: {
       ...mapActions([
-          'addComment'
+          'addComment',
+          'editCard'
     ]),
     back() {
         this.$router.go(-1)
@@ -46,6 +60,10 @@ import { mapActions, mapMutations } from 'vuex'
             text: this.commText
         }
         this.addComment({comment: comm})
+    },
+    addLabel(label) {
+        this.editCard({card: this.cardviewData, name: this.cardviewData.card_name, desc: this.cardviewData.desc, label: label.id})
+        console.log(label.color)
     }
   },
   props: ['cardviewData']
@@ -58,12 +76,17 @@ import { mapActions, mapMutations } from 'vuex'
 		background-color: #fff;
 		margin: 8px;
 		padding: 5px;
-    border-radius: 2px;
-    box-shadow: 0px 4px 5px #888888;
-    
-    white-space: normal;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
+        border-radius: 2px;
+        box-shadow: 0px 4px 5px #888888;
+        height: 500px;
+        white-space: normal;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+	}
+    .card-global-label {
+		width: 50px;
+		height: 10px;
+		margin: 5px;
 	}
 	
 </style>
