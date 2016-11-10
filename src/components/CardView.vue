@@ -12,8 +12,9 @@
         </button>
         <div class="collapse" :id="modalParam">
             <div class="well">
-                <button v-for="label in globalLabels" class="card-global-label" 
+                <button v-for="label in globalLabels" class="btn btn-secondary"
                         v-on:click="addLabel(label)" :style="{ 'background-color': label.color }">
+                        {{label.name}}
                 </button>
             </div>
         </div>
