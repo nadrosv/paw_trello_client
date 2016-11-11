@@ -71,18 +71,6 @@ export const delCard = (context, {card}) => {
 }
 
 
-export const getBoards = (context) => {
-    return new Promise((resolve, reject) => {
-
-        app.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
-            context.commit(types.GET_BOARDS, response.body, { silent: true })
-            resolve()
-        }, (response) => {
-            console.log(response)
-        });
-    })
-}
-
 export const getLists = (context, {boardId}) => {
     return new Promise((resolve, reject) => {
 
@@ -131,6 +119,55 @@ export const getComps = (context) => {
     }).then(() => {
         app.$store.dispatch('getLabels')
     })
+}
+
+export const getBoards = (context) => {
+    return new Promise((resolve, reject) => {
+
+        app.$http.get('http://localhost:3000/boards?userId=' + auth.user.id).then((response) => {
+            app.$store.dispatch('setSharedBoards').then(() => {
+                app.$store.dispatch('getSharedBoards').then((boards) => {
+
+                    response.body.push.apply(response.body, boards)
+                    context.commit(types.GET_BOARDS, response.body, { silent: true })
+
+                    resolve()
+                })
+            }, (response) => {
+                console.log(response)
+            });
+        })
+    })
+}
+
+export const setSharedBoards = (context) => {
+    return new Promise((resolve, reject) => {
+        app.$http.get('http://localhost:3000/users?id=' + auth.user.id).then((response) => {
+            context.commit(types.SET_SHARED_BOARDS, response.body[0].sharedBoards, { silent: true })
+            resolve()
+        }, (response) => {
+            console.log(response)
+        });
+    })
+}
+
+export const getSharedBoards = (context) => {
+let boards = []
+let promises = []
+
+for (let i = 0; i < app.$store.state.sharedBoards.length; i++) {
+    promises.push(new Promise((resolve, reject) => {
+        app.$http.get('http://localhost:3000/boards?id=' + app.$store.state.sharedBoards[i]).
+        then((response) => {
+            resolve(response.body[0])
+        }, (response) => {
+            console.log(response)
+        })
+    })
+    )
+}
+
+return Promise.all(promises)
 }
 
 export const toggleFavList = (context, {list}) => {

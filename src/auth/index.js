@@ -9,7 +9,8 @@ export default {
     user: {
         authenticated: false,
         id: 0,
-        username: localStorage.getItem('username')
+        username: localStorage.getItem('username'),
+        sharedBoards: []
     },
 
     login(context, creds, redirect) {
@@ -20,9 +21,10 @@ export default {
                 console.log(response.body[0].id)
                 this.user.id = response.body[0].id
                 this.user.username = response.body[0].userName
+                this.user.sharedBoards = response.body[0].sharedBoards
                 localStorage.setItem('id_token', response.body[0].id)
                 localStorage.setItem('username', response.body[0].userName)
-
+                localStorage.setItem('sharedBoards', response.body[0].sharedBoards)
                 router.push('/dashboard')
                 // if (redirect) {
                 // router.go(redirect)

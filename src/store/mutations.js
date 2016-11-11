@@ -4,6 +4,8 @@ import * as types from './mutation-types'
 
 
 export const state = {
+    sharedBoards: {},
+    user: {},
     comp: [],
     boards: [],
     lists: {},
@@ -20,6 +22,13 @@ export const state = {
 // we can use the ES2015 computed property name feature
 // to use a constant as the function name
 export const mutations = {
+    [types.GET_USER](state,user) {
+        state.user = user
+    },
+    [types.SET_SHARED_BOARDS](state, sharedBoards) {
+        state.sharedBoards = sharedBoards
+    },
+
     [types.GET_BOARDS](state, boards) {
         var i
         for (i = 0; i < boards.length; i++) {

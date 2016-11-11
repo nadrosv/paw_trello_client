@@ -125,11 +125,13 @@ export default {
 		},
 
 		saveList() {
+			let len = this.lists === undefined ? 0 : this.lists.length
+
 			let newListData = {
 				"boardId": this.boardData.id,
 				"list_name": this.newListName,
 				"favourite": false,
-				"pos": this.lists.length,
+				"pos": len,
 				"archived": false
 			}
 			this.addList({ list: newListData })

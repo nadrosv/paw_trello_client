@@ -1,3 +1,4 @@
+export const GET_USER = 'GET_USER'
 export const GET_BOARDS = 'GET_BOARDS'
 export const GET_LISTS = 'GET_LISTS'
 export const GET_CARDS = 'GET_CARDS'
@@ -28,5 +29,6 @@ export const ADD_ACTIVITY = 'ADD_ACTIVITY'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const DEL_COMMENT = 'DEL_COMMENT'
 
+export const SET_SHARED_BOARDS = 'SET_SHARED_BOARDS'
 
 
