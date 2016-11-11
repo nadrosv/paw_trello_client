@@ -23,7 +23,7 @@ export const getBoardLists = (context, {board}) => {
 export const addBoard = (context, {board}) => {
     app.$http.post('http://localhost:3000/boards', board).then((response) => {
         context.commit(types.ADD_BOARD, response.body)
-        app.$store.dispatch('addActivity', { action: 'added board', element: board_boardname })
+        app.$store.dispatch('addActivity', { action: 'added board', element: board.board_name })
     }, (response) => {
         console.log(response)
     });
@@ -70,6 +70,17 @@ export const delCard = (context, {card}) => {
     });
 }
 
+export const getUsers = (context) => {
+    return new Promise((resolve, reject) => {
+        app.$http.get('http://localhost:3000/users/').then((response) => {
+            // context.commit(types.DEL_CARD, { card })
+            // app.$store.dispatch('addActivity', { action: 'deleted card', element: card.card_name })
+            resolve(response.body)
+        }, (response) => {
+            console.log(response)
+        })
+    })
+}
 
 export const getLists = (context, {boardId}) => {
     return new Promise((resolve, reject) => {
@@ -152,22 +163,32 @@ export const setSharedBoards = (context) => {
 }
 
 export const getSharedBoards = (context) => {
-let boards = []
-let promises = []
+    let boards = []
+    let promises = []
 
-for (let i = 0; i < app.$store.state.sharedBoards.length; i++) {
-    promises.push(new Promise((resolve, reject) => {
-        app.$http.get('http://localhost:3000/boards?id=' + app.$store.state.sharedBoards[i]).
-        then((response) => {
-            resolve(response.body[0])
-        }, (response) => {
-            console.log(response)
+    for (let i = 0; i < app.$store.state.sharedBoards.length; i++) {
+        promises.push(new Promise((resolve, reject) => {
+            app.$http.get('http://localhost:3000/boards?id=' + app.$store.state.sharedBoards[i]).
+                then((response) => {
+                    resolve(response.body[0])
+                }, (response) => {
+                    console.log(response)
+                })
         })
-    })
-    )
+        )
+    }
+
+    return Promise.all(promises)
 }
 
-return Promise.all(promises)
+export const shareBoard = (context, {board, user}) => {
+    user.sharedBoards.push(board.id)
+    app.$http.put('http://localhost:3000/users/' + user.id, user).then((response) => {
+        // context.commit(types.FAV_LIST, { list })
+        app.$store.dispatch('addActivity', { action: 'shared board', element: board.board_name })
+    }, (response) => {
+        console.log(response)
+    });
 }
 
 export const toggleFavList = (context, {list}) => {

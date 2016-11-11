@@ -24,6 +24,7 @@
 			:class="[boardData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
 		</span>
   	</button>
+	<button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="hashModal.concat('label')" aria-expanded="false">Share board</button>  
 
 	  <!-- Archived button -->
 	<div class="btn-group">
@@ -63,6 +64,15 @@
 		</div>
 	</div>
 
+	<div class="collapse" :id="modalParam.concat('label')">
+            <div class="well">
+                <button v-for="user in users" class="btn btn-secondary"
+                        v-on:click="onShare(user)">
+                        {{user.userName}}
+                </button>
+            </div>
+        </div>
+
 	<div v-show="this.$route.params.listId === undefined" class="list-container" 
 		 v-sortable="{delay: 20, onStart: onStart, onEnd: onEnd, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost', handle: '.list-name'}">
 		<list v-for="(list,k,i) in lists" 
@@ -94,7 +104,8 @@ export default {
 		hashModal: '#modal' + this.boardData.id,
         modalParam: 'modal' + this.boardData.id,
 		selectedList: {},
-		logsVisible: false
+		logsVisible: false,
+		users: {}
 		}
 	},
 	computed: {
@@ -107,6 +118,10 @@ export default {
 		activities() {
 			return this.$store.state.activities[this.boardData.id]
 		}
+		// ,
+		// users() {
+		// 	return this.$store.dispatch('getUsers')
+		// }
 	},
 
 	methods: {  
@@ -116,7 +131,8 @@ export default {
 			'editList',
 			'editBoard',
 			'delBoard',
-			'favBoard'
+			'favBoard',
+			'shareBoard'
 		]),
 
 		edit() {
@@ -157,19 +173,23 @@ export default {
 			// 	"transition-duration": "0.3s"
 			// });
 		},
-     	onEnd: function (event) {
+     	onEnd: function(event) {
 			// $(event.item.firstChild).css({
 			// 	"background-color": "rgba(185, 191, 194, 1)",
 			// 	"transform": "rotate(0deg)"
 			// });
 		},
-
-		
-
+		onShare: function(user) {
+			this.shareBoard({board: this.boardData, user})
+		}
 	},
 
-	mounted: function () {
+	created: function () {
 		this.$nextTick(function () {
+			this.$store.dispatch('getUsers').then((users) => {
+				this.users = users
+				console.log(this.users)
+			})
 			// this.getLists({boardId: this.boardData.id})
 		})
 	},
