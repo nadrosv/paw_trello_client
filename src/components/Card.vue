@@ -21,6 +21,9 @@
     </button>
 	</div>
 	<div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }"></div>
+	<div v-if="cardData.files !== undefined">
+		<img v-for="image in cardData.files" :src="image" alt="Picture" height="64" width="64">
+	</div>
 	
 
 	<!--Modal-->
