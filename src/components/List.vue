@@ -31,7 +31,7 @@
               </button>
 		</div>
 		</span>
-		<div v-sortable="{delay: 200, onUpdate: onUpdate, forceFallback: true, filter:'.modal-open', ghostClass: 'ghost', group: 'foo', handle:'.card-area'}">
+		<div v-sortable="{delay: 200, onUpdate: onUpdate, forceFallback: true, filter:'.modal-open', ghostClass: 'ghost', group: { name: 'foo', pull: [true], put: [true] }, handle:'.card-area'}">
 			<card v-for="card in cards" :card-data="card" :key="card.id"></card>
 		</div>
 

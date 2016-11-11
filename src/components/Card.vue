@@ -98,7 +98,7 @@ import { mapActions, mapMutations } from 'vuex'
         'archiveCard'
     ]),
     save() {
-      this.editCard({card: this.cardData, name: this.newName, desc: this.newDesc})
+      this.editCard({card: this.cardData, name: this.newName, pos: this.cardData.pos, desc: this.newDesc})
       // this.editCard({card: this.cardData, editedCard: this.editedCard })
     },
     viewCard() {

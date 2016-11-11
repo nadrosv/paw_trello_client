@@ -188,7 +188,6 @@ export default {
 		this.$nextTick(function () {
 			this.$store.dispatch('getUsers').then((users) => {
 				this.users = users
-				console.log(this.users)
 			})
 			// this.getLists({boardId: this.boardData.id})
 		})

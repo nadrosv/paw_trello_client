@@ -219,7 +219,7 @@ export const addLabel = (context, {card, label}) => {
     }
     newCard.labels = newLabel
     console.log(newCard.labels)
-     app.$http.put('http://localhost:3000/cards/' + card.id, newCard).then((response) => {
+     app.$http.patch('http://localhost:3000/cards/' + card.id, {labels: newLabel}).then((response) => {
         context.commit(types.ADD_LABEL, { card, label: newLabel })
         app.$store.dispatch('addActivity', { action: 'Add Label', element: card.card_name })
 
@@ -228,16 +228,13 @@ export const addLabel = (context, {card, label}) => {
     });
 }
 
-export const editCard = (context, {card, name, pos, desc, label}) => {
-    let newLabel
-    if (card.labels !== undefined) {
-        newLabel = card.labels.toString().concat(label)
-    } else {
-        newLabel = label.toString()
-    }
-
-    app.$http.put('http://localhost:3000/cards/' + card.id, { listId: card.listId, card_name: name, pos: pos, desc: desc, labels: label }).then((response) => {
-        context.commit(types.EDIT_CARD, { card, name, pos, desc, label })
+export const editCard = (context, {card, name, pos, desc}) => {
+    let newCard = card
+    newCard.card_name = name
+    newCard.pos = pos
+    newCard.desc = desc
+    app.$http.patch('http://localhost:3000/cards/' + card.id, { listId: card.listId, card_name: name, pos: pos, desc: desc } ).then((response) => {
+        context.commit(types.EDIT_CARD, { card, name, pos, desc })
         app.$store.dispatch('addActivity', { action: 'edited card', element: card.card_name })
 
     }, (response) => {
