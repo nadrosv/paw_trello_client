@@ -87,6 +87,7 @@ import { mapActions, mapMutations } from 'vuex'
 						let n = cardLabelsText.charAt(i)
 						cardLabels.push(this.$store.state.globalLabels[n])
 					}
+					console.log(cardLabels)
 					return cardLabels
 				}
 		},

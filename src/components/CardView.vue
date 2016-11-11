@@ -13,7 +13,7 @@
         <div class="collapse" :id="modalParam">
             <div class="well">
                 <button v-for="label in globalLabels" class="btn btn-secondary"
-                        v-on:click="addLabel(label)" :style="{ 'background-color': label.color }">
+                        v-on:click="addLabel({card: cardviewData, label: label})" :style="{ 'background-color': label.color }">
                         {{label.name}}
                 </button>
             </div>
@@ -50,7 +50,8 @@ import { mapActions, mapMutations } from 'vuex'
     methods: {
       ...mapActions([
           'addComment',
-          'editCard'
+          'editCard',
+          'addLabel'
     ]),
     back() {
         this.$router.go(-1)
@@ -61,11 +62,12 @@ import { mapActions, mapMutations } from 'vuex'
             text: this.commText
         }
         this.addComment({comment: comm})
-    },
-    addLabel(label) {
-        this.editCard({card: this.cardviewData, name: this.cardviewData.card_name, desc: this.cardviewData.desc, label: label.id})
-        console.log(label.color)
     }
+    // ,
+    // addLabel(label) {
+    //     this.editCard({card: this.cardviewData, name: this.cardviewData.card_name, desc: this.cardviewData.desc, label: label.id})
+    //     console.log(label.color)
+    // }
   },
   props: ['cardviewData']
   }

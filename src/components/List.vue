@@ -31,8 +31,8 @@
               </button>
 		</div>
 		</span>
-		<div v-sortable="{delay: 200, onUpdate: onUpdate, forceFallback: true, filter:'.modal-open', ghostClass: 'ghost', handle:'.card-area'}">
-			<card v-for="card in cards" :card-data="card" :key="card.id"/>
+		<div v-sortable="{delay: 200, onUpdate: onUpdate, forceFallback: true, filter:'.modal-open', ghostClass: 'ghost', group: 'foo', handle:'.card-area'}">
+			<card v-for="card in cards" :card-data="card" :key="card.id"></card>
 		</div>
 
 
@@ -68,6 +68,7 @@
 
 <script>
 import { mapActions, mapMutations } from 'vuex'
+
 
   export default {
     data() {
@@ -134,9 +135,10 @@ import { mapActions, mapMutations } from 'vuex'
 			}
 			let oldCard = this.cards[event.oldIndex]
 			let newCard = this.cards[event.newIndex]
-
-			this.editCard({ card: oldCard, name: oldCard.card_name, pos: oldCard.pos, desc: oldCard.newDesc })
-			this.editCard({ card: newCard, name: newCard.card_name, pos: newCard.pos, desc: newCard.newDesc })
+			console.log(oldCard)
+			console.log(newCard)
+			this.editCard({ card: oldCard, name: oldCard.card_name, pos: oldCard.pos, desc: oldCard.newDesc, label: oldCard.labels})
+			this.editCard({ card: newCard, name: newCard.card_name, pos: newCard.pos, desc: newCard.newDesc, label: newCard.labels})
 
 		}
   },

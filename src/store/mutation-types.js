@@ -25,6 +25,7 @@ export const ARCHIVE_CARD = 'ARCHIVE_CARD'
 export const SET_LISTS = 'SET_LISTS'
 
 export const ADD_ACTIVITY = 'ADD_ACTIVITY'
+export const ADD_LABEL = 'ADD_LABEL'
 
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const DEL_COMMENT = 'DEL_COMMENT'
