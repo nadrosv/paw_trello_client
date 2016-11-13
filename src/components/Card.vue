@@ -2,9 +2,15 @@
 	<!--<div class="col-md-8">-->
 	<div class="card-area" v-on:click.self="showwmodal({ card: cardData })">
 		<!--ID: {{cardData.id}}-->
+		
+		<div class="card-label-container">
+			<span v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }"></span>
+		</div>
+
 		<span>
 			{{cardData.card_name}}
-		</span>
+		</span>		
+
 		<div class="btn-group" role="group" aria-label="listButtons">
 			<button class="btn btn-default" data-toggle="modal" :data-target="hashModal">
 				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -15,19 +21,16 @@
 			<button class="btn btn-default" v-on:click="archiveCard({card: cardData})">
 				<span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
 			</button>
-			<button class="btn btn-default" data-toggle="modal" :data-target="hashModal1">
+			<!--<button class="btn btn-default" data-toggle="modal" :data-target="hashModal1">
 				<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-			</button>
+			</button>-->
 		</div>
-
-		<div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }"></div>
 
 		<div v-if="cardData.files !== undefined">
 			<img v-for="image in cardData.files" :src="image" alt="Picture" height="64" width="64">
 		</div>
 		
-
-		<!--Modal-->
+		<!--Modal - edit tile & description-->
 		<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -35,12 +38,13 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<h4 class="modal-title" id="myModalLabel">Edytuj karte</h4>
+						<h4 class="modal-title" id="myModalLabel">Edit title and description</h4>
 					</div>
 					<div class="modal-body">
 						<p>
-							Nazwa
-							<input v-model="newName"> Opis
+							Title
+							<input v-model="newName"> 
+							Description
 							<input v-model="newDesc">
 						</p>
 					</div>
@@ -51,15 +55,17 @@
 				</div>
 			</div>
 		</div>
+		
+		<!--Modal - advanced edit card's options -->
 		<div class="modal fade" :id="modalParam1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
+				<!--<div class="modal-content">-->
+					<!--<div class="modal-header">-->
 						<div class="modal-body">
-							<cardview :cardview-data="cardData"></cardview>
+							<cardview :cardview-data="cardViewData"></cardview>
 						</div>
-					</div>
-				</div>
+					<!--</div>-->
+				<!--</div>-->
 			</div>
 		</div>
 
@@ -76,10 +82,11 @@ import { mapActions, mapMutations } from 'vuex'
         // editedCard: {...this.cardData},
         newName: this.cardData.card_name,
         newDesc: this.cardData.desc,
-        hashModal: '#modal-card' + this.cardData.id,  // edit title card
+        hashModal: '#modal-card' + this.cardData.id,  // edit title and description
         modalParam: 'modal-card' + this.cardData.id,
-        hashModal1: '#modal-card-1' + this.cardData.id,  // advanced edit card
-        modalParam1: 'modal-card-1' + this.cardData.id
+        hashModal1: '#modal-card-1' + this.cardData.id,  // advanced card edit
+        modalParam1: 'modal-card-1' + this.cardData.id,
+				labels: {}
       }
     },
 		computed: {
@@ -90,9 +97,17 @@ import { mapActions, mapMutations } from 'vuex'
 						let n = cardLabelsText.charAt(i)
 						cardLabels.push(this.$store.state.globalLabels[n])
 					}
-					console.log(cardLabels)
+					//console.log(cardLabels)
 					return cardLabels
-				}
+				},
+
+			cardViewData() {
+				let a = this.cardData;
+				// a.newLabels = this.labels;
+				this.$set(a, 'newLabels', this.labels)  // for dynamic change in all places
+				return a;
+			}
+
 		},
     methods: {
       ...mapActions([
@@ -127,6 +142,9 @@ import { mapActions, mapMutations } from 'vuex'
     white-space: normal;
     overflow-wrap: break-word;
     word-wrap: break-word;
+
+		cursor: pointer;
+		user-select: none;
 	}
 
 	.card-area:hover {
@@ -141,7 +159,15 @@ import { mapActions, mapMutations } from 'vuex'
 
 	.card-label {
 		width: 50px;
-		height: 10px;
-		margin: 5px;
+		height: 9px;
+		margin: 1px;
+		float: left;	
+		border-radius: 3px;		
 	}
+
+	.card-label-container {
+		overflow: auto;
+		margin-bottom: 6px;
+	}
+	
 </style>

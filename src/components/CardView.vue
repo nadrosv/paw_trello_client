@@ -1,23 +1,74 @@
 <template>
 	<div class="card-view-area">
-        {{cardviewData.card_name}}
-        {{cardviewData.desc}}
-        Komentarze
-        <p v-for="comm in comments" :key="comm.id">{{comm.text}}</p>
-        Dodaj Komentarz
-        <input v-model="commText">
-        <button class="btn btn-default" v-on:click="saveComment()">Zapisz</button>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="hashModal" aria-expanded="false">
-            Add labels
-        </button>
-        <div class="collapse" :id="modalParam">
-            <div class="well">
-                <button v-for="label in globalLabels" class="btn btn-secondary"
-                        v-on:click="addLabel({card: cardviewData, label: label})" :style="{ 'background-color': label.color }">
-                        {{label.name}}
-                </button>
+        <div class="container-fluid">
+            <div class="row">
+                <p class="card-title">{{cardviewData.card_name}}</p>
+                
+                <!--LEFT COLUMN-->
+                <div class="col-md-9 col-xs-8">
+                    <p v-if="cardviewData.desc" class="card-description-label">
+                        Description:
+                    </p>
+                    <p class="card-description">
+                        {{cardviewData.desc}}
+                    </p>
+                    
+                    <span v-if="cardviewData.newLabels.length">
+                        Labels:
+                    </span>
+                    <div class="card-label-container">
+                        <div v-for="label in cardviewData.newLabels" class="card-label" :style="{ 'background-color': label.color }"></div>
+                    </div>
+
+                    <p class="add-comment-label">
+                        Add comment
+                    </p>
+                    <input v-model="commText">
+                    <button class="btn btn-default" v-on:click="saveComment()">
+                        Save
+                    </button>
+                                                          
+                    <div class="collapse" :id="modalParam">
+                        <div class="well">
+                            <button v-for="label in globalLabels" class="btn btn-secondary"
+                                    v-on:click="addLabel({card: cardviewData, label: label})" :style="{ 'background-color': label.color }">
+                                    {{label.name}}
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <p class="card-comments-label">Activity</p>
+                    <p v-for="comm in comments" :key="comm.id">{{comm.text}}</p>  
+
+                </div>
+                
+                <!--RIGHT COLUMN-->
+                <div class="col-md-3 col-xs-4">
+                    <p class="text-left lead">
+                        Add
+                    </p> 
+                    <button type="button" class="btn btn-default btn-block">
+                        Members
+                    </button> 
+                    <button type="button" class="btn btn-block btn-default" data-toggle="collapse" :data-target="hashModal" aria-expanded="false">
+                        Labels
+                    </button>
+                    <button type="button" class="btn btn-default btn-block">
+                        Attachment
+                    </button>
+                    <p class="lead text-left" style="margin-top:15px;">
+                        Actions
+                    </p> 
+                    <button type="button" class="btn btn-default btn-block">
+                        Move
+                    </button> 
+                    <button type="button" class="btn btn-default btn-block">
+                        Archive
+                    </button>
+                </div>
+                
             </div>
-        </div>
+        </div>           
     </div>   
 </template>
 
@@ -76,20 +127,60 @@ import { mapActions, mapMutations } from 'vuex'
 <style scoped>
 	.card-view-area {
 		position: relative;
-		background-color: #fff;
+		background-color: #edeff0;
 		margin: 8px;
 		padding: 5px;
-        border-radius: 2px;
-        box-shadow: 0px 4px 5px #888888;
-        height: 500px;
+        border-radius: 4px;
+        box-shadow: 0px 0px 5px #888888;
         white-space: normal;
         overflow-wrap: break-word;
         word-wrap: break-word;
 	}
+    
     .card-global-label {
 		width: 50px;
 		height: 10px;
 		margin: 5px;
+	}
+
+    .card-title {
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .card-description-label {
+        font-size: 14px;
+        color: #292929;
+        margin-bottom: 1px;
+    }
+
+    .card-description {
+        font-size: 16px;
+    }
+
+    .add-comment-label {
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 22px;
+    }
+
+    .card-comments-label {
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 22px;
+    }
+
+    .card-label {
+		width: 30px;
+		height: 30px;
+		margin: 1px;
+        float: left;
+		border-radius: 3px;
+	}
+
+    .card-label-container {
+		overflow: auto;
+		margin-bottom: 6px;
 	}
 	
 </style>
