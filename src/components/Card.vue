@@ -1,55 +1,55 @@
 <template>
 	<!--<div class="col-md-8">-->
-<div class="card-area">
-	<!--ID: {{cardData.id}}-->
-	<span>
-      {{cardData.card_name}}
-    </span>
-	<div class="btn-group" role="group" aria-label="listButtons">
-		<button class="btn btn-default" data-toggle="modal" :data-target="hashModal">
-      <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-    </button>
-		<button class="btn btn-default" v-on:click="delCard({ card: cardData })" v-show="cardData.archived">
-      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-    </button>
+	<div class="card-area" v-on:click.self="showwmodal({ card: cardData })">
+		<!--ID: {{cardData.id}}-->
+		<span>
+			{{cardData.card_name}}
+		</span>
+		<div class="btn-group" role="group" aria-label="listButtons">
+			<button class="btn btn-default" data-toggle="modal" :data-target="hashModal">
+				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+			</button>
+			<button class="btn btn-default" v-on:click="delCard({ card: cardData })" v-show="cardData.archived">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+			</button>
 			<button class="btn btn-default" v-on:click="archiveCard({card: cardData})">
-          <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
-      </button>
+				<span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
+			</button>
+			<button class="btn btn-default" data-toggle="modal" :data-target="hashModal1">
+				<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+			</button>
+		</div>
 
-		<button class="btn btn-default" data-toggle="modal" :data-target="hashModal1">
-      <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-    </button>
-	</div>
-	<div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }"></div>
-	<div v-if="cardData.files !== undefined">
-		<img v-for="image in cardData.files" :src="image" alt="Picture" height="64" width="64">
-	</div>
-	
+		<div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }"></div>
 
-	<!--Modal-->
-	<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-					<h4 class="modal-title" id="myModalLabel">Edytuj karte</h4>
-				</div>
-				<div class="modal-body">
-					<p>
-						Nazwa
-						<input v-model="newName"> Opis
-						<input v-model="newDesc">
+		<div v-if="cardData.files !== undefined">
+			<img v-for="image in cardData.files" :src="image" alt="Picture" height="64" width="64">
+		</div>
+		
 
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" v-on:click="save">Save changes</button>
+		<!--Modal-->
+		<div class="modal fade" :id="modalParam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Edytuj karte</h4>
+					</div>
+					<div class="modal-body">
+						<p>
+							Nazwa
+							<input v-model="newName"> Opis
+							<input v-model="newDesc">
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" v-on:click="save">Save changes</button>
+					</div>
 				</div>
 			</div>
-    </div>
 		</div>
 		<div class="modal fade" :id="modalParam1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
@@ -63,7 +63,7 @@
 			</div>
 		</div>
 
-	</div>
+	</div> <!--card-area-->
 </template>
 
 <script>
@@ -76,9 +76,9 @@ import { mapActions, mapMutations } from 'vuex'
         // editedCard: {...this.cardData},
         newName: this.cardData.card_name,
         newDesc: this.cardData.desc,
-        hashModal: '#modal-card' + this.cardData.id,
+        hashModal: '#modal-card' + this.cardData.id,  // edit title card
         modalParam: 'modal-card' + this.cardData.id,
-        hashModal1: '#modal-card-1' + this.cardData.id,
+        hashModal1: '#modal-card-1' + this.cardData.id,  // advanced edit card
         modalParam1: 'modal-card-1' + this.cardData.id
       }
     },
@@ -106,7 +106,10 @@ import { mapActions, mapMutations } from 'vuex'
     },
     viewCard() {
       this.$router.push({ name: 'CardView', params: {boardId: this.$route.params.boardId, cardId: this.cardData.id }})
-    }
+    },
+		showwmodal(e) {
+			$(this.hashModal1).modal('show');
+		}
   },
   props: ['cardData']
   }
