@@ -89,7 +89,6 @@ export const getLists = (context, {boardId}) => {
             context.commit(types.GET_LISTS, { boardId, lists: response.body }, { silent: true })
             //   this.lists = response.body;
             resolve()
-
         }, (response) => {
             console.log(response)
         });
@@ -105,8 +104,12 @@ export const getCards = (context, {listId}) => {
             //   this.lists = response.body;
 
             for (let i = 0; i < response.body.length; i++) {
+                app.$store.dispatch('getLabels', { cardId: response.body[i].id })
                 app.$store.dispatch('getComments', { cardId: response.body[i].id })
-
+                // .then((cardLabels) => {
+                //     console.log('cardlabels', cardLabels)
+                //     context.commit(types.GET_LABELS, { cardId: response.body[i].id, labels: cardLabels })
+                // })
             }
             resolve()
 
@@ -114,10 +117,78 @@ export const getCards = (context, {listId}) => {
             console.log(response)
         });
     })
-
 }
 
+
+export const getLabelColor = (context, {colorId}) => {
+    return new Promise((resolve, reject) => {
+        app.$http.get('http://localhost:3000/globalLabels?id=' + colorId).then((response) => {
+            // context.commit(types.GET_LABEL_COLORS, { labels: response.body })
+            console.log('color', response.body)
+            resolve({responseColor: response})
+
+        }, (response) => {
+            console.log(response)
+        })
+    })
+}
+
+export const getLabels = (context, {cardId}) => {
+    return new Promise((resolve, reject) => {
+        app.$http.get('http://localhost:3000/labels?cardId=' + cardId).then((response) => {
+            context.commit(types.GET_LABELS, { cardId, labels: response.body })
+            resolve()
+
+        }, (response) => {
+            console.log(response)
+        })
+    })
+}
+
+export const getGlobalLabels = (context) => {
+    return new Promise((resolve, reject) => {
+        app.$http.get('http://localhost:3000/globalLabels').then((response) => {
+            context.commit(types.GET_GLOBAL_LABELS, {labels: response.body })
+            resolve()
+
+        }, (response) => {
+            console.log(response)
+        })
+    })
+}
+
+// export const getLabels = (context, {cardId}) => {
+//     let promises = []
+
+//     // return new Promise((resolve, reject) => {
+//         app.$http.get('http://localhost:3000/labels?cardId=' + cardId).then((response) => {
+//             console.log('label', response)
+//             if (response.body.length > 0) {
+//                 response.body.forEach(function (card) {
+//                     promises.push(new Promise((resolve, reject) => {
+
+//                         app.$store.dispatch('getLabelColor', {colorId: card.colorId}).then((responseColor) => {
+//                             console.log('color', responseColor);
+//                             card.colorHex = responseColor.body[0].color
+//                             resolve(card)
+//                         })
+//                     }))
+//                 })
+//             }
+//             console.log('promises', promises)
+//             return Promise.all(promises)
+
+//             // context.commit(types.GET_LABEL, { labels: response.body })
+
+//         }, (response) => {
+//             console.log(response)
+//         })
+//     // })
+
+// }
+
 export const getComps = (context) => {
+    app.$store.dispatch('getGlobalLabels')
     app.$store.dispatch('getBoards').then(() => {
         for (let i = 0; i < app.$store.state.comp.length; i++) {
             app.$store.dispatch('getActivity', { boardId: app.$store.state.comp[i].id })
@@ -127,8 +198,6 @@ export const getComps = (context) => {
                 }
             })
         }
-    }).then(() => {
-        app.$store.dispatch('getLabels')
     })
 }
 
@@ -209,31 +278,51 @@ export const editList = (context, {list, name, pos}) => {
     });
 }
 
-export const addLabel = (context, {card, label}) => {
-    let newCard = card
-    let newLabel
-    if (card.labels !== undefined) {
-        newLabel = card.labels.toString().concat(label.id)
-    } else {
-        newLabel = label.id.toString()
-    }
-    newCard.labels = newLabel
-    console.log(newCard.labels)
-     app.$http.patch('http://localhost:3000/cards/' + card.id, {labels: newLabel}).then((response) => {
-        context.commit(types.ADD_LABEL, { card, label: newLabel })
-        app.$store.dispatch('addActivity', { action: 'Add Label', element: card.card_name })
+// export const addLabel = (context, {card, label}) => {
+//     let newCard = card
+//     let newLabel
+//     if (card.labels !== undefined) {
+//         newLabel = card.labels.toString().concat(label.id)
+//     } else {
+//         newLabel = label.id.toString()
+//     }
+//     newCard.labels = newLabel
+//     console.log(newCard.labels)
+//     app.$http.patch('http://localhost:3000/cards/' + card.id, { labels: newLabel }).then((response) => {
+//         context.commit(types.ADD_LABEL, { card, label: newLabel })
+//         app.$store.dispatch('addActivity', { action: 'Add Label', element: card.card_name })
+
+//     }, (response) => {
+//         console.log(response)
+//     });
+// }
+
+export const addLabel = (context, {label}) => {
+    app.$http.post('http://localhost:3000/labels', label).then((response) => {
+        context.commit(types.ADD_LABEL, {label: label })
+        app.$store.dispatch('addActivity', { action: 'Add Label', element: label.name })
 
     }, (response) => {
         console.log(response)
     });
 }
 
+// export const addComment = (context, {comment}) => {
+//     app.$http.post('http://localhost:3000/comments', comment).then((response) => {
+//         context.commit(types.ADD_COMMENT, { comment: response.body })
+//         app.$store.dispatch('addActivity', { action: 'added comment', element: comment.text })
+
+//     }, (response) => {
+//         console.log(response)
+//     });
+// }
+
 export const editCard = (context, {card, name, pos, desc}) => {
     let newCard = card
     newCard.card_name = name
     newCard.pos = pos
     newCard.desc = desc
-    app.$http.patch('http://localhost:3000/cards/' + card.id, { listId: card.listId, card_name: name, pos: pos, desc: desc } ).then((response) => {
+    app.$http.patch('http://localhost:3000/cards/' + card.id, { listId: card.listId, card_name: name, pos: pos, desc: desc }).then((response) => {
         context.commit(types.EDIT_CARD, { card, name, pos, desc })
         app.$store.dispatch('addActivity', { action: 'edited card', element: card.card_name })
 
@@ -332,17 +421,6 @@ export const getComments = (context, {cardId}) => {
     })
 }
 
-export const getLabels = (context) => {
-    return new Promise((resolve, reject) => {
-        app.$http.get('http://localhost:3000/labels').then((response) => {
-            context.commit(types.GET_LABELS, { labels: response.body })
-            resolve()
-
-        }, (response) => {
-            console.log(response)
-        })
-    })
-}
 
 export const addComment = (context, {comment}) => {
     app.$http.post('http://localhost:3000/comments', comment).then((response) => {

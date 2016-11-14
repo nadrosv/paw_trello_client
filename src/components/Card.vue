@@ -91,14 +91,16 @@ import { mapActions, mapMutations } from 'vuex'
     },
 		computed: {
 			labels() {
-					let cardLabelsText = this.cardData.labels.toString(); //"12"
-					let cardLabels = []
-					for (let i = 0; i < cardLabelsText.length; i++) {
-						let n = cardLabelsText.charAt(i)
-						cardLabels.push(this.$store.state.globalLabels[n])
-					}
-					//console.log(cardLabels)
-					return cardLabels
+					// let cardLabelsText = this.cardData.labels.toString(); //"12"
+					// let cardLabels = []
+					// for (let i = 0; i < cardLabelsText.length; i++) {
+					// 	let n = cardLabelsText.charAt(i)
+					// 	cardLabels.push(this.$store.state.globalLabels[n])
+					// }
+					// //console.log(cardLabels)
+					// return cardLabels
+					return this.$store.state.labels[this.cardData.id]
+
 				},
 
 			cardViewData() {

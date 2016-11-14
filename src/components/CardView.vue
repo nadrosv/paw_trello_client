@@ -13,11 +13,11 @@
                         {{cardviewData.desc}}
                     </p>
                     
-                    <span v-if="cardviewData.newLabels.length">
+                    <span v-if="labelsCount">
                         Labels:
                     </span>
                     <div class="card-label-container">
-                        <div v-for="label in cardviewData.newLabels" class="card-label" :style="{ 'background-color': label.color }"></div>
+                        <div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }"></div>
                     </div>
 
                     <p class="add-comment-label">
@@ -31,8 +31,8 @@
                     <div class="collapse" :id="modalParam">
                         <div class="well">
                             <button v-for="label in globalLabels" class="btn btn-secondary"
-                                    v-on:click="addLabel({card: cardviewData, label: label})" :style="{ 'background-color': label.color }">
-                                    {{label.name}}
+                                    v-on:click="saveLabel({newLabel: label})" :style="{ 'background-color': label.color }">
+                                    
                             </button>
                         </div>
                     </div>
@@ -90,13 +90,22 @@ import { mapActions, mapMutations } from 'vuex'
         // cardviewData() {
         //     return this.$store.state.cards[this.$route.params.listId][0]
         // }
-            comments() {
-                return this.$store.state.comments[this.cardviewData.id]
-            },
-            globalLabels() {
-                return this.$store.state.globalLabels
-
+        comments() {
+            return this.$store.state.comments[this.cardviewData.id]
+        },
+        labels() {
+            return this.$store.state.labels[this.cardviewData.id]
+        },
+        labelsCount () {
+            if (this.$store.state.labels[this.cardviewData.id]) {
+                return this.$store.state.labels[this.cardviewData.id].length
+            } else {
+                return
             }
+        },
+        globalLabels() {
+            return this.$store.state.globalLabels
+        }
     },
     methods: {
       ...mapActions([
@@ -113,6 +122,15 @@ import { mapActions, mapMutations } from 'vuex'
             text: this.commText
         }
         this.addComment({comment: comm})
+    },
+    saveLabel({newLabel}) {
+        console.log(newLabel.color)
+        let savedLabel = {
+            cardId: this.cardviewData.id,
+            name: "",
+            color: newLabel.color
+        }
+        this.addLabel({label: savedLabel})
     }
     // ,
     // addLabel(label) {
