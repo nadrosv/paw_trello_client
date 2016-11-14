@@ -30,9 +30,8 @@
                                                           
                     <div class="collapse" :id="modalParam">
                         <div class="well">
-                            <button v-for="label in globalLabels" class="btn btn-secondary"
-                                    v-on:click="saveLabel({newLabel: label})" :style="{ 'background-color': label.color }">
-                                    
+                            <button v-for="label in globalLabels" class="btn btn-secondary btn-block"
+                                    v-on:click="saveLabel({newLabel: label})" :style="{ 'background-color': label.color }" >                              
                             </button>
                         </div>
                     </div>
@@ -200,5 +199,13 @@ import { mapActions, mapMutations } from 'vuex'
 		overflow: auto;
 		margin-bottom: 6px;
 	}
+
+    .well .btn {
+        height: 25px;
+    }
+
+    .well .btn:hover {
+        border: 2px dotted #ffffff;
+    }
 	
 </style>
