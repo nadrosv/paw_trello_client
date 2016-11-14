@@ -16,6 +16,7 @@ export const state = {
     activities: {},
     comments: {},
     boardLists: [],
+    labels: {},
     globalLabels: []
 }
 
@@ -27,6 +28,9 @@ export const mutations = {
     },
     [types.SET_SHARED_BOARDS](state, sharedBoards) {
         state.sharedBoards = sharedBoards
+    },
+    [types.GET_GLOBAL_LABELS](state, {labels}) {
+        state.globalLabels = labels
     },
 
     [types.GET_BOARDS](state, boards) {
@@ -63,7 +67,7 @@ export const mutations = {
         app.$set(state.activities, payload.boardId, payload.activities)
     },
     [types.GET_LABELS](state, payload) {
-        state.globalLabels = payload.labels
+        app.$set(state.labels, payload.cardId, payload.labels)
     },
 
     [types.ADD_BOARD](state, board) {
@@ -101,8 +105,11 @@ export const mutations = {
         card.desc = desc
         card.pos = pos
     },
-    [types.ADD_LABEL](state, {card, label}) {
-        card.labels = label
+    // [types.ADD_LABEL](state, {card, label}) {
+    //     card.labels = label
+    // },
+    [types.ADD_LABEL](state, {label}) {
+        state.labels[label.cardId].push(label)
     },
     [types.ARCHIVE_LIST](state, {list}) {
         list.archived = !list.archived
@@ -115,9 +122,16 @@ export const mutations = {
     },
     [types.ADD_LIST](state, {list}) {
         state.lists[list.boardId].push(list)
+        app.$set(state.cards, list.id, [])
+
+
     },
     [types.ADD_CARD](state, {card}) {
         state.cards[card.listId].push(card)
+        app.$set(state.labels, card.id, [])
+        app.$set(state.comments, card.id, [])
+
+
     },
     [types.ADD_COMMENT](state, {comment}) {
         state.comments[comment.cardId].push(comment)
@@ -144,7 +158,7 @@ export const getters = {
     activeBoard: state => state.activeBoard,
     activeList: state => state.activeList,
     activeCard: state => state.activeCard,
-    lists: state => state.lists
+    lists: state => state.lists,
 }
 
 
