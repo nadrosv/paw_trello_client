@@ -3,7 +3,7 @@
 	<div class="board-area board">
 	
 	<span v-if="editing">
-            <input v-model="boardName">
+            <input v-model="boardName" v-on:keyup.enter="edit">
             <button class="btn btn-primary" v-on:click="edit">OK</button>
             <!--<p>Message is: {{ message }}</p>-->
     </span>
@@ -53,7 +53,7 @@
 				<div class="modal-body">
 					<p>
 						Tytul
-						<input v-model="newListName">
+						<input v-model="newListName" v-on:keyup.enter="saveList">
 					</p>
 				</div>
 				<div class="modal-footer">
@@ -151,6 +151,8 @@ export default {
 				"archived": false
 			}
 			this.addList({ list: newListData })
+
+			$('.modal').modal('hide')
 			
 		},
      	onUpdate: function (event) {

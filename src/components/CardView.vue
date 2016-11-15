@@ -17,7 +17,7 @@
                         Labels:
                     </span>
                     <div class="card-label-container">
-                        <div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }"></div>
+                        <div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }" v-on:click="delLabel({ label })"></div>
                     </div>
 
                     <p class="add-comment-label">
@@ -30,9 +30,8 @@
                                                           
                     <div class="collapse" :id="modalParam">
                         <div class="well">
-                            <button v-for="label in globalLabels" class="btn btn-secondary"
-                                    v-on:click="saveLabel({newLabel: label})" :style="{ 'background-color': label.color }">
-                                    
+                            <button v-for="label in globalLabels" class="btn btn-secondary btn-block"
+                                    v-on:click="saveLabel({newLabel: label})" :style="{ 'background-color': label.color }" >                              
                             </button>
                         </div>
                     </div>
@@ -119,7 +118,11 @@ import { mapActions, mapMutations } from 'vuex'
           'addComment',
           'editCard',
           'addLabel',
+<<<<<<< HEAD
           'addFile'
+=======
+          'delLabel'
+>>>>>>> 4ed442681e5b820eca8d7e09c492c9085a74c011
     ]),
     back() {
         this.$router.go(-1)
@@ -218,5 +221,13 @@ import { mapActions, mapMutations } from 'vuex'
 		overflow: auto;
 		margin-bottom: 6px;
 	}
+
+    .well .btn {
+        height: 25px;
+    }
+
+    .well .btn:hover {
+        border: 2px dotted #ffffff;
+    }
 	
 </style>

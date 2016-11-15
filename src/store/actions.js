@@ -321,6 +321,7 @@ export const addLabel = (context, {label}) => {
     });
 }
 
+<<<<<<< HEAD
 export const addFile = (context, {file}) => {
     app.$http.post('http://localhost:3000/files', file).then((response) => {
         context.commit(types.ADD_FILE, { file: file })
@@ -334,11 +335,18 @@ export const addFile = (context, {file}) => {
 //     app.$http.post('http://localhost:3000/comments', comment).then((response) => {
 //         context.commit(types.ADD_COMMENT, { comment: response.body })
 //         app.$store.dispatch('addActivity', { action: 'added comment', element: comment.text })
+=======
+export const delLabel = (context, {label}) => {
+    console.log({label});
+    app.$http.delete('http://localhost:3000/labels/' + label.id).then((response) => {
+        context.commit(types.DEL_LABEL, {label: label })
+        app.$store.dispatch('addActivity', { action: 'remove label', element: label.name })
+>>>>>>> 4ed442681e5b820eca8d7e09c492c9085a74c011
 
-//     }, (response) => {
-//         console.log(response)
-//     });
-// }
+    }, (response) => {
+        console.log(response)
+    });
+}
 
 export const editCard = (context, {card, name, pos, desc}) => {
     let newCard = card
