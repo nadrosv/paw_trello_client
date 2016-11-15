@@ -26,8 +26,8 @@
 			</button>-->
 		</div>
 
-		<div v-if="cardData.files !== undefined">
-			<img v-for="image in cardData.files" :src="image" alt="Picture" height="64" width="64">
+		<div v-if="files !== undefined">
+			<img v-for="file in files" :src="file.path" alt="Picture" height="64" width="64">
 		</div>
 		
 		<!--Modal - edit tile & description-->
@@ -101,6 +101,9 @@ import { mapActions, mapMutations } from 'vuex'
 					// return cardLabels
 					return this.$store.state.labels[this.cardData.id]
 
+				},
+				files() {
+					return this.$store.state.files[this.cardData.id]
 				},
 
 			cardViewData() {

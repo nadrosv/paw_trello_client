@@ -17,13 +17,14 @@ export const state = {
     comments: {},
     boardLists: [],
     labels: {},
+    files: {},
     globalLabels: []
 }
 
 // we can use the ES2015 computed property name feature
 // to use a constant as the function name
 export const mutations = {
-    [types.GET_USER](state,user) {
+    [types.GET_USER](state, user) {
         state.user = user
     },
     [types.SET_SHARED_BOARDS](state, sharedBoards) {
@@ -69,7 +70,9 @@ export const mutations = {
     [types.GET_LABELS](state, payload) {
         app.$set(state.labels, payload.cardId, payload.labels)
     },
-
+    [types.GET_FILES](state, payload) {
+        app.$set(state.files, payload.cardId, payload.files)
+    },
     [types.ADD_BOARD](state, board) {
         board.hash = '#board' + board.id
         board.param = 'board' + board.id
@@ -110,6 +113,9 @@ export const mutations = {
     // },
     [types.ADD_LABEL](state, {label}) {
         state.labels[label.cardId].push(label)
+    },
+    [types.ADD_FILE](state, {file}) {
+        state.files[file.cardId].push(file)
     },
     [types.ARCHIVE_LIST](state, {list}) {
         list.archived = !list.archived

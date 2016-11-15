@@ -6,6 +6,7 @@ export const GET_ACTIVITY = 'GET_ACTIVITY'
 export const GET_COMMENTS = 'GET_COMMENTS'
 export const GET_LABELS = 'GET_LABELS'
 export const GET_GLOBAL_LABELS = 'GET_GLOBAL_LABELS'
+export const GET_FILLES = 'GET_FILES'
 
 export const ADD_BOARD = 'ADD_BOARD'
 export const ADD_LIST = 'ADD_LIST'
@@ -27,6 +28,7 @@ export const SET_LISTS = 'SET_LISTS'
 
 export const ADD_ACTIVITY = 'ADD_ACTIVITY'
 export const ADD_LABEL = 'ADD_LABEL'
+export const ADD_FILE = 'ADD_FILE'
 
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const DEL_COMMENT = 'DEL_COMMENT'

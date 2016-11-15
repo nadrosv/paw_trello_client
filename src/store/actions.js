@@ -104,6 +104,8 @@ export const getCards = (context, {listId}) => {
             //   this.lists = response.body;
 
             for (let i = 0; i < response.body.length; i++) {
+                app.$store.dispatch('getFiles', { cardId: response.body[i].id })
+
                 app.$store.dispatch('getLabels', { cardId: response.body[i].id })
                 app.$store.dispatch('getComments', { cardId: response.body[i].id })
                 // .then((cardLabels) => {
@@ -125,7 +127,7 @@ export const getLabelColor = (context, {colorId}) => {
         app.$http.get('http://localhost:3000/globalLabels?id=' + colorId).then((response) => {
             // context.commit(types.GET_LABEL_COLORS, { labels: response.body })
             console.log('color', response.body)
-            resolve({responseColor: response})
+            resolve({ responseColor: response })
 
         }, (response) => {
             console.log(response)
@@ -145,10 +147,22 @@ export const getLabels = (context, {cardId}) => {
     })
 }
 
+export const getFiles = (context, {cardId}) => {
+    return new Promise((resolve, reject) => {
+        app.$http.get('http://localhost:3000/files?cardId=' + cardId).then((response) => {
+            context.commit(types.GET_FILES, { cardId, files: response.body })
+            resolve()
+
+        }, (response) => {
+            console.log(response)
+        })
+    })
+}
+
 export const getGlobalLabels = (context) => {
     return new Promise((resolve, reject) => {
         app.$http.get('http://localhost:3000/globalLabels').then((response) => {
-            context.commit(types.GET_GLOBAL_LABELS, {labels: response.body })
+            context.commit(types.GET_GLOBAL_LABELS, { labels: response.body })
             resolve()
 
         }, (response) => {
@@ -299,7 +313,7 @@ export const editList = (context, {list, name, pos}) => {
 
 export const addLabel = (context, {label}) => {
     app.$http.post('http://localhost:3000/labels', label).then((response) => {
-        context.commit(types.ADD_LABEL, {label: label })
+        context.commit(types.ADD_LABEL, { label: label })
         app.$store.dispatch('addActivity', { action: 'Add Label', element: label.name })
 
     }, (response) => {
@@ -307,6 +321,15 @@ export const addLabel = (context, {label}) => {
     });
 }
 
+export const addFile = (context, {file}) => {
+    app.$http.post('http://localhost:3000/files', file).then((response) => {
+        context.commit(types.ADD_FILE, { file: file })
+        // app.$store.dispatch('addActivity', { action: 'Add Label', element: label.name })
+
+    }, (response) => {
+        console.log(response)
+    });
+}
 // export const addComment = (context, {comment}) => {
 //     app.$http.post('http://localhost:3000/comments', comment).then((response) => {
 //         context.commit(types.ADD_COMMENT, { comment: response.body })

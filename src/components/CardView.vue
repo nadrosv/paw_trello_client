@@ -39,6 +39,13 @@
                     
                     <p class="card-comments-label">Activity</p>
                     <p v-for="comm in comments" :key="comm.id">{{comm.text}}</p>  
+                    <form action="http://localhost:3000/upload" v-on:submit.prevent="onSubmit" enctype="multipart/form-data" method="post">
+                        <input name="cardId" type="hidden" :value="cardviewData.id" />
+                        <br><br>
+                        <input  name="upload" type="file" />
+                        <br><br>
+                        <input type="submit" value="Upload" />
+                    </form>
 
                 </div>
                 
@@ -111,7 +118,8 @@ import { mapActions, mapMutations } from 'vuex'
       ...mapActions([
           'addComment',
           'editCard',
-          'addLabel'
+          'addLabel',
+          'addFile'
     ]),
     back() {
         this.$router.go(-1)
@@ -131,6 +139,16 @@ import { mapActions, mapMutations } from 'vuex'
             color: newLabel.color
         }
         this.addLabel({label: savedLabel})
+    },
+    onSubmit: function(e) {
+        let processedPath = "http://localhost:3000/uploads/" + e.target[1].value.replace(/.*[\/\\]/, '')
+        let newFile = {
+            cardId: e.target[0].value,
+            path: processedPath 
+        }
+
+        this.addFile({file : newFile})
+        e.target.submit()
     }
     // ,
     // addLabel(label) {
