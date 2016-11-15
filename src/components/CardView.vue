@@ -118,7 +118,7 @@ import { mapActions, mapMutations } from 'vuex'
           'addComment',
           'editCard',
           'addLabel',
-          'addFile'
+          'addFile',
           'delLabel'
     ]),
     back() {
