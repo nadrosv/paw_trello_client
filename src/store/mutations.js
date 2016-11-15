@@ -112,7 +112,7 @@ export const mutations = {
         state.labels[label.cardId].push(label)
     },
     [types.DEL_LABEL](state, {label}) {
-        state.labels[label.cardId].pop(label)
+        state.labels[label.cardId].splice(state.labels[label.cardId].indexOf(label), 1)
     },
     [types.ARCHIVE_LIST](state, {list}) {
         list.archived = !list.archived
