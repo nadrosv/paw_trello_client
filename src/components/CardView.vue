@@ -17,7 +17,7 @@
                         Labels:
                     </span>
                     <div class="card-label-container">
-                        <div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }"></div>
+                        <div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }" v-on:click="delLabel({ label })"></div>
                     </div>
 
                     <p class="add-comment-label">
@@ -110,7 +110,8 @@ import { mapActions, mapMutations } from 'vuex'
       ...mapActions([
           'addComment',
           'editCard',
-          'addLabel'
+          'addLabel',
+          'delLabel'
     ]),
     back() {
         this.$router.go(-1)

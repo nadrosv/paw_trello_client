@@ -111,6 +111,9 @@ export const mutations = {
     [types.ADD_LABEL](state, {label}) {
         state.labels[label.cardId].push(label)
     },
+    [types.DEL_LABEL](state, {label}) {
+        state.labels[label.cardId].pop(label)
+    },
     [types.ARCHIVE_LIST](state, {list}) {
         list.archived = !list.archived
     },

@@ -307,15 +307,16 @@ export const addLabel = (context, {label}) => {
     });
 }
 
-// export const addComment = (context, {comment}) => {
-//     app.$http.post('http://localhost:3000/comments', comment).then((response) => {
-//         context.commit(types.ADD_COMMENT, { comment: response.body })
-//         app.$store.dispatch('addActivity', { action: 'added comment', element: comment.text })
+export const delLabel = (context, {label}) => {
+    console.log({label});
+    app.$http.delete('http://localhost:3000/labels/' + label.id).then((response) => {
+        context.commit(types.DEL_LABEL, {label: label })
+        app.$store.dispatch('addActivity', { action: 'remove label', element: label.name })
 
-//     }, (response) => {
-//         console.log(response)
-//     });
-// }
+    }, (response) => {
+        console.log(response)
+    });
+}
 
 export const editCard = (context, {card, name, pos, desc}) => {
     let newCard = card
