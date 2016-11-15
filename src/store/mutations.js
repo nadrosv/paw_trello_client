@@ -114,13 +114,11 @@ export const mutations = {
     [types.ADD_LABEL](state, {label}) {
         state.labels[label.cardId].push(label)
     },
-<<<<<<< HEAD
     [types.ADD_FILE](state, {file}) {
         state.files[file.cardId].push(file)
-=======
+    },
     [types.DEL_LABEL](state, {label}) {
         state.labels[label.cardId].splice(state.labels[label.cardId].indexOf(label), 1)
->>>>>>> 4ed442681e5b820eca8d7e09c492c9085a74c011
     },
     [types.ARCHIVE_LIST](state, {list}) {
         list.archived = !list.archived

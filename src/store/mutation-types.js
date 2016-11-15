@@ -28,11 +28,8 @@ export const SET_LISTS = 'SET_LISTS'
 
 export const ADD_ACTIVITY = 'ADD_ACTIVITY'
 export const ADD_LABEL = 'ADD_LABEL'
-<<<<<<< HEAD
 export const ADD_FILE = 'ADD_FILE'
-=======
 export const DEL_LABEL = 'DEL_LABEL'
->>>>>>> 4ed442681e5b820eca8d7e09c492c9085a74c011
 
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const DEL_COMMENT = 'DEL_COMMENT'

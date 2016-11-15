@@ -118,11 +118,8 @@ import { mapActions, mapMutations } from 'vuex'
           'addComment',
           'editCard',
           'addLabel',
-<<<<<<< HEAD
           'addFile'
-=======
           'delLabel'
->>>>>>> 4ed442681e5b820eca8d7e09c492c9085a74c011
     ]),
     back() {
         this.$router.go(-1)
