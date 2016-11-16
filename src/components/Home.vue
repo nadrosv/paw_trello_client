@@ -111,6 +111,7 @@ import { mapActions, mapMutations } from 'vuex'
   this.$nextTick(function () {
     // this.getBoards()
     this.getComps()
+    
   })
   },
   route: {

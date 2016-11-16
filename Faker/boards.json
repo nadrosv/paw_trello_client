@@ -157,24 +157,6 @@
       "id": 26
     },
     {
-      "boardId": 81,
-      "date": "2016-11-02T19:26:27.306Z",
-      "log": " favourited \"x\"",
-      "id": 30
-    },
-    {
-      "boardId": 79,
-      "date": "2016-11-02T19:26:36.252Z",
-      "log": " favourited \"asd\"",
-      "id": 31
-    },
-    {
-      "boardId": 81,
-      "date": "2016-11-02T19:28:52.803Z",
-      "log": " favourited \"x\"",
-      "id": 32
-    },
-    {
       "boardId": 1,
       "date": "2016-11-02T19:28:59.334Z",
       "log": " favourited \"undefined\"",
@@ -191,12 +173,6 @@
       "date": "2016-11-02T19:58:21.553Z",
       "log": " favourited \"board23\"",
       "id": 36
-    },
-    {
-      "boardId": 83,
-      "date": "2016-11-02T20:38:20.179Z",
-      "log": " favourited \"nowa\"",
-      "id": 37
     },
     {
       "boardId": 1,
@@ -247,60 +223,6 @@
       "id": 45
     },
     {
-      "boardId": 83,
-      "date": "2016-11-02T22:06:54.260Z",
-      "log": "kornel deleted card \"card1\"",
-      "id": 46
-    },
-    {
-      "boardId": 83,
-      "date": "2016-11-02T22:08:32.648Z",
-      "log": "kornel deleted card \"g\"",
-      "id": 47
-    },
-    {
-      "boardId": 83,
-      "date": "2016-11-02T22:13:25.452Z",
-      "log": "kornel deleted card \"r\"",
-      "id": 48
-    },
-    {
-      "boardId": 83,
-      "date": "2016-11-02T22:14:01.211Z",
-      "log": "kornel deleted card \"s\"",
-      "id": 49
-    },
-    {
-      "boardId": 83,
-      "date": "2016-11-02T22:17:51.808Z",
-      "log": "kornel edited list \"asd\"",
-      "id": 50
-    },
-    {
-      "boardId": 83,
-      "date": "2016-11-02T22:18:05.333Z",
-      "log": "kornel added list \"as\"",
-      "id": 51
-    },
-    {
-      "boardId": 83,
-      "date": "2016-11-02T22:18:22.892Z",
-      "log": "kornel archived list \"lista2\"",
-      "id": 52
-    },
-    {
-      "boardId": 83,
-      "date": "2016-11-02T22:18:29.167Z",
-      "log": "kornel favourited card \"as\"",
-      "id": 53
-    },
-    {
-      "boardId": 83,
-      "date": "2016-11-02T22:18:34.213Z",
-      "log": "kornel favourited card \"as\"",
-      "id": 54
-    },
-    {
       "boardId": 78,
       "date": "2016-11-02T22:19:40.669Z",
       "log": "kornel added list \"d\"",
@@ -311,18 +233,6 @@
       "date": "2016-11-02T22:19:46.173Z",
       "log": "kornel added card \"dd\"",
       "id": 56
-    },
-    {
-      "boardId": 83,
-      "date": "2016-11-02T22:19:58.476Z",
-      "log": "kornel added card \"d\"",
-      "id": 57
-    },
-    {
-      "boardId": 79,
-      "date": "2016-11-02T22:20:07.497Z",
-      "log": "kornel added card \"asd\"",
-      "id": 58
     },
     {
       "boardId": 2,
@@ -469,18 +379,6 @@
       "id": 83
     },
     {
-      "boardId": 79,
-      "date": "2016-11-02T22:43:50.630Z",
-      "log": "kornel archived card \"asd\"",
-      "id": 84
-    },
-    {
-      "boardId": 79,
-      "date": "2016-11-02T22:43:57.954Z",
-      "log": "kornel archived card \"asd\"",
-      "id": 85
-    },
-    {
       "boardId": 78,
       "date": "2016-11-02T22:44:04.186Z",
       "log": "kornel archived card \"dd\"",
@@ -497,18 +395,6 @@
       "date": "2016-11-02T22:44:28.175Z",
       "log": "kornel deleted card \"dd\"",
       "id": 88
-    },
-    {
-      "boardId": 79,
-      "date": "2016-11-02T22:44:49.617Z",
-      "log": "kornel archived card \"asd\"",
-      "id": 89
-    },
-    {
-      "boardId": 79,
-      "date": "2016-11-02T22:44:50.455Z",
-      "log": "kornel archived card \"asd\"",
-      "id": 90
     },
     {
       "boardId": 78,
@@ -653,12 +539,6 @@
       "date": "2016-11-03T14:26:13.200Z",
       "log": "kornel edited list \"w trakcie!\"",
       "id": 114
-    },
-    {
-      "boardId": 83,
-      "date": "2016-11-03T14:33:32.299Z",
-      "log": "kornel edited list \"lista1\"",
-      "id": 115
     },
     {
       "boardId": 1,
@@ -1471,18 +1351,6 @@
       "id": 250
     },
     {
-      "boardId": 79,
-      "date": "2016-11-10T21:31:52.935Z",
-      "log": "kornel added card \"ads\"",
-      "id": 251
-    },
-    {
-      "boardId": 83,
-      "date": "2016-11-10T21:31:57.069Z",
-      "log": "kornel added card \"ads\"",
-      "id": 252
-    },
-    {
       "boardId": 1,
       "date": "2016-11-10T21:33:58.132Z",
       "log": "kornel edited card \"ab\"",
@@ -1535,30 +1403,6 @@
       "date": "2016-11-10T22:00:37.858Z",
       "log": "kornel edited card \"asd\"",
       "id": 261
-    },
-    {
-      "boardId": 99,
-      "date": "2016-11-10T23:59:03.141Z",
-      "log": "kornel added list \"d\"",
-      "id": 262
-    },
-    {
-      "boardId": 99,
-      "date": "2016-11-11T00:41:10.290Z",
-      "log": "kornel added card \"r\"",
-      "id": 263
-    },
-    {
-      "boardId": 99,
-      "date": "2016-11-11T00:41:16.054Z",
-      "log": "kornel edited card \"r\"",
-      "id": 264
-    },
-    {
-      "boardId": 99,
-      "date": "2016-11-11T01:05:13.219Z",
-      "log": "kornel added card \"s\"",
-      "id": 265
     },
     {
       "boardId": 1,
@@ -1699,42 +1543,6 @@
       "id": 288
     },
     {
-      "boardId": 4,
-      "date": "2016-11-11T09:04:05.902Z",
-      "log": "aaa added list \"sd\"",
-      "id": 289
-    },
-    {
-      "boardId": 4,
-      "date": "2016-11-11T09:05:03.264Z",
-      "log": "aaa favourited \"board4\"",
-      "id": 290
-    },
-    {
-      "boardId": 4,
-      "date": "2016-11-11T09:05:03.968Z",
-      "log": "aaa favourited \"board4\"",
-      "id": 291
-    },
-    {
-      "boardId": 4,
-      "date": "2016-11-11T09:10:49.927Z",
-      "log": "aaa favourited \"board4\"",
-      "id": 292
-    },
-    {
-      "boardId": 4,
-      "date": "2016-11-11T09:11:42.420Z",
-      "log": "aaa shared board \"board4\"",
-      "id": 293
-    },
-    {
-      "boardId": 80,
-      "date": "2016-11-11T09:12:34.958Z",
-      "log": "aaa shared board \"elobaza\"",
-      "id": 294
-    },
-    {
       "boardId": 1,
       "date": "2016-11-11T12:40:09.856Z",
       "log": "kornel added card \"asd\"",
@@ -1775,18 +1583,6 @@
       "date": "2016-11-11T12:41:02.700Z",
       "log": "kornel favourited card \"zakonczone\"",
       "id": 301
-    },
-    {
-      "boardId": 99,
-      "date": "2016-11-11T14:49:12.470Z",
-      "log": "kornel edited card \"r\"",
-      "id": 302
-    },
-    {
-      "boardId": 99,
-      "date": "2016-11-11T14:49:12.482Z",
-      "log": "kornel edited card \"s\"",
-      "id": 303
     },
     {
       "boardId": 1,
@@ -2297,30 +2093,6 @@
       "date": "2016-11-11T16:51:24.004Z",
       "log": "kornel edited card \"asd\"",
       "id": 388
-    },
-    {
-      "boardId": 79,
-      "date": "2016-11-11T16:53:48.912Z",
-      "log": "kornel added card \"x\"",
-      "id": 389
-    },
-    {
-      "boardId": 79,
-      "date": "2016-11-11T16:53:55.469Z",
-      "log": "kornel Add Label \"x\"",
-      "id": 390
-    },
-    {
-      "boardId": 79,
-      "date": "2016-11-11T16:53:57.352Z",
-      "log": "kornel Add Label \"x\"",
-      "id": 391
-    },
-    {
-      "boardId": 79,
-      "date": "2016-11-11T16:53:58.699Z",
-      "log": "kornel Add Label \"x\"",
-      "id": 392
     },
     {
       "boardId": 1,
@@ -3125,18 +2897,201 @@
       "date": "2016-11-15T23:16:46.619Z",
       "log": "kornel remove label \"\"",
       "id": 698
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:26:29.769Z",
+      "log": "kornel Add Label \"\"",
+      "id": 699
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:26:36.098Z",
+      "log": "kornel remove label \"\"",
+      "id": 700
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:30.675Z",
+      "log": "kornel Add Label \"\"",
+      "id": 701
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:31.145Z",
+      "log": "kornel Add Label \"\"",
+      "id": 702
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:31.903Z",
+      "log": "kornel Add Label \"\"",
+      "id": 703
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:32.304Z",
+      "log": "kornel Add Label \"\"",
+      "id": 704
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:33.217Z",
+      "log": "kornel remove label \"\"",
+      "id": 705
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:33.892Z",
+      "log": "kornel remove label \"\"",
+      "id": 706
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:34.625Z",
+      "log": "kornel remove label \"\"",
+      "id": 707
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:35.957Z",
+      "log": "kornel Add Label \"\"",
+      "id": 708
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:36.364Z",
+      "log": "kornel Add Label \"\"",
+      "id": 709
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:36.806Z",
+      "log": "kornel Add Label \"\"",
+      "id": 710
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:37.252Z",
+      "log": "kornel Add Label \"\"",
+      "id": 711
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:38.192Z",
+      "log": "kornel remove label \"\"",
+      "id": 712
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:38.683Z",
+      "log": "kornel remove label \"\"",
+      "id": 713
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:39.145Z",
+      "log": "kornel remove label \"\"",
+      "id": 714
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:39.946Z",
+      "log": "kornel remove label \"\"",
+      "id": 715
+    },
+    {
+      "boardId": "1",
+      "date": "2016-11-16T20:28:40.911Z",
+      "log": "kornel remove label \"\"",
+      "id": 716
+    },
+    {
+      "boardId": 78,
+      "date": "2016-11-16T20:31:58.066Z",
+      "log": "adam added list \"TablicaAdama\"",
+      "id": 718
+    },
+    {
+      "boardId": 78,
+      "date": "2016-11-16T20:32:14.497Z",
+      "log": "adam archived list \"TablicaAdama\"",
+      "id": 719
+    },
+    {
+      "boardId": 78,
+      "date": "2016-11-16T20:32:17.841Z",
+      "log": "adam deleted list \"TablicaAdama\"",
+      "id": 720
+    },
+    {
+      "boardId": 123,
+      "date": "2016-11-16T20:32:30.480Z",
+      "log": "adam added board \"TablicaAdama\"",
+      "id": 721
+    },
+    {
+      "boardId": 123,
+      "date": "2016-11-16T20:33:17.077Z",
+      "log": "adam added list \"ListaAdama\"",
+      "id": 722
+    },
+    {
+      "boardId": 123,
+      "date": "2016-11-16T20:33:46.617Z",
+      "log": "adam added list \"Uczelnia\"",
+      "id": 723
+    },
+    {
+      "boardId": 123,
+      "date": "2016-11-16T20:33:53.061Z",
+      "log": "adam added card \"Nauka\"",
+      "id": 724
+    },
+    {
+      "boardId": 123,
+      "date": "2016-11-16T20:34:07.933Z",
+      "log": "adam added card \"Aktywnosc\"",
+      "id": 725
+    },
+    {
+      "boardId": 123,
+      "date": "2016-11-16T20:34:12.127Z",
+      "log": "adam Add Label \"\"",
+      "id": 726
+    },
+    {
+      "boardId": 123,
+      "date": "2016-11-16T20:34:12.923Z",
+      "log": "adam Add Label \"\"",
+      "id": 727
+    },
+    {
+      "boardId": 123,
+      "date": "2016-11-16T20:37:25.983Z",
+      "log": "adam shared board \"TablicaAdama\"",
+      "id": 728
+    },
+    {
+      "boardId": 80,
+      "date": "2016-11-16T20:38:17.208Z",
+      "log": "kornel deleted board \"elobaza\"",
+      "id": 729
+    },
+    {
+      "boardId": 123,
+      "date": "2016-11-16T21:25:30.524Z",
+      "log": "kornel Add Label \"\"",
+      "id": 730
     }
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "userName": "kornel",
       "password": "secret1",
       "sharedBoards": [
-        99,
-        121,
-        4,
-        80
+        123
       ]
     },
     {
@@ -3144,8 +3099,7 @@
       "password": "secret",
       "id": 3,
       "sharedBoards": [
-        1,
-        78
+        1
       ]
     },
     {
@@ -3153,15 +3107,13 @@
       "password": "secret1",
       "id": 4,
       "sharedBoards": [
-        1,
-        78,
         1
       ]
     }
   ],
   "boards": [
     {
-      "id": "1",
+      "id": 1,
       "userId": 1,
       "board_name": "Trelloo",
       "hash": "#board1",
@@ -3177,53 +3129,12 @@
       "favourite": true
     },
     {
-      "id": 4,
-      "userId": 3,
-      "board_name": "board4",
-      "hash": "#board4",
-      "param": "board4",
-      "favourite": true
-    },
-    {
-      "board_name": "nowa",
-      "id": 77
-    },
-    {
       "userId": 1,
       "board_name": "kkk",
       "id": 78,
       "hash": "#board78",
       "param": "board78",
       "favourite": true
-    },
-    {
-      "userId": 1,
-      "board_name": "asd",
-      "id": 79,
-      "hash": "#board79",
-      "param": "board79",
-      "favourite": true
-    },
-    {
-      "userId": 3,
-      "board_name": "elobaza",
-      "id": 80
-    },
-    {
-      "userId": 1,
-      "board_name": "x",
-      "id": 81,
-      "hash": "#board81",
-      "param": "board81",
-      "favourite": false
-    },
-    {
-      "userId": 3,
-      "board_name": "niemojatablica",
-      "id": 99,
-      "hash": "#board99",
-      "param": "board99",
-      "favourite": false
     },
     {
       "userId": 3,
@@ -3234,27 +3145,20 @@
       "favourite": false
     },
     {
-      "userId": 1,
-      "board_name": "asd",
-      "id": 83,
-      "hash": "#board83",
-      "param": "board83",
-      "favourite": true
-    },
-    {
-      "userName": "adam",
-      "password": "secret1",
-      "id": 84
-    },
-    {
-      "userName": "adam",
-      "password": "secret1",
-      "id": 85
-    },
-    {
       "userId": 3,
       "board_name": "bbbbbbbb",
-      "id": 122
+      "id": 122,
+      "hash": "#board122",
+      "param": "board122",
+      "favourite": false
+    },
+    {
+      "userId": 4,
+      "board_name": "TablicaAdama",
+      "id": 123,
+      "hash": "#board123",
+      "param": "board123",
+      "favourite": false
     }
   ],
   "lists": [
@@ -3361,40 +3265,6 @@
       "archived": true
     },
     {
-      "boardId": 79,
-      "list_name": "ko",
-      "id": 26
-    },
-    {
-      "boardId": 80,
-      "list_name": "co",
-      "archived": false,
-      "pos": 0,
-      "id": 27
-    },
-    {
-      "boardId": 83,
-      "list_name": "lista1",
-      "pos": 0,
-      "id": 28
-    },
-    {
-      "boardId": 83,
-      "list_name": "lista2",
-      "favourite": false,
-      "pos": 1,
-      "archived": true,
-      "id": 29
-    },
-    {
-      "boardId": 83,
-      "list_name": "as",
-      "favourite": true,
-      "pos": 2,
-      "archived": false,
-      "id": 30
-    },
-    {
       "boardId": 78,
       "list_name": "d",
       "favourite": false,
@@ -3432,22 +3302,6 @@
       "pos": 5,
       "archived": false,
       "id": 39
-    },
-    {
-      "boardId": 99,
-      "list_name": "d",
-      "favourite": false,
-      "pos": 0,
-      "archived": false,
-      "id": 40
-    },
-    {
-      "boardId": 4,
-      "list_name": "sd",
-      "favourite": false,
-      "pos": 0,
-      "archived": false,
-      "id": 41
     },
     {
       "boardId": 1,
@@ -3512,6 +3366,22 @@
       "pos": 13,
       "archived": false,
       "id": "S1Ik4yKZg"
+    },
+    {
+      "boardId": 123,
+      "list_name": "ListaAdama",
+      "favourite": false,
+      "pos": 0,
+      "archived": false,
+      "id": "H1rqfBc-g"
+    },
+    {
+      "boardId": 123,
+      "list_name": "Uczelnia",
+      "favourite": false,
+      "pos": 1,
+      "archived": false,
+      "id": "rJ7nfrcWx"
     }
   ],
   "cards": [
@@ -3533,48 +3403,12 @@
       "pos": 0
     },
     {
-      "listId": 26,
-      "card_name": "asdAb",
-      "desc": "",
-      "archived": false,
-      "pos": 0,
-      "id": 5
-    },
-    {
-      "listId": 30,
-      "card_name": "ads",
-      "desc": "",
-      "archived": false,
-      "pos": 0,
-      "id": 6
-    },
-    {
-      "listId": 40,
-      "card_name": "r",
-      "pos": 1,
-      "id": 7
-    },
-    {
-      "listId": 40,
-      "card_name": "s",
-      "pos": 0,
-      "id": 8
-    },
-    {
       "listId": 20,
       "card_name": "dem",
       "desc": "",
       "archived": false,
       "pos": 1,
       "id": 13
-    },
-    {
-      "listId": 26,
-      "card_name": "x",
-      "desc": "",
-      "archived": false,
-      "pos": 1,
-      "id": 15
     },
     {
       "listId": 20,
@@ -3637,6 +3471,24 @@
       "pos": 0,
       "labels": "",
       "id": 22
+    },
+    {
+      "listId": "rJ7nfrcWx",
+      "card_name": "Nauka",
+      "desc": "",
+      "archived": false,
+      "pos": 0,
+      "labels": "",
+      "id": 24
+    },
+    {
+      "listId": "H1rqfBc-g",
+      "card_name": "Aktywnosc",
+      "desc": "Opis aktywnosci",
+      "archived": false,
+      "pos": 0,
+      "labels": "",
+      "id": 25
     }
   ],
   "comments": [
@@ -3659,11 +3511,6 @@
       "cardId": 1,
       "text": "sd",
       "id": 11
-    },
-    {
-      "cardId": 7,
-      "text": "l",
-      "id": 15
     },
     {
       "cardId": 13,
@@ -3764,20 +3611,80 @@
     {
       "cardId": "18",
       "name": "",
-      "color": "#00C2E0",
-      "id": 3
-    },
-    {
-      "cardId": "18",
-      "name": "",
       "color": "#F2D600",
       "id": 4
     },
     {
+      "cardId": "18",
+      "name": "",
+      "color": "#0079BF",
+      "id": 42
+    },
+    {
       "cardId": "17",
       "name": "",
+      "color": "#0079BF",
+      "id": 48
+    },
+    {
+      "cardId": 25,
+      "name": "",
+      "color": "#F2D600",
+      "id": 49
+    },
+    {
+      "cardId": 25,
+      "name": "",
       "color": "#61BD4F",
-      "id": 41
+      "id": 50
+    },
+    {
+      "cardId": 25,
+      "name": "",
+      "color": "#EB5A46",
+      "id": 51
+    }
+  ],
+  "files": [
+    {
+      "id": 0,
+      "cardId": 13,
+      "path": "http://localhost:3000/uploads/man.png"
+    },
+    {
+      "cardId": "16",
+      "path": "http://localhost:3000/uploads/user.png",
+      "id": 1
+    },
+    {
+      "cardId": "17",
+      "path": "http://localhost:3000/uploads/user.png",
+      "id": 2
+    },
+    {
+      "cardId": "17",
+      "path": "http://localhost:3000/uploads/notebook.png",
+      "id": 3
+    },
+    {
+      "cardId": "18",
+      "path": "http://localhost:3000/uploads/notebook.png",
+      "id": 4
+    },
+    {
+      "cardId": "19",
+      "path": "http://localhost:3000/uploads/20160511_135043.jpg",
+      "id": 5
+    },
+    {
+      "cardId": "25",
+      "path": "http://localhost:3000/uploads/notebook.png",
+      "id": 7
+    },
+    {
+      "cardId": "16",
+      "path": "http://localhost:3000/uploads/Company Logo.jpg",
+      "id": 8
     }
   ],
   "all": [
