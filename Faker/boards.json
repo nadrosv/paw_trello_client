@@ -1821,16 +1821,60 @@
       "id": 16
     }
   ],
-  "labels": [
+  "globalLabels": [
     {
       "id": 0,
-      "name": "Praca",
-      "color": "#008080"
+      "color": "#61BD4F"
     },
     {
       "id": 1,
-      "name": "Dom",
-      "color": "#c11a0a"
+      "color": "#F2D600"
+    },
+    {
+      "id": 2,
+      "color": "#FFAB4A"
+    },
+    {
+      "id": 3,
+      "color": "#EB5A46"
+    },
+    {
+      "id": 4,
+      "color": "#C377E0"
+    },
+    {
+      "id": 5,
+      "color": "#0079BF"
+    },
+    {
+      "id": 6,
+      "color": "#00C2E0"
+    },
+    {
+      "id": 7,
+      "color": "#51E898"
+    },
+    {
+      "id": 8,
+      "color": "#FF80CE"
+    },
+    {
+      "id": 9,
+      "color": "#4d4d4d"
+    }
+  ],
+  "labels": [
+    {
+      "cardId": 16,
+      "name": "",
+      "color": "#00C2E0",
+      "id": 1
+    },
+    {
+      "cardId": 16,
+      "name": "",
+      "color": "#C377E0",
+      "id": 2
     }
   ],
   "all": [
