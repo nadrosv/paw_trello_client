@@ -139,7 +139,7 @@ export const mutations = {
         state.cards[card.listId].push(card)
         app.$set(state.labels, card.id, [])
         app.$set(state.comments, card.id, [])
-
+        app.$set(state.files, card.id, [])
 
     },
     [types.ADD_COMMENT](state, {comment}) {

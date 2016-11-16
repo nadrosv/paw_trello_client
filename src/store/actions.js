@@ -313,7 +313,7 @@ export const editList = (context, {list, name, pos}) => {
 
 export const addLabel = (context, {label}) => {
     app.$http.post('http://localhost:3000/labels', label).then((response) => {
-        context.commit(types.ADD_LABEL, { label: label })
+        context.commit(types.ADD_LABEL, { label: response.body })
         app.$store.dispatch('addActivity', { action: 'Add Label', element: label.name })
 
     }, (response) => {
