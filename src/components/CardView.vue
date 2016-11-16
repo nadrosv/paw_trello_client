@@ -35,16 +35,22 @@
                             </button>
                         </div>
                     </div>
+
+                     <div class="collapse" :id="modalFiles">
+                        <div class="well">
+                            <form action="http://localhost:3000/upload" v-on:submit.prevent="onSubmit" enctype="multipart/form-data" method="post">
+                                <input name="cardId" type="hidden" :value="cardviewData.id" />
+                                <br><br>
+                                <input  name="upload" type="file" />
+                                <br><br>
+                                <input type="submit" value="Upload" />
+                            </form>
+                        </div>
+                    </div>
                     
                     <p class="card-comments-label">Activity</p>
                     <p v-for="comm in comments" :key="comm.id">{{comm.text}}</p>  
-                    <form action="http://localhost:3000/upload" v-on:submit.prevent="onSubmit" enctype="multipart/form-data" method="post">
-                        <input name="cardId" type="hidden" :value="cardviewData.id" />
-                        <br><br>
-                        <input  name="upload" type="file" />
-                        <br><br>
-                        <input type="submit" value="Upload" />
-                    </form>
+                    
 
                 </div>
                 
@@ -59,7 +65,7 @@
                     <button type="button" class="btn btn-block btn-default" data-toggle="collapse" :data-target="hashModal" aria-expanded="false">
                         Labels
                     </button>
-                    <button type="button" class="btn btn-default btn-block">
+                    <button type="button" class="btn btn-default btn-block" data-toggle="collapse" :data-target="filesModal" aria-expanded="false">
                         Attachment
                     </button>
                     <p class="lead text-left" style="margin-top:15px;">
@@ -87,6 +93,8 @@ import { mapActions, mapMutations } from 'vuex'
           commText: '',
           hashModal: '#modal-cardview' + this.cardviewData.id,
           modalParam: 'modal-cardview' + this.cardviewData.id,
+          filesModal: '#modal-cardview-files' + this.cardviewData.id,
+          modalFiles: 'modal-cardview-files' + this.cardviewData.id,
 
         // newName: this.cardviewData.card_name,
         // newDesc: this.cardviewData.desc,
