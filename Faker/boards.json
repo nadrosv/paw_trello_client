@@ -191,7 +191,7 @@
       "date": "2016-11-02T21:40:44.440Z",
       "log": " favourited \"f\"",
       "id": 40
-    }
+    },
     {
       "boardId": 1,
       "date": "2016-11-14T23:06:29.735Z",
@@ -437,7 +437,7 @@
       "date": "2016-11-16T20:28:39.145Z",
       "log": "kornel remove label \"\"",
       "id": 714
-    }
+    },
     {
       "boardId": "1",
       "date": "2016-11-22T20:15:39.911Z",
@@ -473,6 +473,12 @@
       "date": "2016-11-22T20:24:19.809Z",
       "log": "aaa Add Label \"\"",
       "id": 805
+    },
+    {
+      "boardId": 123,
+      "date": "2016-11-22T22:05:36.022Z",
+      "log": "adam added card \"zakupy\"",
+      "id": 806
     }
   ],
   "users": [
@@ -902,6 +908,15 @@
       "pos": 0,
       "labels": "",
       "id": 26
+    },
+    {
+      "listId": "rJ7nfrcWx",
+      "card_name": "zakupy",
+      "desc": "lista zakupów",
+      "archived": false,
+      "pos": 0,
+      "labels": "",
+      "id": 27
     }
   ],
   "comments": [
