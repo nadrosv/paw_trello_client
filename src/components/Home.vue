@@ -113,7 +113,6 @@ import { mapActions, mapMutations } from 'vuex'
      if (auth.user.authenticated) {
        this.getComps()
      } else {
-       console.log(this.$route)
        this.$store.dispatch('getBoard', {id: this.$route.params.boardId})
      }
     
