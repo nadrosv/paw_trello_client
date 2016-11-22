@@ -110,7 +110,12 @@ import { mapActions, mapMutations } from 'vuex'
   mounted: function () {
   this.$nextTick(function () {
     // this.getBoards()
-    this.getComps()
+     if (auth.user.authenticated) {
+       this.getComps()
+     } else {
+       console.log(this.$route)
+       this.$store.dispatch('getBoard', {id: this.$route.params.boardId})
+     }
     
   })
   },
@@ -122,8 +127,12 @@ import { mapActions, mapMutations } from 'vuex'
   },
   watch: {
     '$route' (to, from) {
-      // console.log(to)
-    this.setActiveBoard({board: this.$store.state.comp[to.params.boardId]})
+      console.log(to)
+      if (auth.user.authenticated) {
+        this.setActiveBoard({board: this.$store.state.comp[to.params.boardId]})
+      } else {
+        this.setActiveBoard({board: this.$store.state.board})
+      }
     }
   }
   }

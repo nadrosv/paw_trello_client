@@ -67,6 +67,11 @@ const routes = [
                     a: CardView
                 },
                 name: 'CardView',
+            },
+            {
+                path: 'share/board/:boardId',
+                component: Board,
+                name: 'ShareBoard',
             }
         ]
     },

@@ -18,7 +18,10 @@ export const state = {
     boardLists: [],
     labels: {},
     files: {},
-    globalLabels: []
+    globalLabels: [],
+    teams: [],
+    users: {},
+    board: {}
 }
 
 // we can use the ES2015 computed property name feature
@@ -26,6 +29,9 @@ export const state = {
 export const mutations = {
     [types.GET_USER](state, user) {
         state.user = user
+    },
+    [types.GET_BOARD](state, board) {
+        state.board = board
     },
     [types.SET_SHARED_BOARDS](state, sharedBoards) {
         state.sharedBoards = sharedBoards
@@ -63,7 +69,11 @@ export const mutations = {
         })
         app.$set(state.cards, payload.listId, payload.cards)
     },
+    [types.GET_TEAMS](state, payload) {
+        state.teams.push(payload[0])
+        // app.$set(state.teams, payload.listId, payload.cards)
 
+    },
     [types.GET_ACTIVITY](state, payload) {
         app.$set(state.activities, payload.boardId, payload.activities)
     },

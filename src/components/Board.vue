@@ -25,6 +25,8 @@
 		</span>
   	</button>
 	<button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="hashModal.concat('label')" aria-expanded="false">Share board</button>  
+	<button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="hashModal.concat('team')" aria-expanded="false">Teams</button>  
+	<button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="hashModal.concat('share')" aria-expanded="false">Share</button>  
 
 	  <!-- Archived button -->
 	<div class="btn-group">
@@ -71,7 +73,28 @@
                         {{user.userName}}
                 </button>
             </div>
-        </div>
+	</div>
+
+	<div class="collapse" :id="modalParam.concat('share')">
+            <div class="well">
+                http://localhost:8080/#/dashboard/share/board/{{boardData.id}}
+            </div>
+	</div>
+
+	<div class="collapse" :id="modalParam.concat('team')">
+		<div class="well">
+			<button v-for="(team, index) in teams" class="btn btn-secondary" type="button" data-toggle="collapse" 
+					:data-target="hashModal.concat('team-board')" aria-expanded="false"
+					@click="selectedTeamBoard = index"> {{team.name}} </button>  
+			
+			<div v-if="teams[selectedTeamBoard]" class="collapse" :id="modalParam.concat('team-board')">
+				<button class="btn btn-secondary" v-for="board in teams[selectedTeamBoard].boards">
+					<router-link :to="{ name: 'Board', params: { boardId: board }}"> {{board}} </router-link>
+				</button>
+			</div>
+		</div>
+	</div>
+	
 
 	<div v-show="this.$route.params.listId === undefined" class="list-container" 
 		 v-sortable="{delay: 20, onStart: onStart, onEnd: onEnd, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost', handle: '.list-name'}">
@@ -94,6 +117,8 @@
 
 <script>
 import { mapActions, mapMutation } from 'vuex'
+import auth from '../auth'
+
 export default {
 	data() {
 		return{
@@ -105,7 +130,9 @@ export default {
         modalParam: 'modal' + this.boardData.id,
 		selectedList: {},
 		logsVisible: false,
-		users: {}
+		users: {},
+		teams: {},
+		selectedTeamBoard: -1
 		}
 	},
 	computed: {
@@ -122,6 +149,7 @@ export default {
 		// users() {
 		// 	return this.$store.dispatch('getUsers')
 		// }
+		
 	},
 
 	methods: {  
@@ -190,8 +218,20 @@ export default {
 		this.$nextTick(function () {
 			this.$store.dispatch('getUsers').then((users) => {
 				this.users = users
+				
+			})
+			console.log(auth.user.authenticated)
+			if (auth.user.authenticated) {
+
+			this.$store.dispatch('getUserTeams').then((teamsUser) => {
+				this.$store.dispatch('getTeams', {teams: teamsUser}).then((teams) => {
+				this.teams = teams[0]
+				this.$store.commit('GET_TEAMS', teams[0])
 			})
 			// this.getLists({boardId: this.boardData.id})
+		})
+		}
+
 		})
 	},
 

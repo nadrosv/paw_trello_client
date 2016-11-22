@@ -121,6 +121,37 @@ export const getCards = (context, {listId}) => {
     })
 }
 
+export const getTeams = (context, {teams}) => {
+    let promises = []
+
+    for (let i = 0; i < teams.length; i++) {
+        promises.push(new Promise((resolve, reject) => {
+            app.$http.get('http://localhost:3000/teams?id=' + teams[i]).
+                then((response) => {
+                    resolve(response.body)
+                }, (response) => {
+                    console.log(response)
+                })
+        })
+        )
+    }
+    return Promise.all(promises)
+
+}
+
+export const getUserTeams = (context) => {
+    return new Promise((resolve, reject) => {
+
+        app.$http.get('http://localhost:3000/users?id=' + auth.user.id).
+            then((response) => {
+                resolve(response.body[0].teams)
+            }, (response) => {
+                console.log(response)
+                reject()
+            })
+    })
+
+}
 
 export const getLabelColor = (context, {colorId}) => {
     return new Promise((resolve, reject) => {
@@ -212,6 +243,25 @@ export const getComps = (context) => {
                 }
             })
         }
+    })
+}
+
+export const getBoard = (context, {id}) => {
+    app.$store.dispatch('getGlobalLabels')
+    app.$http.get('http://localhost:3000/boards/' + id).then((response) => {
+        context.commit(types.GET_BOARD, response.body)
+        context.commit('setActiveBoard', {board: response.body})
+
+        console.log(response.body.id)
+        // for (let i = 0; i < app.$store.state.comp.length; i++) {
+        app.$store.dispatch('getActivity', { boardId: response.body.id })
+        app.$store.dispatch('getLists', { boardId: response.body.id }).then(() => {
+
+            for (let j = 0; j < app.$store.state.lists[response.body.id].length; j++) {
+                app.$store.dispatch('getCards', { listId: (app.$store.state.lists[response.body.id])[j].id })
+            }
+        })
+        // }
     })
 }
 
@@ -335,9 +385,9 @@ export const addFile = (context, {file}) => {
 //         context.commit(types.ADD_COMMENT, { comment: response.body })
 //         app.$store.dispatch('addActivity', { action: 'added comment', element: comment.text })
 export const delLabel = (context, {label}) => {
-    console.log({label});
+    console.log({ label });
     app.$http.delete('http://localhost:3000/labels/' + label.id).then((response) => {
-        context.commit(types.DEL_LABEL, {label: label })
+        context.commit(types.DEL_LABEL, { label: label })
         app.$store.dispatch('addActivity', { action: 'remove label', element: label.name })
 
     }, (response) => {
