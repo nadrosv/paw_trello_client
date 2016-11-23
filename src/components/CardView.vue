@@ -19,6 +19,13 @@
                     <div class="card-label-container">
                         <div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }" v-on:click="delLabel({ label })"></div>
                     </div>
+                    
+                    <div v-if="dueDateLabel !== null">
+                        Due date:<br>
+                        <span class="label label-default">
+                            {{dueDateLabel}}
+                        </span>
+                    </div>
 
                     <p class="add-comment-label">
                         Add comment
@@ -36,7 +43,38 @@
                         </div>
                     </div>
 
-                     <div class="collapse" :id="modalFiles">
+                    <div class="collapse" :id="modalParam.concat('date')">
+                        <div class="well">    
+
+                            <!--<vue-datetime-picker class="vue-picker1" name="picker1" model='null'>
+                            </vue-datetime-picker>                                             -->
+
+                            <div class='input-group date' :id="modalParam.concat('datea')"  >
+                                <input type='text' class="form-control" v-model="dueDateValue" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                                
+                            </div>
+                            <button type="button" class="btn btn-default btn-block" v-on:click="saveDueDate">
+                                    Save
+                            </button> 
+
+                            <!--<div class="row">
+                                <div class="form-group">
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>-->
+  
+                        </div>
+                    </div>
+
+                    <div class="collapse" :id="modalFiles">
                         <div class="well">
                             <form action="http://localhost:3000/upload" v-on:submit.prevent="onSubmit" enctype="multipart/form-data" method="post">
                                 <input name="cardId" type="hidden" :value="cardviewData.id" />
@@ -58,13 +96,13 @@
                 <div class="col-md-3 col-xs-4">
                     <p class="text-left lead">
                         Add
-                    </p> 
-                    <button type="button" class="btn btn-default btn-block">
-                        Members
-                    </button> 
+                    </p>               
                     <button type="button" class="btn btn-block btn-default" data-toggle="collapse" :data-target="hashModal" aria-expanded="false">
                         Labels
                     </button>
+                    <button type="button" class="btn btn-block btn-default" data-toggle="collapse" :data-target="hashModal.concat('date')" aria-expanded="false" v-on:click="forDate">
+                        Due date
+                    </button>                    
                     <button type="button" class="btn btn-default btn-block" data-toggle="collapse" :data-target="filesModal" aria-expanded="false">
                         Attachment
                     </button>
@@ -74,6 +112,9 @@
                     <button type="button" class="btn btn-default btn-block">
                         Move
                     </button> 
+                    <button type="button" class="btn btn-default btn-block">
+                        Subscribe
+                    </button>
                     <button type="button" class="btn btn-default btn-block">
                         Archive
                     </button>
@@ -98,6 +139,9 @@ import { mapActions, mapMutations } from 'vuex'
           modalParam: 'modal-cardview' + this.cardviewData.id,
           filesModal: '#modal-cardview-files' + this.cardviewData.id,
           modalFiles: 'modal-cardview-files' + this.cardviewData.id,
+          dateModal: '#modal-cardview-date' + this.cardviewData.id,
+          modalDate: 'modal-cardview-date' + this.cardviewData.id,
+          dueDateValue: ''
 
         // newName: this.cardviewData.card_name,
         // newDesc: this.cardviewData.desc,
@@ -125,6 +169,9 @@ import { mapActions, mapMutations } from 'vuex'
         },
         subbed() {
             return this.$store.state.user.subs.indexOf(Number(this.cardviewData.id)) != -1
+        },
+        dueDateLabel() {
+            return (new Date(this.cardviewData.dueDate));
         }
     },
     methods: {
@@ -164,6 +211,19 @@ import { mapActions, mapMutations } from 'vuex'
 
         this.addFile({file : newFile})
         e.target.submit()
+    },
+    forDate() {   
+        $(this.hashModal.concat('datea')).datetimepicker({
+            locale: 'pl'
+        });
+        
+    },
+    saveDueDate() {
+        var myDate = new Date($(this.hashModal.concat('datea')).data("DateTimePicker").date()._d);
+        var myDateMillis = myDate.getTime();
+        var currentMillisTime = (new Date).getTime();
+        this.editCard({card: this.cardviewData, card_name: this.cardviewData.card_name, pos: this.cardviewData.pos, desc: this.cardviewData.desc, dueDate: myDateMillis, lastChanged: currentMillisTime })
+       
     }
     // ,
     // addLabel(label) {

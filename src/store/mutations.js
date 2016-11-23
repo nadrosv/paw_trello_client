@@ -120,10 +120,12 @@ export const mutations = {
         list.list_name = name
         list.pos = pos
     },
-    [types.EDIT_CARD](state, {card, name, pos, desc}) {
-        card.card_name = name
+    [types.EDIT_CARD](state, {card, card_name, pos, desc, dueDate, lastChanged}) {
+        card.card_name = card_name
         card.desc = desc
         card.pos = pos
+        card.dueDate = dueDate
+        card.lastChanged = lastChanged
     },
     // [types.ADD_LABEL](state, {card, label}) {
     //     card.labels = label

@@ -400,13 +400,14 @@ export const delLabel = (context, {label}) => {
     });
 }
 
-export const editCard = (context, {card, name, pos, desc}) => {
+export const editCard = (context, {card, card_name, pos, desc, dueDate, lastChanged}) => {
     let newCard = card
     newCard.card_name = name
     newCard.pos = pos
     newCard.desc = desc
-    app.$http.patch('http://localhost:3000/cards/' + card.id, { listId: card.listId, card_name: name, pos: pos, desc: desc }).then((response) => {
-        context.commit(types.EDIT_CARD, { card, name, pos, desc })
+    app.$http.put('http://localhost:3000/cards/' + card.id, { listId: card.listId, card_name: card_name, pos: pos, desc: desc, dueDate: dueDate, lastChanged: lastChanged }).then((response) => {
+        context.commit(types.EDIT_CARD, { card, card_name, pos, desc, dueDate, lastChanged })
+        console.log(response.body)
         app.$store.dispatch('addActivity', { action: 'edited card', element: card.card_name })
 
     }, (response) => {
