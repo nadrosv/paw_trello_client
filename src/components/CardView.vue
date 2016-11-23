@@ -77,6 +77,9 @@
                     <button type="button" class="btn btn-default btn-block">
                         Archive
                     </button>
+                    <button type="button" class="btn btn-default btn-block" v-bind:class="{ 'btn-success': subbed }" @click="subCard({card: cardviewData})">
+                        Subbed
+                    </button>
                 </div>
                 
             </div>
@@ -119,6 +122,9 @@ import { mapActions, mapMutations } from 'vuex'
         },
         globalLabels() {
             return this.$store.state.globalLabels
+        },
+        subbed() {
+            return this.$store.state.user.subs.indexOf(Number(this.cardviewData.id)) != -1
         }
     },
     methods: {
@@ -127,7 +133,8 @@ import { mapActions, mapMutations } from 'vuex'
           'editCard',
           'addLabel',
           'addFile',
-          'delLabel'
+          'delLabel',
+          'subCard'
     ]),
     back() {
         this.$router.go(-1)

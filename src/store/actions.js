@@ -144,6 +144,7 @@ export const getUserTeams = (context) => {
 
         app.$http.get('http://localhost:3000/users?id=' + auth.user.id).
             then((response) => {
+                context.commit('GET_USER', response.body[0])
                 resolve(response.body[0].teams)
             }, (response) => {
                 console.log(response)
@@ -369,6 +370,10 @@ export const addLabel = (context, {label}) => {
     }, (response) => {
         console.log(response)
     });
+}
+
+export const subCard = (context, {card}) => {
+    context.commit(types.SUB_CARD, {cardId: card.id})
 }
 
 export const addFile = (context, {file}) => {

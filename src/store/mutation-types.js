@@ -38,4 +38,5 @@ export const DEL_COMMENT = 'DEL_COMMENT'
 
 export const SET_SHARED_BOARDS = 'SET_SHARED_BOARDS'
 export const SET_USERS = 'SET_USERS'
+export const SUB_CARD = 'SUB_CARD'
 
