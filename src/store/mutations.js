@@ -39,7 +39,14 @@ export const mutations = {
     [types.GET_GLOBAL_LABELS](state, {labels}) {
         state.globalLabels = labels
     },
+    [types.SUB_CARD](state, {cardId}) {
+        if (state.user.subs.indexOf(Number(cardId)) != -1) {
+            state.user.subs.splice(state.user.subs.indexOf(cardId), 1)
+        } else {
+            state.user.subs.push(Number(cardId))
+        }
 
+    },
     [types.GET_BOARDS](state, boards) {
         var i
         for (i = 0; i < boards.length; i++) {
