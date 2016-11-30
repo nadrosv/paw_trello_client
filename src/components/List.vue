@@ -42,8 +42,8 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+            	<span aria-hidden="true">&times;</span>
+          	</button>
 						<h4 class="modal-title" id="myModalLabel">Dodaj nowa karte</h4>
 					</div>
 					<div class="modal-body">
@@ -60,6 +60,8 @@
 				</div>
 			</div>
 		</div>
+
+
 	</div>
 </div>
 
@@ -161,13 +163,13 @@ import { mapActions, mapMutations } from 'vuex'
 
 
 <style scoped>
-    .column-wrapper {
-        margin: 0;
-        box-sizing: border-box;
-        display: inline-block;
-        vertical-align: top;
-        white-space: nowrap;
-    }
+  .column-wrapper {
+		margin: 0;
+		box-sizing: border-box;
+		display: inline-block;
+		vertical-align: top;
+		white-space: nowrap;
+  }
   
 	.list-area {
 		background-color: rgba(185, 191, 194, 1);
@@ -197,7 +199,10 @@ import { mapActions, mapMutations } from 'vuex'
 	.col-fixed-size {
 		width: 340px;
 	}
-		.ghost {
+	
+	.ghost {
 		opacity: 0;
 	}
+
+
 </style>

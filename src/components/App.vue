@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<nav class="navbar navbar-default">
-			<div class="container">
+			<div class="container1">
 				<ul class="nav navbar-nav">
 					<li><router-link to="/home">Home</router-link></li>
 					<li><router-link to="login" v-if="!user.authenticated">Login</router-link></li>
@@ -36,5 +36,9 @@
 	<style scoped>
     .container {
       width: 100%;
+			background-image: url('/assets/backgrounds/kmaalcld6wa-andrew-ruiz-edit.jpg');
+    	background-repeat: no-repeat;
+    	background-attachment: fixed;
     }
+		
   </style>

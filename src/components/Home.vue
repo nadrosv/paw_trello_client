@@ -6,6 +6,14 @@
       <div class="search-container">
 
         <input class="input-search" v-model="searchPhrase" placeholder="Search"></input>	
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn" v-on:click="showMenu">MENU</button>
+        <div class="dropdown-content">
+          <a href="#">Link 1</a>
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
+        </div>
       </div>	
 			<button class="btn btn-primary" data-toggle="modal" data-target="#home-modal">Dodaj tablice</button>
       <br>
@@ -105,6 +113,18 @@ import { mapActions, mapMutations } from 'vuex'
         "board_name": this.newBoardName
         }
         this.addBoard({board: formData})
+      },
+
+      showMenu () {
+        var m = $('.dropdown-content');
+        if (m.is(":visible") == true) {
+          m.animate({height: '0px'}, "slow");
+          m.css({"display":"none"});
+        }
+        else {
+          m.animate({height: '300px'}, "slow");
+          m.css({"display":"block","z-index":"10"});        
+        }
       }
   },
   mounted: function () {
@@ -166,4 +186,45 @@ import { mapActions, mapMutations } from 'vuex'
     width: 100%;
     text-align: center;
   }
+
+  .dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+      position: relative;
+      display: inline-block;
+  }
+
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  }
+
+  /* Links inside the dropdown */
+  .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+  }
+
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #f1f1f1}
+
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {
+      background-color: #3e8e41;
+  }
+
 </style>

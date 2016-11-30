@@ -259,7 +259,7 @@ export default {
 
 <style scoped>
 	.board-area {
-		background-color: rgba(0,141,196,1);
+		/*background-color: rgba(0,141,196,1); */
 		margin: 10px;
 		padding: 10px;
 		overflow: hidden;
@@ -278,6 +278,8 @@ export default {
 		
 		white-space: nowrap;
 		overflow-x: auto;
+
+		/*height: 700px;*/
   	}
 
 	.ghost {
