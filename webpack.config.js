@@ -21,16 +21,10 @@ module.exports = {
     ]
   },
 
-  babel: {
-    presets: ['es2015', 'stage-3'],
-    plugins: [
-      ['transform-runtime'],
-      ['transform-object-rest-spread'],
-      ['transform-es2015-destructuring']
-      // ['transform-es2015-spread', {
-      //   "loose": true
-      // }]
-    ]
+   vue: {
+    loaders: {
+      js: 'babel'
+    }
   },
 
   resolve: {
