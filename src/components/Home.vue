@@ -10,10 +10,10 @@
       <div class="dropdown">
         <button class="dropbtn" v-on:click="showMenu">MENU</button>
         <div class="dropdown-content">
-          {{ $t("menu.language") }} 
+          <p>{{ $t("menu.language") }}:</p>
           <button class="btn btn-primary" type="button" aria-expanded="false" @click="changeLangToEng">{{ $t("board.langToEngBtn") }}</button> 
         	<button class="btn btn-primary" type="button" aria-expanded="false" @click="changeLangToPl">{{ $t("board.langToPlBtn") }}</button>
-          {{ $t("menu.wallpapers") }} 
+          <p>{{ $t("menu.wallpapers") }}:</p>
           <div class='wallpapers-section'>
             <img src='/assets/backgrounds/background1.png' v-on:click="setWallpaper($event)">
             <img src='/assets/backgrounds/background2.png' v-on:click="setWallpaper($event)">
@@ -25,11 +25,11 @@
             <img src='/assets/backgrounds/wallpaper6_thumbnail.jpg' v-on:click="setWallpaper($event)">
             <img src='/assets/backgrounds/wallpaper7_thumbnail.jpg' v-on:click="setWallpaper($event)">
             <img src='/assets/backgrounds/wallpaper8_thumbnail.jpg' v-on:click="setWallpaper($event)">
-            <img src='/assets/backgrounds/wallpaper9_thumbnail.jpg'>
-            <img src='/assets/backgrounds/wallpaper10_thumbnail.jpg'>
-            <img src='/assets/backgrounds/wallpaper11_thumbnail.jpg'>
-            <img src='/assets/backgrounds/wallpaper12_thumbnail.jpg'>
-            <img src='/assets/backgrounds/wallpaper13_thumbnail.jpg'>
+            <img src='/assets/backgrounds/wallpaper9_thumbnail.jpg' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/wallpaper10_thumbnail.jpg' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/wallpaper11_thumbnail.jpg' v-on:click="setWallpaper($event)"> 
+            <img src='/assets/backgrounds/wallpaper12_thumbnail.jpg' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/wallpaper13_thumbnail.jpg' v-on:click="setWallpaper($event)">
           </div>
         </div>
       </div>	
@@ -123,11 +123,13 @@
       ]),
       
       changeLangToEng() {
-        Vue.config.lang = 'en'
+        Vue.config.lang = 'en';
+        document.cookie = "lang=en";
       },
 
       changeLangToPl() {
-        Vue.config.lang = 'pl'
+        Vue.config.lang = 'pl';
+        document.cookie = "lang=pl";
       },
 
       customFilter: function(board) {
@@ -158,27 +160,52 @@
       setWallpaper: function(e) {
         var imgURL = e.path[0].src;
         var imgURL2 = imgURL.split("_")[0]+".jpg";
-        console.log(imgURL);
+        // console.log(imgURL);
         //console.log('url("' + imgURL + '")');
 
-        if ( imgURL.split("backgrounds")[1] == "/background1.png" )
+        if ( imgURL.split("backgrounds")[1] == "/background1.png" ) {
           $("body").css("background","rgba(0,141,196,1)");
-        else if ( imgURL.split("backgrounds")[1] == "/background2.png" )
+          var a = '"background"'+","+'"rgba(0,141,196,1)"';
+          console.log(a);
+          document.cookie = "wallpaper=" + a;
+        }
+        else if ( imgURL.split("backgrounds")[1] == "/background2.png" ) {
           $("body").css("background","rgb(255, 109, 0)");
-        else
+          var b = '"background"'+","+'"rgb(255, 109, 0)"';
+          document.cookie = "wallpaper=" + b;
+        }
+        else {
           $("body").css("background-image",'url("' + imgURL2 + '")');
+          var c = '"background-image",'+"'"+'url("'+ imgURL2 + '")'+"'";
+          console.log(c);
+          document.cookie = "wallpaper=" + c;
+        }
       }
   },
   mounted: function () {
-  this.$nextTick(function () {
-    // this.getBoards()
-     if (auth.user.authenticated) {
-       this.getComps()
-     } else {
-       this.$store.dispatch('getBoard', {id: this.$route.params.boardId})
-     }
-    
-  })
+    this.$nextTick(function () {
+      // this.getBoards()
+      if (auth.user.authenticated) {
+        this.getComps()
+      } else {
+        this.$store.dispatch('getBoard', {id: this.$route.params.boardId})
+      }
+
+      document.cookie = document.cookie;
+      var match = document.cookie.match(new RegExp('lang' + '=([^;]+)'));
+      if (match) {
+        console.log( match[1] );
+        Vue.config.lang = match[1]
+      }
+      
+      var match = document.cookie.match(new RegExp('wallpaper' + '=([^;]+)'));
+      if (match) {
+        console.log( match[1] );
+        $("body").css( String(match[1]) );
+      }
+      $("body").css( String(match[1]) );
+      
+    })
   },
   route: {
     canActivate() {
@@ -229,6 +256,12 @@
     text-align: center;
   }
 
+  .input-search {
+    height: 30px;
+    border-radius: 5px;
+    text-align: center;
+  }
+
   .dropbtn {
     background-color: #4CAF50;
     color: white;
@@ -263,7 +296,13 @@
   }
 
   /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #f1f1f1}
+  .dropdown-content a:hover {
+    background-color: #f1f1f1
+  }
+
+  .dropdown-content p {
+    margin-top: 12px;
+  }
 
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdown:hover .dropbtn {

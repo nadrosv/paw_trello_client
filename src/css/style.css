@@ -1,9 +1,10 @@
 body {
-	/*background-color: rgba(0,141,196,1);*/
+	background-color: rgba(0,141,196,1);
 	/*background-color: rgb(255, 109, 0);*/
-	background-image: url('/assets/backgrounds/wallpaper1.jpg');
-	background-repeat: no-repeat;
-    background-attachment: fixed;
+	
+	/*background-image: url('/assets/backgrounds/wallpaper1.jpg');*/
+	/*background-repeat: no-repeat;*/
+    /*background-attachment: fixed;*/
 	z-index: 10;
 }
 

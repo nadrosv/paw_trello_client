@@ -7,11 +7,12 @@
 					<li><router-link to="login" v-if="!user.authenticated">{{ $t("app.login") }}</router-link></li>
 					<li><router-link to="signup" v-if="!user.authenticated">{{ $t("app.signingUp") }}</router-link></li>
 					<li><router-link to="/dashboard" v-if="user.authenticated" v-on:click.native="logout">{{ $t("app.logout") }}</router-link></li>
-				</ul>			
-			</div>
-			<div class="logo">
+				</ul>		
+				<div class="logo">
 					<img src='/assets/logo/morello_logo.png' alt='Morello logo'> 
-				</div>
+				</div>	
+			</div>
+			
 		</nav>
 		<div class="container">
 			<router-view></router-view>
@@ -19,34 +20,49 @@
 	</div>
 </template>
 
- <script>
+<script>
   import auth from '../auth'
+
   export default {
     data() {
       return {
         user: auth.user
       }
     },
+
     methods: {
       logout() {
-		  console.log('logout')
-		  auth.logout()
+		  	console.log('logout')
+		  	auth.logout()
       }
     }
+
   }
-  </script>
+</script>
 
-	<style scoped>
-    .container {
-      width: 100%;
-    }
+<style scoped>
 
-		.logo img {
-			height: 85px;
-		}
+	.container {
+		width: 100%;
+	}
 
-		.logo {
-			text-align: center;
-		}
+	.navbar .navbar-nav {
+    display: inline-block;
+    float: none;
+	}
 
-  </style>
+	.navbar .navbar-collapse {
+    text-align: center;
+	}
+
+	.logo img {
+		height: 85px;
+	}
+
+	.logo {
+		text-align: center;
+		margin-top: -60px;
+		
+	}
+
+</style>

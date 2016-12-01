@@ -200,7 +200,7 @@ import { mapActions, mapMutations } from 'vuex'
         this.addLabel({label: savedLabel})
     },
     onSubmit: function(e) {
-        let processedPath = "http://localhost:3000/uploads/" + e.target[1].value.replace(/.*[\/\\]/, '')
+        let processedPath = "http://localhost:8080/Faker/uploads/" + e.target[1].value.replace(/.*[\/\\]/, '')
         let newFile = {
             cardId: e.target[0].value,
             path: processedPath 

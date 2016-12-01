@@ -5,8 +5,8 @@ var middlewares = jsonServer.defaults()
 var fs = require('fs'),
     formidable = require('formidable'),
     util = require('util'),
-    fs = require('fs-extra'),
-    qt = require('quickthumb')
+    fs = require('fs-extra')
+    //qt = require('quickthumb')
 
 
 server.use(middlewares)
@@ -14,7 +14,7 @@ server.use(middlewares)
 server.use(jsonServer.bodyParser)
 
 // Post files
-server.use(qt.static(__dirname + '/'));
+// server.use(qt.static(__dirname + '/'));
 
 server.post('/upload', function (req, res) {
     var form = new formidable.IncomingForm();
