@@ -44,18 +44,18 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             	<span aria-hidden="true">&times;</span>
           	</button>
-						<h4 class="modal-title" id="myModalLabel">Dodaj nowa karte</h4>
+						<h4 class="modal-title" id="myModalLabel">{{ $t("list.addCardModal_title") }}</h4>
 					</div>
 					<div class="modal-body">
 						<p>
-							Nazwa
-							<input v-model="newName"> Opis
+							{{ $t("list.addCardModal_cardName") }}
+							<input v-model="newName"> {{ $t("list.addCardModal_cardDescription") }}
 							<input v-model="newDesc">
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" v-on:click="save">Save changes</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ $t("home.addBoardModal_closeBtn") }}</button>
+						<button type="button" class="btn btn-primary" v-on:click="save">{{ $t("home.addBoardModal_saveBtn") }}</button>
 					</div>
 				</div>
 			</div>

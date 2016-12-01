@@ -4,18 +4,37 @@
 		<div>
 
       <div class="search-container">
-
-        <input class="input-search" v-model="searchPhrase" placeholder="Search"></input>	
+        <input class="input-search" v-model="searchPhrase" v-bind:placeholder="$t('search.placeholder')"></input>	
       </div>
+
       <div class="dropdown">
         <button class="dropbtn" v-on:click="showMenu">MENU</button>
         <div class="dropdown-content">
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
+          {{ $t("menu.language") }} 
+          <button class="btn btn-primary" type="button" aria-expanded="false" @click="changeLangToEng">{{ $t("board.langToEngBtn") }}</button> 
+        	<button class="btn btn-primary" type="button" aria-expanded="false" @click="changeLangToPl">{{ $t("board.langToPlBtn") }}</button>
+          {{ $t("menu.wallpapers") }} 
+          <div class='wallpapers-section'>
+            <img src='/assets/backgrounds/background1.png' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/background2.png' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/wallpaper1_thumbnail.jpg' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/wallpaper2_thumbnail.jpg' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/wallpaper3_thumbnail.jpg' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/wallpaper4_thumbnail.jpg' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/wallpaper5_thumbnail.jpg' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/wallpaper6_thumbnail.jpg' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/wallpaper7_thumbnail.jpg' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/wallpaper8_thumbnail.jpg' v-on:click="setWallpaper($event)">
+            <img src='/assets/backgrounds/wallpaper9_thumbnail.jpg'>
+            <img src='/assets/backgrounds/wallpaper10_thumbnail.jpg'>
+            <img src='/assets/backgrounds/wallpaper11_thumbnail.jpg'>
+            <img src='/assets/backgrounds/wallpaper12_thumbnail.jpg'>
+            <img src='/assets/backgrounds/wallpaper13_thumbnail.jpg'>
+          </div>
         </div>
       </div>	
-			<button class="btn btn-primary" data-toggle="modal" data-target="#home-modal">Dodaj tablice</button>
+
+			<button class="btn btn-primary" data-toggle="modal" data-target="#home-modal">{{ $t("home.addBoard") }}</button>
       <br>
       <br>
 			<!-- Nav tabs -->
@@ -51,17 +70,17 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-						<h4 class="modal-title" id="home-modal-Label">Dodaj nowa tablice</h4>
+						<h4 class="modal-title" id="home-modal-Label">{{ $t("home.addBoardModal_title") }}</h4>
 					</div>
 					<div class="modal-body">
 						<p>
-							Nazwa tablicy
+							{{ $t("home.addBoardModal_boardName") }}
 							<input v-model="newBoardName">
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" v-on:click="add">Save changes</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ $t("home.addBoardModal_closeBtn") }}</button>
+						<button type="button" class="btn btn-primary" v-on:click="add">{{ $t("home.addBoardModal_saveBtn") }}</button>
 					</div>
 				</div>
 			</div>
@@ -71,10 +90,11 @@
 </template>
 
 <script>
-import user from './App.vue'
-import auth from '../auth'
-import {store} from '../store/index.js'
-import { mapActions, mapMutations } from 'vuex'
+  import user from './App.vue'
+  import auth from '../auth'
+  import {store} from '../store/index.js'
+  import { mapActions, mapMutations } from 'vuex'
+  import Vue from 'vue'
 
   export default {
     data() {
@@ -101,6 +121,14 @@ import { mapActions, mapMutations } from 'vuex'
         'getBoards',
         'getComps'
       ]),
+      
+      changeLangToEng() {
+        Vue.config.lang = 'en'
+      },
+
+      changeLangToPl() {
+        Vue.config.lang = 'pl'
+      },
 
       customFilter: function(board) {
         if (board.board_name !== undefined)
@@ -122,9 +150,23 @@ import { mapActions, mapMutations } from 'vuex'
           m.css({"display":"none"});
         }
         else {
-          m.animate({height: '300px'}, "slow");
+          m.animate({height: '500px'}, "slow");
           m.css({"display":"block","z-index":"10"});        
         }
+      },
+
+      setWallpaper: function(e) {
+        var imgURL = e.path[0].src;
+        var imgURL2 = imgURL.split("_")[0]+".jpg";
+        console.log(imgURL);
+        //console.log('url("' + imgURL + '")');
+
+        if ( imgURL.split("backgrounds")[1] == "/background1.png" )
+          $("body").css("background","rgba(0,141,196,1)");
+        else if ( imgURL.split("backgrounds")[1] == "/background2.png" )
+          $("body").css("background","rgb(255, 109, 0)");
+        else
+          $("body").css("background-image",'url("' + imgURL2 + '")');
       }
   },
   mounted: function () {
@@ -206,15 +248,16 @@ import { mapActions, mapMutations } from 'vuex'
   .dropdown-content {
       display: none;
       position: absolute;
+      padding: 10px;
       background-color: #f9f9f9;
-      min-width: 160px;
+      min-width: 270px;
       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   }
 
   /* Links inside the dropdown */
-  .dropdown-content a {
+  .dropdown-content a{
       color: black;
-      padding: 12px 16px;
+      padding: 10px 16px;
       text-decoration: none;
       display: block;
   }
@@ -225,6 +268,15 @@ import { mapActions, mapMutations } from 'vuex'
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdown:hover .dropbtn {
       background-color: #3e8e41;
+  }
+
+  .wallpapers-section img {
+    width: 80px;
+    padding: 2px;
+  }
+
+  .wallpapers-section img:hover {
+    border: 2px black solid;
   }
 
 </style>

@@ -353,6 +353,8 @@ export const delLabel = (context, {label}) => {
 
 export const editCard = (context, {card, card_name, pos, desc, dueDate, lastChanged}) => {
     let newCard = card
+    if (dueDate === undefined) 
+        dueDate = card.dueDate
     newCard.card_name = name
     newCard.pos = pos
     newCard.desc = desc

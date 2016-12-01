@@ -21,9 +21,6 @@
 			<button class="btn btn-default" v-on:click="archiveCard({card: cardData})">
 				<span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
 			</button>
-			<!--<button class="btn btn-default" data-toggle="modal" :data-target="hashModal1">
-				<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-			</button>-->
 		</div>
 
 		<div v-if="files !== undefined">
@@ -38,19 +35,19 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<h4 class="modal-title" id="myModalLabel">Edit title and description</h4>
+						<h4 class="modal-title" id="myModalLabel">{{ $t("card.editCardModal_title") }}</h4>
 					</div>
 					<div class="modal-body">
 						<p>
-							Title
+							{{ $t("card.editCardModal_cardName") }}
 							<input v-model="newName"> 
-							Description
+							{{ $t("card.editCardModal_description") }}
 							<input v-model="newDesc">
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" v-on:click="save">Save changes</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ $t("home.addBoardModal_closeBtn") }}</button>
+						<button type="button" class="btn btn-primary" v-on:click="save">{{ $t("home.addBoardModal_saveBtn") }}</button>
 					</div>
 				</div>
 			</div>
@@ -121,7 +118,7 @@ import { mapActions, mapMutations } from 'vuex'
         'archiveCard'
     ]),
     save() {
-      this.editCard({card: this.cardData, name: this.newName, pos: this.cardData.pos, desc: this.newDesc})
+      this.editCard({card: this.cardData, card_name: this.newName, pos: this.cardData.pos, desc: this.newDesc})
       // this.editCard({card: this.cardData, editedCard: this.editedCard })
     },
     viewCard() {

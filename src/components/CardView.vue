@@ -7,32 +7,32 @@
                 <!--LEFT COLUMN-->
                 <div class="col-md-9 col-xs-8">
                     <p v-if="cardviewData.desc" class="card-description-label">
-                        Description:
+                        {{ $t("cardView.description") }}:
                     </p>
                     <p class="card-description">
                         {{cardviewData.desc}}
                     </p>
                     
                     <span v-if="labelsCount">
-                        Labels:
+                        {{ $t("cardView.labels") }}:
                     </span>
                     <div class="card-label-container">
                         <div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }" v-on:click="delLabel({ label })"></div>
                     </div>
                     
-                    <div v-if="dueDateLabel !== null">
-                        Due date:<br>
+                    <div v-if="!isNaN(dueDateLabel)">
+                        {{ $t("cardView.dueDate") }}:<br>
                         <span class="label label-default">
                             {{dueDateLabel}}
                         </span>
                     </div>
 
                     <p class="add-comment-label">
-                        Add comment
+                        {{ $t("cardView.addComment") }}
                     </p>
                     <input v-model="commText">
                     <button class="btn btn-default" v-on:click="saveComment()">
-                        Save
+                        {{ $t("cardView.saveBtn") }}
                     </button>
                                                           
                     <div class="collapse" :id="modalParam">
@@ -57,7 +57,7 @@
                                 
                             </div>
                             <button type="button" class="btn btn-default btn-block" v-on:click="saveDueDate">
-                                    Save
+                                    {{ $t("cardView.saveBtn") }}
                             </button> 
 
                             <!--<div class="row">
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     
-                    <p class="card-comments-label">Activity</p>
+                    <p class="card-comments-label">{{ $t("cardView.activity") }}</p>
                     <p v-for="comm in comments" :key="comm.id">{{comm.text}}</p>  
                     
 
@@ -95,31 +95,28 @@
                 <!--RIGHT COLUMN-->
                 <div class="col-md-3 col-xs-4">
                     <p class="text-left lead">
-                        Add
+                        {{ $t("cardView.add") }}
                     </p>               
                     <button type="button" class="btn btn-block btn-default" data-toggle="collapse" :data-target="hashModal" aria-expanded="false">
-                        Labels
+                        {{ $t("cardView.labelsBtn") }}
                     </button>
                     <button type="button" class="btn btn-block btn-default" data-toggle="collapse" :data-target="hashModal.concat('date')" aria-expanded="false" v-on:click="forDate">
-                        Due date
+                        {{ $t("cardView.dueDateBtn") }}
                     </button>                    
                     <button type="button" class="btn btn-default btn-block" data-toggle="collapse" :data-target="filesModal" aria-expanded="false">
-                        Attachment
+                        {{ $t("cardView.attachmentBtn") }}
                     </button>
                     <p class="lead text-left" style="margin-top:15px;">
-                        Actions
+                        {{ $t("cardView.actions") }}
                     </p> 
                     <button type="button" class="btn btn-default btn-block">
-                        Move
-                    </button> 
-                    <button type="button" class="btn btn-default btn-block">
-                        Subscribe
+                        {{ $t("cardView.subscribeBtn") }}
                     </button>
                     <button type="button" class="btn btn-default btn-block">
-                        Archive
+                        {{ $t("cardView.archiveBtn") }}
                     </button>
                     <button type="button" class="btn btn-default btn-block" v-bind:class="{ 'btn-success': subbed }" @click="subCard({card: cardviewData})">
-                        Subbed
+                        {{ $t("cardView.subbedBtn") }}
                     </button>
                 </div>
                 
@@ -171,7 +168,7 @@ import { mapActions, mapMutations } from 'vuex'
             return this.$store.state.user.subs.indexOf(Number(this.cardviewData.id)) != -1
         },
         dueDateLabel() {
-            return (new Date(this.cardviewData.dueDate));
+            return new Date(this.cardviewData.dueDate);
         }
     },
     methods: {

@@ -8,30 +8,32 @@
             <!--<p>Message is: {{ message }}</p>-->
     </span>
 	<span v-else>
-          <button class="btn btn-primary" v-on:click="editing = true">Edit name
+          <button class="btn btn-primary" v-on:click="editing = true"> {{ $t("board.editNameBtn") }}
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 	</button>
 	</span>
 	<!--{{newName}}-->
-	<button class="btn btn-primary" data-toggle="modal" :data-target="boardData.hash">Add list
+
+	<button class="btn btn-primary" data-toggle="modal" :data-target="boardData.hash">{{ $t("board.addListBtn") }}
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
-	<button class="btn btn-primary" v-on:click="delBoard({board: boardData})">Remove board
+	<button class="btn btn-primary" v-on:click="delBoard({board: boardData})">{{ $t("board.removeBoardBtn") }}
         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
       </button>
-	<button class="btn btn-primary" v-on:click="favBoard({board: boardData})">Star board
+	<button class="btn btn-primary" v-on:click="favBoard({board: boardData})">
 		<span style="cursor: pointer;" aria-hidden="true" 
 			:class="[boardData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
 		</span>
   	</button>
-	<button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="hashModal.concat('label')" aria-expanded="false">Share board</button>  
-	<button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="hashModal.concat('team')" aria-expanded="false">Teams</button>  
-	<button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="hashModal.concat('share')" aria-expanded="false">Share</button>  
+	<button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="hashModal.concat('label')" aria-expanded="false">{{ $t("board.addMemberBtn") }}</button>  
+	<button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="hashModal.concat('team')" aria-expanded="false">{{ $t("board.teamsBtn") }}</button>  
+	<button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="hashModal.concat('share')" aria-expanded="false">{{ $t("board.shareBtn") }}</button>  
+	
 
 	  <!-- Archived button -->
 	<div class="btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Archived <span class="caret"></span>
+			{{ $t("board.archivedBtn") }} <span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu">
 			<li>
@@ -50,17 +52,17 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-					<h4 class="modal-title" id="board-modal-label">Dodaj nowa liste</h4>
+					<h4 class="modal-title" id="board-modal-label">{{ $t("board.addListModal_title") }}</h4>
 				</div>
 				<div class="modal-body">
 					<p>
-						Tytul
+						{{ $t("board.addListModal_listName") }}
 						<input v-model="newListName" v-on:keyup.enter="saveList">
 					</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" v-on:click="saveList">Save changes</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ $t("home.addBoardModal_closeBtn") }}</button>
+					<button type="button" class="btn btn-primary" v-on:click="saveList">{{ $t("home.addBoardModal_saveBtn") }}</button>
 				</div>
 			</div>
 		</div>
@@ -105,9 +107,8 @@
 		</list>
     </div>
 
-	<button type="button" class="btn btn-info btn-logs" @click="logsVisible=!logsVisible">show logs</button>
+	<button type="button" class="btn btn-info btn-logs" @click="logsVisible=!logsVisible">{{ $t("board.showLogsBtn") }}</button>
 	<div class="super-activity-container" v-show="logsVisible">
-		<p>LOGS:</p>	
 		<activity v-for="activity in activities" :activity-data="activity" :key="activity.id"></activity>
 	</div>
 
@@ -118,21 +119,22 @@
 <script>
 import { mapActions, mapMutation } from 'vuex'
 import auth from '../auth'
+import Vue from 'vue'
 
 export default {
 	data() {
-		return{
-		lists: {},
-		boardName: this.boardData.board_name,
-		newListName: '',
-		editing: false,
-		hashModal: '#modal' + this.boardData.id,
-        modalParam: 'modal' + this.boardData.id,
-		selectedList: {},
-		logsVisible: false,
-		users: {},
-		teams: {},
-		selectedTeamBoard: -1
+		return {
+			lists: {},
+			boardName: this.boardData.board_name,
+			newListName: '',
+			editing: false,
+			hashModal: '#modal' + this.boardData.id,
+			modalParam: 'modal' + this.boardData.id,
+			selectedList: {},
+			logsVisible: false,
+			users: {},
+			teams: {},
+			selectedTeamBoard: -1,
 		}
 	},
 	computed: {
@@ -231,11 +233,11 @@ export default {
 			// this.getLists({boardId: this.boardData.id})
 		})
 		}
-
 		})
 	},
 
 	props: ['boardData', 'index'],
+	
 	// props:{
 	// 	// boardData: {
 	// 	// 	// type: Object,
@@ -243,15 +245,13 @@ export default {
 	// 	// }, 
 	// 	index: Number
 	// },
- watch: {
-    '$route' (to, from) {
-
+ 	watch: {
+		'$route' (to, from) {
 			if(to.params.listId !== undefined) {
 			this.selectedList = (this.$store.state.lists[this.$store.state.activeBoard.id])[to.params.listId]
-			}
- 				
-    //   console.log(to)
-    }
+			}			
+		//   console.log(to)
+		}
   }
 }
 

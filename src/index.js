@@ -13,6 +13,8 @@ import CardView from './components/CardView.vue'
 import auth from './auth'
 import store from './store'
 import Sortable from '../vue-sortable-master/vue-sortable.js'
+
+var VueI18n = require('vue-i18n')
 // import { sync } from 'vuex-router-sync'
 
 auth.checkAuth()
@@ -21,6 +23,9 @@ auth.checkAuth()
 Vue.use(Sortable)
 Vue.use(VueResource)
 Vue.use(VueRouter)
+Vue.use(VueI18n)
+Vue.config.lang = 'en'
+
 
 
 Vue.component('app1', App)
@@ -97,37 +102,156 @@ const routes = [
 export var router = new VueRouter({
     routes
 })
-// sync(store, router)
 
-// export const app = Vue.component('app')
+var locales = {
+    en: {
+        message: {
+            hello: 'hello world'
+        },
+        app: {
+            home: 'Home',
+            login: 'Login',
+            logout: 'Logout',
+            signingUp: 'Sign up'
+        },
+        login: {
+            title: 'Log In',
+            message: 'Log in to your account',
+            loginPlaceholder: 'Your login',
+            passwordPlaceholder: 'Your password'
+        },
+        search: {
+            placeholder: 'search'
+        },
+        menu: {
+            language: 'Set language',
+            wallpapers: 'Set background'
+        },
+        home: {
+            addBoard: 'Add board',
+            addBoardModal_title: 'Add new board',
+            addBoardModal_boardName: 'Board name',
+            addBoardModal_closeBtn: 'Close',
+            addBoardModal_saveBtn: 'Save'
+        },
+        list: {
+            addCardModal_title: 'Add new card',
+            addCardModal_cardName: 'Name',
+            addCardModal_cardDescription: 'Description'
+        },
+        board: {
+            editNameBtn: 'Edit name',
+            addListBtn: 'Add list',
+            removeBoardBtn: 'Remove board',
+            addMemberBtn: 'Add member',
+            teamsBtn: 'Teams',
+            shareBtn: 'Share',
+            archivedBtn: 'Archived',
+            addListModal_title: 'Add new list',
+            addListModal_listName: 'Title',
+            showLogsBtn: 'Show logs',
+            langToEngBtn: 'English',
+            langToPlBtn: 'Polish'
+        },
+        card: {
+            editCardModal_title: 'Edit title and description',
+            editCardModal_cardName: 'Title',
+            editCardModal_description: 'Description'
+        },
+        cardView: {
+            description: 'Description',
+            labels: 'Labels',
+            dueDate: 'Due date',
+            addComment: 'Add comment',
+            saveBtn: 'Save',
+            activity: 'Activity',
+            add: 'Add',
+            labelsBtn: 'Labels',
+            dueDateBtn: 'Due date',
+            attachmentBtn: 'Attachment',
+            actions: 'Actions',
+            subscribeBtn: 'Subscribe',
+            archiveBtn: 'Archive',
+            subbedBtn: 'Subbed'
+        }
+    },
+    pl: {
+        message: {
+            hello: 'witaj świecie'
+        },
+        app: {
+            home: 'Strona główna',
+            login: 'Zaloguj',
+            logout: 'Wyloguj',
+            signingUp: 'Zarejestruj się'
+        },
+        login: {
+            title: 'Zaloguj się',
+            message: 'Zaloguj się do swojego konta',
+            loginPlaceholder: 'Twój login',
+            passwordPlaceholder: 'Twoje hasło'
+        },
+        search: {
+            placeholder: 'szukaj'
+        },
+        menu: {
+            language: 'Ustaw język',
+            wallpapers: 'Ustaw tło'
+        },
+        home: {
+            addBoard: 'Dodaj tablicę',
+            addBoardModal_title: 'Dodaj nową tablicę',
+            addBoardModal_boardName: 'Nazwa tablicy',
+            addBoardModal_closeBtn: 'Zamknij',
+            addBoardModal_saveBtn: 'Zapisz'
+        },
+        list: {
+            addCardModal_title: 'Dodaj nową kartę',
+            addCardModal_cardName: 'Nazwa',
+            addCardModal_cardDescription: 'Opis'
+        },
+        board: {
+            editNameBtn: 'Zmień nazwę',
+            addListBtn: 'Dodaj listę',
+            removeBoardBtn: 'Usuń tablicę',
+            addMemberBtn: 'Dodaj członka',
+            teamsBtn: 'Zespoły',
+            shareBtn: 'Udostępnij',
+            archivedBtn: 'Zarchiwizowane',
+            addListModal_title: 'Dodaj nową listę',
+            addListModal_listName: 'Tytuł',
+            showLogsBtn: 'Pokaż logi',
+            langToEngBtn: 'Angielski',
+            langToPlBtn: 'Polski'
+        },
+        card: {
+            editCardModal_title: 'Zmień nazwę i opis',
+            editCardModal_cardName: 'Nazwa',
+            editCardModal_description: 'Opis'
+        },
+        cardView: {
+            description: 'Opis',
+            labels: 'Oznaczenia',
+            dueDate: 'Do dnia',
+            addComment: 'Dodaj komentarz',
+            saveBtn: 'Zapisz',
+            activity: 'Aktywność',
+            add: 'Dodaj',
+            labelsBtn: 'Oznaczenia',
+            dueDateBtn: 'Terminacz',
+            attachmentBtn: 'Załącznik',
+            actions: 'Akcje',
+            subscribeBtn: 'Subskrybuj',
+            archiveBtn: 'Archiwizuj',
+            subbedBtn: 'Subsrybcja'
+        }
+    }
+}
 
+Object.keys(locales).forEach(function (lang) {
+    Vue.locale(lang, locales[lang])
+})
 
-// export const store = new Vuex.Store({
-//   state: {
-//     count: 0,
-//     comp: []
-//   },
-//   mutations: {
-//     increment (state) {
-//       state.count++
-//     },
-//     addBoards(state, boards) {
-//         var i
-//         for (i = 0; i < boards.length; i++) { 
-//           boards[i].hash = '#board' + boards[i].id;
-//           boards[i].param = 'board' + boards[i].id;
-//         }
-//         state.comp = boards;
-//     },
-//     addBoard(state, board) {
-
-//         board.hash = '#board' + board.id;
-//         board.param = 'board' + board.id;
-
-//         state.comp.push(board);
-//     }
-//   }
-// })
 
 export const app = new Vue({
     router,
