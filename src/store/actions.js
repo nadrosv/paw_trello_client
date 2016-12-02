@@ -1,29 +1,12 @@
 import * as types from './mutation-types'
 import { app } from '../index.js'
 import auth from '../auth'
+import * as api from './api'
 
-export const getBoardLists = (context, {board}) => {
-    let lists = context.getters.lists
-    let boardLists = lists[board.id]
-    if (boardLists !== undefined) {
-        let filtered = boardLists.filter(list => !list.archived)
-
-        let sorted = filtered.sort(function (a, b) {
-            if (a.pos < b.pos) return -1;
-            if (a.pos > b.pos) return 1;
-            return 0;
-        })
-
-        context.commit(types.SET_LISTS, { sorted })
-    }
-
-}
-
-const API_URL = 'http://localhost:3000/'
 
 //BOARDS
 export const addBoard = (context, {board}) => {
-    app.$http.post(API_URL + 'boards', board).then((response) => {
+    app.$http.post(api.CREATE_BOARD, board).then((response) => {
         context.commit(types.ADD_BOARD, response.body)
         app.$store.dispatch('addActivity', { action: 'added board', element: board.board_name })
     }, (response) => {
@@ -33,7 +16,7 @@ export const addBoard = (context, {board}) => {
 
 export const editBoard = (context, {boardData, boardName}) => {
     boardData.board_name = boardName
-    app.$http.put(API_URL + 'boards/' + boardData.id, boardData).then((response) => {
+    app.$http.put(api.UPDATE_BOARD + boardData.id, boardData).then((response) => {
         context.commit(types.EDIT_BOARD, { boardData, boardName })
         app.$store.dispatch('addActivity', { action: 'edited list', element: boardName })
 
@@ -43,7 +26,7 @@ export const editBoard = (context, {boardData, boardName}) => {
 }
 
 export const delBoard = (context, {board}) => {
-    app.$http.delete(API_URL + 'boards/' + context.state.activeBoard.id).then((response) => {
+    app.$http.delete(api.DEL_BOARD + context.state.activeBoard.id).then((response) => {
         context.commit(types.DEL_BOARD, { board })
         app.$store.dispatch('addActivity', { action: 'deleted board', element: board.board_name })
 
@@ -53,7 +36,7 @@ export const delBoard = (context, {board}) => {
 }
 
 export const delList = (context, {list}) => {
-    app.$http.delete(API_URL + 'lists/' + list.id).then((response) => {
+    app.$http.delete(api.DEL_LIST + list.id).then((response) => {
         context.commit(types.DEL_LIST, { list })
         app.$store.dispatch('addActivity', { action: 'deleted list', element: list.list_name })
 
@@ -63,7 +46,7 @@ export const delList = (context, {list}) => {
 }
 
 export const delCard = (context, {card}) => {
-    app.$http.delete(API_URL + 'cards/' + card.id).then((response) => {
+    app.$http.delete(api.DEL_CARD + card.id).then((response) => {
         context.commit(types.DEL_CARD, { card })
         app.$store.dispatch('addActivity', { action: 'deleted card', element: card.card_name })
 
@@ -74,9 +57,7 @@ export const delCard = (context, {card}) => {
 
 export const getUsers = (context) => {
     return new Promise((resolve, reject) => {
-        app.$http.get(API_URL + 'users/').then((response) => {
-            // context.commit(types.DEL_CARD, { card })
-            // app.$store.dispatch('addActivity', { action: 'deleted card', element: card.card_name })
+        app.$http.get(api.API_URL + 'users/').then((response) => {
             resolve(response.body)
         }, (response) => {
             console.log(response)
@@ -87,9 +68,8 @@ export const getUsers = (context) => {
 export const getLists = (context, {boardId}) => {
     return new Promise((resolve, reject) => {
 
-        app.$http.get(API_URL + 'lists?boardId=' + boardId).then((response) => {
+        app.$http.get(api.GET_LISTS + boardId).then((response) => {
             context.commit(types.GET_LISTS, { boardId, lists: response.body }, { silent: true })
-            //   this.lists = response.body;
             resolve()
         }, (response) => {
             console.log(response)
@@ -101,19 +81,14 @@ export const getLists = (context, {boardId}) => {
 export const getCards = (context, {listId}) => {
     return new Promise((resolve, reject) => {
 
-        app.$http.get(API_URL + 'cards?listId=' + listId).then((response) => {
+        app.$http.get(api.GET_CARDS + listId).then((response) => {
             context.commit(types.GET_CARDS, { listId, cards: response.body }, { silent: true })
-            //   this.lists = response.body;
 
             for (let i = 0; i < response.body.length; i++) {
                 app.$store.dispatch('getFiles', { cardId: response.body[i].id })
-
                 app.$store.dispatch('getLabels', { cardId: response.body[i].id })
                 app.$store.dispatch('getComments', { cardId: response.body[i].id })
-                // .then((cardLabels) => {
-                //     console.log('cardlabels', cardLabels)
-                //     context.commit(types.GET_LABELS, { cardId: response.body[i].id, labels: cardLabels })
-                // })
+
             }
             resolve()
 
@@ -128,7 +103,7 @@ export const getTeams = (context, {teams}) => {
 
     for (let i = 0; i < teams.length; i++) {
         promises.push(new Promise((resolve, reject) => {
-            app.$http.get(API_URL + 'teams?id=' + teams[i]).
+            app.$http.get(api.API_URL + 'teams?id=' + teams[i]).
                 then((response) => {
                     resolve(response.body)
                 }, (response) => {
@@ -144,7 +119,7 @@ export const getTeams = (context, {teams}) => {
 export const getUserTeams = (context) => {
     return new Promise((resolve, reject) => {
 
-        app.$http.get(API_URL + 'users?id=' + auth.user.id).
+        app.$http.get(api.API_URL + 'users?id=' + auth.user.id).
             then((response) => {
                 context.commit('GET_USER', response.body[0])
                 resolve(response.body[0].teams)
@@ -158,9 +133,7 @@ export const getUserTeams = (context) => {
 
 export const getLabelColor = (context, {colorId}) => {
     return new Promise((resolve, reject) => {
-        app.$http.get(API_URL + 'globalLabels?id=' + colorId).then((response) => {
-            // context.commit(types.GET_LABEL_COLORS, { labels: response.body })
-            console.log('color', response.body)
+        app.$http.get(api.GET_COLORS).then((response) => {
             resolve({ responseColor: response })
 
         }, (response) => {
@@ -171,7 +144,7 @@ export const getLabelColor = (context, {colorId}) => {
 
 export const getLabels = (context, {cardId}) => {
     return new Promise((resolve, reject) => {
-        app.$http.get(API_URL + 'labels?cardId=' + cardId).then((response) => {
+        app.$http.get(api.GET_LABELS + cardId).then((response) => {
             context.commit(types.GET_LABELS, { cardId, labels: response.body })
             resolve()
 
@@ -183,7 +156,7 @@ export const getLabels = (context, {cardId}) => {
 
 export const getFiles = (context, {cardId}) => {
     return new Promise((resolve, reject) => {
-        app.$http.get(API_URL + 'files?cardId=' + cardId).then((response) => {
+        app.$http.get(api.API_URL + 'files?cardId=' + cardId).then((response) => {
             context.commit(types.GET_FILES, { cardId, files: response.body })
             resolve()
 
@@ -195,7 +168,7 @@ export const getFiles = (context, {cardId}) => {
 
 export const getGlobalLabels = (context) => {
     return new Promise((resolve, reject) => {
-        app.$http.get(API_URL + 'globalLabels').then((response) => {
+        app.$http.get(api.GET_LABELS).then((response) => {
             context.commit(types.GET_GLOBAL_LABELS, { labels: response.body })
             resolve()
 
@@ -212,6 +185,7 @@ export const getComps = (context) => {
         for (let i = 0; i < app.$store.state.comp.length; i++) {
             app.$store.dispatch('getActivity', { boardId: app.$store.state.comp[i].id })
             app.$store.dispatch('getLists', { boardId: app.$store.state.comp[i].id }).then(() => {
+                
                 for (let j = 0; j < app.$store.state.lists[app.$store.state.comp[i].id].length; j++) {
                     app.$store.dispatch('getCards', { listId: (app.$store.state.lists[app.$store.state.comp[i].id])[j].id })
                 }
@@ -222,12 +196,10 @@ export const getComps = (context) => {
 
 export const getBoard = (context, {id}) => {
     app.$store.dispatch('getGlobalLabels')
-    app.$http.get(API_URL + 'boards/' + id).then((response) => {
+    app.$http.get(api.GET_BOARDS + id).then((response) => {
         context.commit(types.GET_BOARD, response.body)
-        context.commit('setActiveBoard', {board: response.body})
+        context.commit('setActiveBoard', { board: response.body })
 
-        console.log(response.body.id)
-        // for (let i = 0; i < app.$store.state.comp.length; i++) {
         app.$store.dispatch('getActivity', { boardId: response.body.id })
         app.$store.dispatch('getLists', { boardId: response.body.id }).then(() => {
 
@@ -235,14 +207,13 @@ export const getBoard = (context, {id}) => {
                 app.$store.dispatch('getCards', { listId: (app.$store.state.lists[response.body.id])[j].id })
             }
         })
-        // }
     })
 }
 
 export const getBoards = (context) => {
     return new Promise((resolve, reject) => {
 
-        app.$http.get(API_URL + 'boards?userId=' + auth.user.id).then((response) => {
+        app.$http.get(api.GET_BOARDS + auth.user.id).then((response) => {
             app.$store.dispatch('setSharedBoards').then(() => {
                 app.$store.dispatch('getSharedBoards').then((boards) => {
 
@@ -260,7 +231,7 @@ export const getBoards = (context) => {
 
 export const setSharedBoards = (context) => {
     return new Promise((resolve, reject) => {
-        app.$http.get(API_URL + 'users?id=' + auth.user.id).then((response) => {
+        app.$http.get(api.API_URL + 'users?id=' + auth.user.id).then((response) => {
             context.commit(types.SET_SHARED_BOARDS, response.body[0].sharedBoards, { silent: true })
             resolve()
         }, (response) => {
@@ -275,7 +246,7 @@ export const getSharedBoards = (context) => {
 
     for (let i = 0; i < app.$store.state.sharedBoards.length; i++) {
         promises.push(new Promise((resolve, reject) => {
-            app.$http.get(API_URL + 'boards?id=' + app.$store.state.sharedBoards[i]).
+            app.$http.get(api.GET_BOARD + app.$store.state.sharedBoards[i]).
                 then((response) => {
                     resolve(response.body[0])
                 }, (response) => {
@@ -290,8 +261,7 @@ export const getSharedBoards = (context) => {
 
 export const shareBoard = (context, {board, user}) => {
     user.sharedBoards.push(board.id)
-    app.$http.put(API_URL + 'users/' + user.id, user).then((response) => {
-        // context.commit(types.FAV_LIST, { list })
+    app.$http.put(api.API_URL + 'users/' + user.id, user).then((response) => {
         app.$store.dispatch('addActivity', { action: 'shared board', element: board.board_name })
     }, (response) => {
         console.log(response)
@@ -299,7 +269,7 @@ export const shareBoard = (context, {board, user}) => {
 }
 
 export const toggleFavList = (context, {list}) => {
-    app.$http.put(API_URL + 'lists/' + list.id, list).then((response) => {
+    app.$http.put(api.EDIT_LIST + list.id, list).then((response) => {
         context.commit(types.FAV_LIST, { list })
         app.$store.dispatch('addActivity', { action: 'favourited card', element: list.list_name })
 
@@ -308,7 +278,7 @@ export const toggleFavList = (context, {list}) => {
     });
 }
 export const editList = (context, {list, name, pos}) => {
-    app.$http.put(API_URL + 'lists/' + list.id, { boardId: list.boardId, list_name: name, pos: pos }).then((response) => {
+    app.$http.put(api.EDIT_LIST + list.id, { boardId: list.boardId, list_name: name, pos: pos }).then((response) => {
         context.commit(types.EDIT_LIST, { list, name, pos })
         app.$store.dispatch('addActivity', { action: 'edited list', element: list.list_name })
     }, (response) => {
@@ -317,7 +287,7 @@ export const editList = (context, {list, name, pos}) => {
 }
 
 export const addLabel = (context, {label}) => {
-    app.$http.post(API_URL + 'labels', label).then((response) => {
+    app.$http.post(api.CREATE_LABEL, label).then((response) => {
         context.commit(types.ADD_LABEL, { label: response.body })
         app.$store.dispatch('addActivity', { action: 'Add Label', element: label.name })
 
@@ -327,13 +297,12 @@ export const addLabel = (context, {label}) => {
 }
 
 export const subCard = (context, {card}) => {
-    context.commit(types.SUB_CARD, {cardId: card.id})
+    context.commit(types.SUB_CARD, { cardId: card.id })
 }
 
 export const addFile = (context, {file}) => {
-    app.$http.post(API_URL + 'files', file).then((response) => {
+    app.$http.post(api.API_URL + 'files', file).then((response) => {
         context.commit(types.ADD_FILE, { file: file })
-        // app.$store.dispatch('addActivity', { action: 'Add Label', element: label.name })
 
     }, (response) => {
         console.log(response)
@@ -342,7 +311,7 @@ export const addFile = (context, {file}) => {
 
 export const delLabel = (context, {label}) => {
     console.log({ label });
-    app.$http.delete(API_URL + 'labels/' + label.id).then((response) => {
+    app.$http.delete(api.DEL_LABEL + label.id).then((response) => {
         context.commit(types.DEL_LABEL, { label: label })
         app.$store.dispatch('addActivity', { action: 'remove label', element: label.name })
 
@@ -353,12 +322,12 @@ export const delLabel = (context, {label}) => {
 
 export const editCard = (context, {card, card_name, pos, desc, dueDate, lastChanged}) => {
     let newCard = card
-    if (dueDate === undefined) 
+    if (dueDate === undefined)
         dueDate = card.dueDate
     newCard.card_name = name
     newCard.pos = pos
     newCard.desc = desc
-    app.$http.put(API_URL + 'cards/' + card.id, { listId: card.listId, card_name: card_name, pos: pos, desc: desc, dueDate: dueDate, lastChanged: lastChanged }).then((response) => {
+    app.$http.put(api.EDIT_CARD + card.id, { listId: card.listId, card_name: card_name, pos: pos, desc: desc, dueDate: dueDate, lastChanged: lastChanged }).then((response) => {
         context.commit(types.EDIT_CARD, { card, card_name, pos, desc, dueDate, lastChanged })
         console.log(response.body)
         app.$store.dispatch('addActivity', { action: 'edited card', element: card.card_name })
@@ -370,7 +339,7 @@ export const editCard = (context, {card, card_name, pos, desc, dueDate, lastChan
 
 export const archiveList = (context, {list}) => {
     context.commit(types.ARCHIVE_LIST, { list })
-    app.$http.put(API_URL + 'lists/' + list.id, list).then((response) => {
+    app.$http.put(api.EDIT_LIST + list.id, list).then((response) => {
         app.$store.dispatch('addActivity', { action: 'archived list', element: list.list_name })
 
     }, (response) => {
@@ -380,7 +349,7 @@ export const archiveList = (context, {list}) => {
 
 export const archiveCard = (context, {card}) => {
     context.commit(types.ARCHIVE_CARD, { card })
-    app.$http.put(API_URL + 'cards/' + card.id, card).then((response) => {
+    app.$http.put(api.EDIT_CARD + card.id, card).then((response) => {
         app.$store.dispatch('addActivity', { action: 'archived card', element: card.card_name })
 
     }, (response) => {
@@ -389,7 +358,7 @@ export const archiveCard = (context, {card}) => {
 }
 
 export const addList = (context, {list}) => {
-    app.$http.post(API_URL + 'lists', list).then((response) => {
+    app.$http.post(api.ADD_LIST, list).then((response) => {
         app.$store.dispatch('addActivity', { action: 'added list', element: list.list_name })
 
         context.commit(types.ADD_LIST, { list: response.body })
@@ -399,7 +368,7 @@ export const addList = (context, {list}) => {
 }
 
 export const addCard = (context, {card}) => {
-    app.$http.post(API_URL + 'cards', card).then((response) => {
+    app.$http.post(api.ADD_CARD, card).then((response) => {
         app.$store.dispatch('addActivity', { action: 'added card', element: card.card_name })
         context.commit(types.ADD_CARD, { card: response.body })
     }, (response) => {
@@ -411,7 +380,7 @@ export const favBoard = (context, {board}) => {
     context.commit(types.FAV_BOARD, { board })
     app.$store.dispatch('addActivity', { action: 'favourited', element: board.board_name })
 
-    app.$http.put(API_URL + 'boards/' + board.id, board).then((response) => {
+    app.$http.put(api.EDIT_BOARD + board.id, board).then((response) => {
         console.log(response.body)
     }, (response) => {
         console.log(response)
@@ -427,7 +396,7 @@ export const addActivity = (context, {action, element}) => {
         "log": newLog
     }
 
-    app.$http.post(API_URL + 'activities', newActivity).then((response) => {
+    app.$http.post(api.API_URL + 'activities', newActivity).then((response) => {
         context.commit(types.ADD_ACTIVITY, { newActivity })
     }, (response) => {
         console.log(response)
@@ -436,7 +405,7 @@ export const addActivity = (context, {action, element}) => {
 
 export const getActivity = (context, {boardId}) => {
     return new Promise((resolve, reject) => {
-        app.$http.get(API_URL + 'activities?boardId=' + boardId).then((response) => {
+        app.$http.get(api.API_URL + 'activities?boardId=' + boardId).then((response) => {
             context.commit(types.GET_ACTIVITY, { boardId, activities: response.body })
             resolve()
 
@@ -448,7 +417,7 @@ export const getActivity = (context, {boardId}) => {
 
 export const getComments = (context, {cardId}) => {
     return new Promise((resolve, reject) => {
-        app.$http.get(API_URL + 'comments?cardId=' + cardId).then((response) => {
+        app.$http.get(api.API_URL + 'comments?cardId=' + cardId).then((response) => {
             context.commit(types.GET_COMMENTS, { cardId, comments: response.body })
             resolve()
 
@@ -460,7 +429,7 @@ export const getComments = (context, {cardId}) => {
 
 
 export const addComment = (context, {comment}) => {
-    app.$http.post(API_URL + 'comments', comment).then((response) => {
+    app.$http.post(api.API_URL + 'comments', comment).then((response) => {
         context.commit(types.ADD_COMMENT, { comment: response.body })
         app.$store.dispatch('addActivity', { action: 'added comment', element: comment.text })
 
