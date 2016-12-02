@@ -1,25 +1,23 @@
 <template>
-	<!--<div class="col-md-8">-->
 	<div class="board-area board">
 	
 	<span v-if="editing">
             <input v-model="boardName" v-on:keyup.enter="edit">
             <button class="btn btn-primary" v-on:click="edit">OK</button>
-            <!--<p>Message is: {{ message }}</p>-->
+
     </span>
 	<span v-else>
           <button class="btn btn-primary" v-on:click="editing = true"> {{ $t("board.editNameBtn") }}
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 	</button>
 	</span>
-	<!--{{newName}}-->
 
 	<button class="btn btn-primary" data-toggle="modal" :data-target="boardData.hash">{{ $t("board.addListBtn") }}
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
 	<button class="btn btn-primary" v-on:click="delBoard({board: boardData})">{{ $t("board.removeBoardBtn") }}
         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-      </button>
+	</button>
 	<button class="btn btn-primary" v-on:click="favBoard({board: boardData})">
 		<span style="cursor: pointer;" aria-hidden="true" 
 			:class="[boardData.favourite ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty']">
@@ -101,9 +99,9 @@
 	<div v-show="this.$route.params.listId === undefined" class="list-container" 
 		 v-sortable="{delay: 20, onStart: onStart, onEnd: onEnd, onUpdate: onUpdate, forceFallback: true,  ghostClass: 'ghost', handle: '.list-name'}">
 		<list v-for="(list,k,i) in lists" 
-			    v-show="!list.archived"
-			    :list-data="list"
-			    :key="list.id">
+			v-show="!list.archived"
+			:list-data="list"
+			:key="list.id">
 		</list>
     </div>
 
@@ -146,12 +144,7 @@ export default {
 		},
 		activities() {
 			return this.$store.state.activities[this.boardData.id]
-		}
-		// ,
-		// users() {
-		// 	return this.$store.dispatch('getUsers')
-		// }
-		
+		}		
 	},
 
 	methods: {  
@@ -199,17 +192,8 @@ export default {
 		},
 
     	onStart: function(event) {
-			// $(event.item.firstChild).css({
-			// 	"background-color": "rgba(100,141,196,1)",
-			// 	"transform": "rotate(360deg)",
-			// 	"transition-duration": "0.3s"
-			// });
 		},
      	onEnd: function(event) {
-			// $(event.item.firstChild).css({
-			// 	"background-color": "rgba(185, 191, 194, 1)",
-			// 	"transform": "rotate(0deg)"
-			// });
 		},
 		onShare: function(user) {
 			this.shareBoard({board: this.boardData, user})
@@ -229,28 +213,19 @@ export default {
 				this.$store.dispatch('getTeams', {teams: teamsUser}).then((teams) => {
 				this.teams = teams[0]
 				this.$store.commit('GET_TEAMS', teams[0])
+				})
 			})
-			// this.getLists({boardId: this.boardData.id})
-		})
-		}
+			}
 		})
 	},
 
 	props: ['boardData', 'index'],
-	
-	// props:{
-	// 	// boardData: {
-	// 	// 	// type: Object,
-	// 	// 	// required: true
-	// 	// }, 
-	// 	index: Number
-	// },
+
  	watch: {
 		'$route' (to, from) {
 			if(to.params.listId !== undefined) {
 			this.selectedList = (this.$store.state.lists[this.$store.state.activeBoard.id])[to.params.listId]
 			}			
-		//   console.log(to)
 		}
   }
 }
@@ -259,7 +234,6 @@ export default {
 
 <style scoped>
 	.board-area {
-		/*background-color: rgba(0,141,196,1); */
 		margin: 10px;
 		padding: 10px;
 		overflow: hidden;

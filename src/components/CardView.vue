@@ -1,126 +1,110 @@
 <template>
 	<div class="card-view-area">
-        <div class="container-fluid">
-            <div class="row">
-                <p class="card-title">{{cardviewData.card_name}}</p>
-                
-                <!--LEFT COLUMN-->
-                <div class="col-md-9 col-xs-8">
-                    <p v-if="cardviewData.desc" class="card-description-label">
-                        {{ $t("cardView.description") }}:
-                    </p>
-                    <p class="card-description">
-                        {{cardviewData.desc}}
-                    </p>
-                    
-                    <span v-if="labelsCount">
-                        {{ $t("cardView.labels") }}:
-                    </span>
-                    <div class="card-label-container">
-                        <div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }" v-on:click="delLabel({ label })"></div>
-                    </div>
-                    
-                    <div v-if="!isNaN(dueDateLabel)">
-                        {{ $t("cardView.dueDate") }}:<br>
-                        <span class="label label-default">
-                            {{dueDateLabel}}
-                        </span>
-                    </div>
+	<div class="container-fluid">
+	<div class="row">
+		<p class="card-title">{{cardviewData.card_name}}</p>
+		
+		<!--LEFT COLUMN-->
+		<div class="col-md-9 col-xs-8">
+			<p v-if="cardviewData.desc" class="card-description-label">
+				{{ $t("cardView.description") }}:
+			</p>
+			<p class="card-description">
+				{{cardviewData.desc}}
+			</p>
+			
+			<span v-if="labelsCount">
+				{{ $t("cardView.labels") }}:
+			</span>
+			<div class="card-label-container">
+				<div v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }" v-on:click="delLabel({ label })"></div>
+			</div>
+			
+			<div v-if="!isNaN(dueDateLabel)">
+				{{ $t("cardView.dueDate") }}:<br>
+				<span class="label label-default">
+					{{dueDateLabel}}
+				</span>
+			</div>
 
-                    <p class="add-comment-label">
-                        {{ $t("cardView.addComment") }}
-                    </p>
-                    <input v-model="commText">
-                    <button class="btn btn-default" v-on:click="saveComment()">
-                        {{ $t("cardView.saveBtn") }}
-                    </button>
-                                                          
-                    <div class="collapse" :id="modalParam">
-                        <div class="well">
-                            <button v-for="label in globalLabels" class="btn btn-secondary btn-block"
-                                    v-on:click="saveLabel({newLabel: label})" :style="{ 'background-color': label.color }" >                              
-                            </button>
-                        </div>
-                    </div>
+			<p class="add-comment-label">
+				{{ $t("cardView.addComment") }}
+			</p>
+			<input v-model="commText">
+			<button class="btn btn-default" v-on:click="saveComment()">
+				{{ $t("cardView.saveBtn") }}
+			</button>
+													
+			<div class="collapse" :id="modalParam">
+				<div class="well">
+					<button v-for="label in globalLabels" class="btn btn-secondary btn-block"
+							v-on:click="saveLabel({newLabel: label})" :style="{ 'background-color': label.color }" >                              
+					</button>
+				</div>
+			</div>
 
-                    <div class="collapse" :id="modalParam.concat('date')">
-                        <div class="well">    
+			<div class="collapse" :id="modalParam.concat('date')">
+				<div class="well">    
+					<div class='input-group date' :id="modalParam.concat('datea')"  >
+						<input type='text' class="form-control" v-model="dueDateValue" />
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</span>
+						
+					</div>
+					<button type="button" class="btn btn-default btn-block" v-on:click="saveDueDate">
+							{{ $t("cardView.saveBtn") }}
+					</button> 
+				</div>
+			</div>
 
-                            <!--<vue-datetime-picker class="vue-picker1" name="picker1" model='null'>
-                            </vue-datetime-picker>                                             -->
+			<div class="collapse" :id="modalFiles">
+				<div class="well">
+					<form action="http://localhost:3000/upload" v-on:submit.prevent="onSubmit" enctype="multipart/form-data" method="post">
+						<input name="cardId" type="hidden" :value="cardviewData.id" />
+						<br><br>
+						<input  name="upload" type="file" />
+						<br><br>
+						<input type="submit" value="Upload" />
+					</form>
+				</div>
+			</div>
+			
+			<p class="card-comments-label">{{ $t("cardView.activity") }}</p>
+			<p v-for="comm in comments" :key="comm.id">{{comm.text}}</p>  
+			
 
-                            <div class='input-group date' :id="modalParam.concat('datea')"  >
-                                <input type='text' class="form-control" v-model="dueDateValue" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                                
-                            </div>
-                            <button type="button" class="btn btn-default btn-block" v-on:click="saveDueDate">
-                                    {{ $t("cardView.saveBtn") }}
-                            </button> 
-
-                            <!--<div class="row">
-                                <div class="form-group">
-                                    <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' class="form-control" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>-->
-  
-                        </div>
-                    </div>
-
-                    <div class="collapse" :id="modalFiles">
-                        <div class="well">
-                            <form action="http://localhost:3000/upload" v-on:submit.prevent="onSubmit" enctype="multipart/form-data" method="post">
-                                <input name="cardId" type="hidden" :value="cardviewData.id" />
-                                <br><br>
-                                <input  name="upload" type="file" />
-                                <br><br>
-                                <input type="submit" value="Upload" />
-                            </form>
-                        </div>
-                    </div>
-                    
-                    <p class="card-comments-label">{{ $t("cardView.activity") }}</p>
-                    <p v-for="comm in comments" :key="comm.id">{{comm.text}}</p>  
-                    
-
-                </div>
-                
-                <!--RIGHT COLUMN-->
-                <div class="col-md-3 col-xs-4">
-                    <p class="text-left lead">
-                        {{ $t("cardView.add") }}
-                    </p>               
-                    <button type="button" class="btn btn-block btn-default" data-toggle="collapse" :data-target="hashModal" aria-expanded="false">
-                        {{ $t("cardView.labelsBtn") }}
-                    </button>
-                    <button type="button" class="btn btn-block btn-default" data-toggle="collapse" :data-target="hashModal.concat('date')" aria-expanded="false" v-on:click="forDate">
-                        {{ $t("cardView.dueDateBtn") }}
-                    </button>                    
-                    <button type="button" class="btn btn-default btn-block" data-toggle="collapse" :data-target="filesModal" aria-expanded="false">
-                        {{ $t("cardView.attachmentBtn") }}
-                    </button>
-                    <p class="lead text-left" style="margin-top:15px;">
-                        {{ $t("cardView.actions") }}
-                    </p> 
-                    <button type="button" class="btn btn-default btn-block">
-                        {{ $t("cardView.subscribeBtn") }}
-                    </button>
-                    <button type="button" class="btn btn-default btn-block">
-                        {{ $t("cardView.archiveBtn") }}
-                    </button>
-                    <button type="button" class="btn btn-default btn-block" v-bind:class="{ 'btn-success': subbed }" @click="subCard({card: cardviewData})">
-                        {{ $t("cardView.subbedBtn") }}
-                    </button>
-                </div>
-                
-            </div>
+		</div>
+		
+		<!--RIGHT COLUMN-->
+		<div class="col-md-3 col-xs-4">
+			<p class="text-left lead">
+				{{ $t("cardView.add") }}
+			</p>               
+			<button type="button" class="btn btn-block btn-default" data-toggle="collapse" :data-target="hashModal" aria-expanded="false">
+				{{ $t("cardView.labelsBtn") }}
+			</button>
+			<button type="button" class="btn btn-block btn-default" data-toggle="collapse" :data-target="hashModal.concat('date')" aria-expanded="false" v-on:click="forDate">
+				{{ $t("cardView.dueDateBtn") }}
+			</button>                    
+			<button type="button" class="btn btn-default btn-block" data-toggle="collapse" :data-target="filesModal" aria-expanded="false">
+				{{ $t("cardView.attachmentBtn") }}
+			</button>
+			<p class="lead text-left" style="margin-top:15px;">
+				{{ $t("cardView.actions") }}
+			</p> 
+			<button type="button" class="btn btn-default btn-block">
+				{{ $t("cardView.subscribeBtn") }}
+			</button>
+			<button type="button" class="btn btn-default btn-block">
+				{{ $t("cardView.archiveBtn") }}
+			</button>
+			<button type="button" class="btn btn-default btn-block" v-bind:class="{ 'btn-success': subbed }" @click="subCard({card: cardviewData})">
+				{{ $t("cardView.subbedBtn") }}
+			</button>
+		</div>
+			
+		</div>
         </div>           
     </div>   
 </template>
@@ -139,15 +123,10 @@ import { mapActions, mapMutations } from 'vuex'
           dateModal: '#modal-cardview-date' + this.cardviewData.id,
           modalDate: 'modal-cardview-date' + this.cardviewData.id,
           dueDateValue: ''
-
-        // newName: this.cardviewData.card_name,
-        // newDesc: this.cardviewData.desc,
-      }
+     }
     },
     computed: {
-        // cardviewData() {
-        //     return this.$store.state.cards[this.$route.params.listId][0]
-        // }
+
         comments() {
             return this.$store.state.comments[this.cardviewData.id]
         },
@@ -222,11 +201,6 @@ import { mapActions, mapMutations } from 'vuex'
         this.editCard({card: this.cardviewData, card_name: this.cardviewData.card_name, pos: this.cardviewData.pos, desc: this.cardviewData.desc, dueDate: myDateMillis, lastChanged: currentMillisTime })
        
     }
-    // ,
-    // addLabel(label) {
-    //     this.editCard({card: this.cardviewData, name: this.cardviewData.card_name, desc: this.cardviewData.desc, label: label.id})
-    //     console.log(label.color)
-    // }
   },
   props: ['cardviewData']
   }

@@ -15,12 +15,11 @@
       </div>
       <div class="form-group">
         <input
-          type="password"
-          class="form-control"
-          v-bind:placeholder="$t('login.passwordPlaceholder')"
-          v-model="credentials.password"
-          v-on:keyup.enter="submit()"
-        >
+			type="password"
+			class="form-control"
+			v-bind:placeholder="$t('login.passwordPlaceholder')"
+			v-model="credentials.password"
+			v-on:keyup.enter="submit()">
       </div>
       <button class="btn btn-primary" v-on:click="submit()">Login</button>
     </div>
@@ -44,8 +43,7 @@
           username: this.credentials.username,
           password: this.credentials.password
         }
-        // We need to pass the component's this context
-        // to properly make use of http in the auth service
+
         auth.login(this, credentials, '/home')
       }
     }

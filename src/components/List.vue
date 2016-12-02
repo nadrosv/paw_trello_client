@@ -91,14 +91,6 @@ import { mapActions, mapMutations } from 'vuex'
       cards () {
         return this.$store.state.cards[this.listData.id]
       }
-	//   ,
-	//   listData() {
-	// 	//   if (this.$store.state.route.params.boardId === this.$store.state.activeBoard.id) {
-	// 	//   console.log('listparam ' + this.$store.state.activeBoard.id)
-	// 		// console.log(this.$store.state.lists[this.$route.params.listId])
-	// 		return this.$store.state.lists[this.$store.state.route.params.boardId]
-	// 	// }
-	//   }
     },
     methods: {
       ...mapActions([
@@ -112,7 +104,6 @@ import { mapActions, mapMutations } from 'vuex'
     ]),
 
     save() {
-			// console.log(this.cards.length)
 			let len = this.cards === undefined ? 0 : this.cards.length
 			let newCard = {
 				listId: this.listData.id,
@@ -130,15 +121,13 @@ import { mapActions, mapMutations } from 'vuex'
     },
 
 		onUpdate: function (event) {
-
 			this.cards.splice(event.newIndex, 0, this.cards.splice(event.oldIndex, 1)[0])
 			for (let i = 0; i < this.cards.length; i++) {
 				this.cards[i].pos = i
 			}
 			let oldCard = this.cards[event.oldIndex]
 			let newCard = this.cards[event.newIndex]
-			console.log(oldCard)
-			console.log(newCard)
+
 			this.editCard({ card: oldCard, name: oldCard.card_name, pos: oldCard.pos, desc: oldCard.newDesc, label: oldCard.labels})
 			this.editCard({ card: newCard, name: newCard.card_name, pos: newCard.pos, desc: newCard.newDesc, label: newCard.labels})
 
@@ -150,14 +139,6 @@ import { mapActions, mapMutations } from 'vuex'
    })
   },
   props: ['listData', 'index']
-//   props:{
-//   listData: {
-//       type: Object,
-//       required: true
-// 	}, 
-// 	index: Number
-// 	}
-//   }
   }
   </script>
 

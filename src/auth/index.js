@@ -18,7 +18,6 @@ export default {
             console.log(response)
             if (response.body.length > 0) {
                 this.user.authenticated = true
-                console.log(response.body[0].id)
                 this.user.id = response.body[0].id
                 this.user.username = response.body[0].userName
                 this.user.sharedBoards = response.body[0].sharedBoards
@@ -26,9 +25,7 @@ export default {
                 localStorage.setItem('username', response.body[0].userName)
                 localStorage.setItem('sharedBoards', response.body[0].sharedBoards)
                 router.push('/dashboard')
-                // if (redirect) {
-                // router.go(redirect)
-                // }
+
             } else {
                 context.error = 'Brak takiego uzytkownika'
             }
@@ -43,8 +40,6 @@ export default {
         } else {
             context.$http.post(SIGNUP_URL, creds).then((response) => {
                 localStorage.setItem('id_token', response.id_token)
-
-                // this.user.authenticated = true
 
                 if (redirect) {
                     router.push(redirect)

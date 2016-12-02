@@ -1,7 +1,5 @@
 <template>
-	<!--<div class="col-md-8">-->
 	<div class="card-area" v-on:click.self="showwmodal({ card: cardData })">
-		<!--ID: {{cardData.id}}-->
 		
 		<div class="card-label-container">
 			<span v-for="label in labels" class="card-label" :style="{ 'background-color': label.color }"></span>
@@ -56,13 +54,9 @@
 		<!--Modal - advanced edit card's options -->
 		<div class="modal fade" :id="modalParam1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
-				<!--<div class="modal-content">-->
-					<!--<div class="modal-header">-->
-						<div class="modal-body">
-							<cardview :cardview-data="cardViewData"></cardview>
-						</div>
-					<!--</div>-->
-				<!--</div>-->
+				<div class="modal-body">
+					<cardview :cardview-data="cardViewData"></cardview>
+				</div>
 			</div>
 		</div>
 
@@ -75,8 +69,6 @@ import { mapActions, mapMutations } from 'vuex'
   export default {
     data() {
       return {
-        // editedCard: {Object.assign({},this.cardData),
-        // editedCard: {...this.cardData},
         newName: this.cardData.card_name,
         newDesc: this.cardData.desc,
         hashModal: '#modal-card' + this.cardData.id,  // edit title and description
@@ -88,14 +80,6 @@ import { mapActions, mapMutations } from 'vuex'
     },
 		computed: {
 			labels() {
-					// let cardLabelsText = this.cardData.labels.toString(); //"12"
-					// let cardLabels = []
-					// for (let i = 0; i < cardLabelsText.length; i++) {
-					// 	let n = cardLabelsText.charAt(i)
-					// 	cardLabels.push(this.$store.state.globalLabels[n])
-					// }
-					// //console.log(cardLabels)
-					// return cardLabels
 					return this.$store.state.labels[this.cardData.id]
 
 				},
@@ -105,11 +89,9 @@ import { mapActions, mapMutations } from 'vuex'
 
 			cardViewData() {
 				let a = this.cardData;
-				// a.newLabels = this.labels;
 				this.$set(a, 'newLabels', this.labels)  // for dynamic change in all places
 				return a;
 			}
-
 		},
     methods: {
       ...mapActions([
@@ -119,7 +101,6 @@ import { mapActions, mapMutations } from 'vuex'
     ]),
     save() {
       this.editCard({card: this.cardData, card_name: this.newName, pos: this.cardData.pos, desc: this.newDesc})
-      // this.editCard({card: this.cardData, editedCard: this.editedCard })
     },
     viewCard() {
       this.$router.push({ name: 'CardView', params: {boardId: this.$route.params.boardId, cardId: this.cardData.id }})
