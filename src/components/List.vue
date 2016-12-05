@@ -69,8 +69,8 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
 
+	import { mapActions, mapMutations } from 'vuex'
 
   export default {
     data() {
@@ -115,6 +115,7 @@ import { mapActions, mapMutations } from 'vuex'
 			}
 		this.addCard({card: newCard})
     },
+		
     saveList() {
         this.listEditable = false
         this.editList({list: this.listData, name: this.listData.list_name, pos: this.listData.pos})
@@ -130,20 +131,24 @@ import { mapActions, mapMutations } from 'vuex'
 
 			this.editCard({ card: oldCard, name: oldCard.card_name, pos: oldCard.pos, desc: oldCard.newDesc, label: oldCard.labels})
 			this.editCard({ card: newCard, name: newCard.card_name, pos: newCard.pos, desc: newCard.newDesc, label: newCard.labels})
-
 		}
-  },
-  mounted: function () {
-  this.$nextTick(function () {
-	 // this.getCards({listId: this.listData.id})
-   })
-  },
-  props: ['listData', 'index']
-  }
-  </script>
+
+		},
+		mounted: function () {
+			this.$nextTick(function () {
+			// this.getCards({listId: this.listData.id})
+			})
+		},
+
+		props: ['listData', 'index']
+
+	}
+
+</script>
 
 
 <style scoped>
+
   .column-wrapper {
 		margin: 0;
 		box-sizing: border-box;
@@ -184,6 +189,5 @@ import { mapActions, mapMutations } from 'vuex'
 	.ghost {
 		opacity: 0;
 	}
-
 
 </style>

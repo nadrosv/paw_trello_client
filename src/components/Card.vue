@@ -89,7 +89,7 @@ import { mapActions, mapMutations } from 'vuex'
 
 			cardViewData() {
 				let a = this.cardData;
-				this.$set(a, 'newLabels', this.labels)  // for dynamic change in all places
+				this.$set(a, 'newLabels', this.labels)  // for dynamic update in all places
 				return a;
 			}
 		},
@@ -114,6 +114,7 @@ import { mapActions, mapMutations } from 'vuex'
   </script>
 
 <style scoped>
+
 	.card-area {
 		position: relative;
 		background-color: #fff;

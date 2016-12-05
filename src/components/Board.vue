@@ -227,12 +227,13 @@ export default {
 			this.selectedList = (this.$store.state.lists[this.$store.state.activeBoard.id])[to.params.listId]
 			}			
 		}
-  }
+  	}
 }
 
-  </script>
+</script>
 
 <style scoped>
+
 	.board-area {
 		margin: 10px;
 		padding: 10px;
@@ -240,20 +241,15 @@ export default {
 	}
 
 	.list-container {
-		display: flex;
-		flex: 1;
-		overflow: auto;   
-		
-		/*position: absolute;*/ 
 		top: 280px; 
 		right: 0; 
 		bottom: 0;
 		left: 0; 
-		
+		display: flex;
+		flex: 1;
+		overflow: auto;   			
 		white-space: nowrap;
 		overflow-x: auto;
-
-		/*height: 700px;*/
   	}
 
 	.ghost {
@@ -267,5 +263,4 @@ export default {
 		color: rgba(245, 235, 238, 0.9);
 	}
 	
-
 </style>

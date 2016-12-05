@@ -1,5 +1,5 @@
 body {
-	background-color: rgba(0,141,196,1);
+	background-color: rgba(0,141,196,1); /* default background */
 	/*background-color: rgb(255, 109, 0);*/
 	
 	/*background-image: url('/assets/backgrounds/wallpaper1.jpg');*/
@@ -19,15 +19,6 @@ body {
 
 }
 
-.top {
-	background-color: blue;
-	color: white;
-	width: 100%;
-	height: 50px;
-	line-height: 50px;
-	padding: 10px;
-}
-
 .board {
 	display: flex;
 	background-color: deepskyblue;
@@ -35,26 +26,3 @@ body {
 	height: 100%;
 	padding: 10px;
 }
-
-.board-title{
-	min-height: 50px;
-}
-
-.list {
-	width: 300px;
-	min-height: 100px;
-	max-height: 100%;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	background-color: #999;
-	margin: 10px;
-}
-
-.card {
-	width: 100%;
-	min-height: 50px;
-	background-color: #fff;
-}*/
-

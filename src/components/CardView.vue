@@ -94,9 +94,6 @@
 				{{ $t("cardView.actions") }}
 			</p> 
 			<button type="button" class="btn btn-default btn-block">
-				{{ $t("cardView.subscribeBtn") }}
-			</button>
-			<button type="button" class="btn btn-default btn-block">
 				{{ $t("cardView.archiveBtn") }}
 			</button>
 			<button type="button" class="btn btn-default btn-block" v-bind:class="{ 'btn-success': subbed }" @click="subCard({card: cardviewData})">
@@ -207,6 +204,7 @@ import { mapActions, mapMutations } from 'vuex'
   </script>
 
 <style scoped>
+
 	.card-view-area {
 		position: relative;
 		background-color: #edeff0;
